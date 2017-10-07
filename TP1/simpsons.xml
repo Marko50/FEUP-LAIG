@@ -98,6 +98,7 @@
         <DESCENDANTS>
             <NODEREF id="chao" />
             <NODEREF id="mesa" />
+            <NODEREF id="candeeiro" />
         </DESCENDANTS>
 
     </NODE>
@@ -116,7 +117,7 @@
 				</DESCENDANTS>
     </NODE>
 
-    <!----------------------------------- The table ------------------------->
+<!-- The Table  -->
       <NODE id="mesa">
           <MATERIAL id="null" />
           <TEXTURE id="rocks" />
@@ -127,7 +128,6 @@
             <NODEREF id="perna4" />
             <NODEREF id="tampomesa1" />
             <NODEREF id="tampomesa2" />
-            <NODEREF id="ladomesa1" />
           </DESCENDANTS>
       </NODE>
 
@@ -324,10 +324,68 @@
    </DESCENDANTS>
 
 </NODE>
-  <!-----------------------------------       -------------------------------->
 
-    <!----------------------------------- The candle ------------------------->
+<!--   -->
 
+<!-- The Candle  -->
+
+<NODE id="candeeiro">
+   <MATERIAL id="null" />
+   <TEXTURE id="null" />
+
+   <TRANSLATION x="0" y="0" z="0" />
+
+   <DESCENDANTS>
+       <NODEREF id="basecandeeiro" />
+       <NODEREF id="troncocandeeiro" />
+       <NODEREF id="cabecacandeeiro" />
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="basecandeeiro">
+   <MATERIAL id="defaultMaterial" />
+   <TEXTURE id="rocks" />
+
+   <TRANSLATION x="0" y="6" z="0" />
+   <ROTATION axis="x" angle="90" />
+   <SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+   <DESCENDANTS>
+     <LEAF  type="cylinder" args="1 2 2 1 20 1 1" />
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="troncocandeeiro">
+   <MATERIAL id="defaultMaterial" />
+   <TEXTURE id="rocks" />
+
+   <TRANSLATION x="0" y="8" z="0" />
+   <ROTATION axis="x" angle="90" />
+   <SCALE sx="0.4" sy="0.4" sz="0.4" />
+
+   <DESCENDANTS>
+     <LEAF  type="cylinder" args="6 1 1 1 20 1 1" />
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="cabecacandeeiro">
+   <MATERIAL id="defaultMaterial" />
+   <TEXTURE id="rocks" />
+
+   <TRANSLATION x="0" y="9" z="0" />
+   <ROTATION axis="x" angle="90" />
+   <SCALE sx="0.4" sy="0.4" sz="0.4" />
+
+   <DESCENDANTS>
+     <LEAF  type="cylinder" args="4 2 4 1 20 0 0" />
+   </DESCENDANTS>
+
+</NODE>
+
+<!--   -->
 </NODES>
 
 </SCENE>
