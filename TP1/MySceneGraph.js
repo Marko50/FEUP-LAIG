@@ -22,6 +22,9 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
 
+    this.countNodes = 0;
+
+
 
     this.idRoot = null;                    // The id of the root element.
 
@@ -1169,6 +1172,13 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
     // Traverses nodes.
     var children = nodesNode.children;
+    console.log(this.defaultMaterialID);
+    if(nodesNode.materialID == null){
+      console.log("Material is NULL");
+      nodesNode.materialID = this.defaultMaterialID;
+    }
+
+    this.nodeIDS = [];
 
     for (var i = 0; i < children.length; i++) {
         var nodeName;
@@ -1196,7 +1206,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
@@ -1215,8 +1224,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (materialIndex == -1)
                 return "material must be defined (node ID = " + nodeID + ")";
             var materialID = this.reader.getString(nodeSpecs[materialIndex], 'id');
-            if (materialID == null )
-                return "unable to parse material ID (node ID = " + nodeID + ")";
+            if (materialID == "null" ){
+                materialID = nodesNode.materialID;
+                console.log("Node: " + nodeID + " gained material " + materialID + " from father " + nodesNode.nodeID);
+            }
             if (materialID != "null" && this.materials[materialID] == null )
                 return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
 
@@ -1227,8 +1238,12 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (textureIndex == -1)
                 return "texture must be defined (node ID = " + nodeID + ")";
             var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
-            if (textureID == null )
-                return "unable to parse texture ID (node ID = " + nodeID + ")";
+            if (textureID == "null")
+            {
+              texureID = nodesNode.texureID;
+              console.log("Node: " + nodeID + " gained texture " + textureID + " from father " + nodesNode.nodeID);
+            }
+
             if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
@@ -1345,6 +1360,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
+            this.nodeIDS.push(nodeID);
 						var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
             var coords = this.reader.getString(descendants[j], 'args');
 
@@ -1432,11 +1448,20 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-  this.scene.pushMatrix();
-  this.scene.multMatrix(this.nodes["chao"].transformMatrix);
-  this.materials[this.nodes["chao"].materialID].apply();
-  this.textures["rocks"][0].bind();
-	this.nodes["chao"].display();
-  this.textures["rocks"][0].unbind();
-  this.scene.popMatrix();
+    for(let i = 0; i < this.nodeIDS.length; i++){
+    this.scene.pushMatrix();
+    let nodeID = this.nodeIDS[i];
+    let materialID = this.nodes[nodeID].materialID;
+    let textureID = this.nodes[nodeID].textureID;
+    this.scene.multMatrix(this.nodes[nodeID].transformMatrix);
+    this.materials[materialID].apply();
+    if(textureID != "null"){
+      this.textures[textureID][0].bind();
+    }
+    this.nodes[nodeID].display();
+    if(textureID != "null"){
+      this.textures[textureID][0].unbind();
+    }
+    this.scene.popMatrix();
+  }
 }

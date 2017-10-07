@@ -50,7 +50,6 @@ function MySphere(scene, coords) {
       }
 
 
-
       for (let i = 0; i < stacks; i++) {
           for (let j = 0; j < slices; j++) {
               this.indices.push(i * (slices + 1) + j, (i + 1) * (slices + 1) + j, (i + 1) * (slices + 1) + j + 1);
@@ -59,8 +58,7 @@ function MySphere(scene, coords) {
       }
 
 
-      console.log(this.vertices);
-      console.log(this.indices);
+
 
       this.primitiveType = this.scene.gl.TRIANGLES;
       this.initGLBuffers();

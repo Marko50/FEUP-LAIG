@@ -97,13 +97,14 @@
 
         <DESCENDANTS>
             <NODEREF id="chao" />
+            <NODEREF id="piramide" />
         </DESCENDANTS>
 
     </NODE>
 
     <!-- The floor -->
     <NODE id="chao">
-        <MATERIAL id= "defaultMaterial" />
+        <MATERIAL id= "null" />
         <TEXTURE id= "rocks" />
 
         <SCALE sx="1" sy="1" sz="1" />
@@ -111,10 +112,111 @@
         <ROTATION axis="x" angle="0" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 1 1 0" />
+					<LEAF  type="rectangle" args="0 5 5 0" />
 				</DESCENDANTS>
 
+
     </NODE>
+    <!-- A pyramid -->
+    <NODE id="piramide">
+
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="12" y="5.8" z="4.75" />
+        <SCALE sx="0.4" sy="2" sz="0.4" />
+
+        <DESCENDANTS>
+          <NODEREF id="meiaPiramide1" />
+            <NODEREF id="meiaPiramide2" />
+            <NODEREF id="basePiramide" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The pyramid base -->
+    <NODE id="basePiramide">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="x" angle="90" />
+        <TRANSLATION x="1" y="6" z="2.87" />
+        <SCALE sx="2.8" sy="3.5" sz="1" />
+
+        <DESCENDANTS>
+          <LEAF  type="rectangle" args="0 4 5 0" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Half a pyramid -->
+    <NODE id="meiaPiramide1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="meiaPiramide" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The other half -->
+    <NODE id="meiaPiramide2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+    <TRANSLATION x="16" y="0" z="26"	/>
+    <ROTATION axis="y" angle="180" />
+
+        <DESCENDANTS>
+            <NODEREF id="meiaPiramide" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Generic half a pyramid -->
+    <NODE id="meiaPiramide">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="facePiramide1" />
+            <NODEREF id="facePiramide2" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Pyramid face -->
+   <NODE id="facePiramide1">
+        <MATERIAL id= "null" />
+        <TEXTURE id="null" />
+
+    <TRANSLATION x="8" y="4" z="13" />
+    <ROTATION axis="x" angle="44.42" />
+        <ROTATION axis="y" angle="-45" />
+
+        <DESCENDANTS>
+          <LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another pyramid face -->
+    <NODE id="facePiramide2">
+        <MATERIAL id= "null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="10" y="4" z="15" />
+        <TRANSLATION x="-2" y="0" z="-2" />
+        <ROTATION axis="z" angle="-44.42" />
+        <ROTATION axis="y" angle="45" />
+
+        <DESCENDANTS>
+          <LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
+        </DESCENDANTS>
+
+    </NODE>
+
 </NODES>
 
 </SCENE>
