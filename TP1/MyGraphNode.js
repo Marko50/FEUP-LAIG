@@ -46,6 +46,10 @@ MyGraphNode.prototype.addLeaf = function(leaf,coords) {
   else if (leaf == "cylinder"){
     this.leaves.push(new MyCylinder(this.scene, coords));
   }
+  else if(leaf == "sphere")
+  {
+    this.leaves.push(new MySphere(this.scene, coords));
+  }
 
 }
 

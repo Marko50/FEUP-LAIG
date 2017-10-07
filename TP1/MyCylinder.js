@@ -28,8 +28,8 @@ MyCylinder.prototype.initBuffers = function(coords) {
   var stack = arr[3];
   var slice = arr[4];
 
-this.stacks=stack;
-this.slices=slice;
+  this.stacks=stack;
+  this.slices=slice;
     this.vertices = [];
     this.indices = [];
     this.normals = [];
