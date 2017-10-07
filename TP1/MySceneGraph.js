@@ -1161,77 +1161,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
-/**
- * Parses the <LEAVES> block.
- */
 
-/*
-MySceneGraph.prototype.parseLeaves = function(leavesNode) {
-
-    var children = leavesNode.children;
-
-    var numArgs = [];
-    numArgs["rectangle"] = 4;
-    numArgs["cylinder"] = 5;
-    numArgs["sphere"] = 3;
-    numArgs["triangle"] = 9;
-
-    for (var i = 0; i < children.length; i++) {
-        if (children[i].nodeName != "LEAF") {
-            this.onXMLMinorError("invalid tag name <" + children[i].nodeName + ">");
-            continue;
-        }
-
-        // Retrieves node ID.
-        var nodeID = this.reader.getString(children[i], 'id');
-        if (nodeID == null )
-            return "failed to parse node ID";
-        // Verifies ID.
-        if (this.nodes[nodeID] != null )
-            return "node ID must be unique (conflict: ID = " + nodeID + ")";
-
-        // Gets type of leaf.
-        var type = this.reader.getItem(children[i], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-        if (type == null )
-            return "failed to parse type of leaf for ID = " + nodeID;
-
-        // Retrieves arguments.
-        var unsplit = this.reader.getString(children[i], 'args');
-        if (unsplit == null )
-            return "failed to retrieve list of arguments";
-        var args = unsplit.split(/ +/);
-
-        if (args[args.length - 1] == "")
-            args.splice(-1, 1);
-
-        // Checks if all arguments are numeric.
-        for (var j = 0; j < args.length; j++) {
-            var numeric;
-            if (isNaN((numeric = parseFloat(args[j]))))
-                return "non-numeric argument for ID = " + nodeID;
-            else
-                args[j] = numeric;
-        }
-
-        // Checks for a correct number of arguments.
-        if (args.length != numArgs[type])
-            return "incorrect number of arguments for type " + type + " (ID = " + nodeID + ")";
-
-        // Checks valid cylinder and sphere parameters.
-        if (type === 'cylinder' || type == 'sphere') {
-            for (var j = 0; j < args.length; j++) {
-                if (args[j] < 0)
-                    return "all arguments for a " +  type + " must be positive";
-            }
-        }
-
-        // Creates node.
-        this.nodes[nodeID] = new MyGraphLeaf(this,nodeID,type,args);
-    }
-
-    console.log("Parsed leaves");
-}
-*/
 /**
  * Parses the <NODES> block.
  */
@@ -1303,6 +1233,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].textureID = textureID;
+            //this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
+
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
@@ -1500,10 +1432,11 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-//  this.mulMatrix(this.nodes["chao"].transformMatrix);
   this.scene.pushMatrix();
   this.scene.multMatrix(this.nodes["chao"].transformMatrix);
+  this.materials[this.nodes["chao"].materialID].apply();
+  this.textures["rocks"][0].bind();
 	this.nodes["chao"].display();
+  this.textures["rocks"][0].unbind();
   this.scene.popMatrix();
-	//this.log("Graph should be rendered here...");
 }

@@ -12,23 +12,12 @@
  MyRectangle.prototype.constructor = MyRectangle;
 
  MyRectangle.prototype.initBuffers = function(coords) {
-
-   //0 4 5 0
-   //0 14 5 10
-   this.texCoords = [
-    0,1,
-    1,1,
-    0,0,
-    1,0
-  ];
   var arr = [];
   arr = coords.split(" ");
-  var x1 = arr[0];
-  var x2 = arr[1];
-  var y1 = arr[2];
-  var y2 = arr[3];
-
-
+  var x1 = parseFloat(arr[0]);
+  var y1 = parseFloat(arr[1]);
+  var x2 = parseFloat(arr[2]);
+  var y2 = parseFloat(arr[3]);
 
  	this.vertices = [
  	  x2, y2, 0,
@@ -41,6 +30,13 @@
  	    0, 1, 2,
  	    3, 2, 1
  	  ];
+
+    this.texCoords = [
+     1,1,
+     1,0,
+     0,1,
+     0,0
+   ];
 
     this.normals = [
      0,0,1,

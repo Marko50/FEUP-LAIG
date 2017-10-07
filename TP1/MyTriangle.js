@@ -15,17 +15,17 @@ MyTriangle.prototype.initBuffers = function (coords) {
   //2 0 12 12 0 2 0 0 0
   var arr = [];
   arr = coords.split(" ");
-  var x1 = arr[0];
-  var y1 = arr[1];
-  var z1 = arr[2];
+  var x1 = parseFloat(arr[0]);
+  var y1 = parseFloat(arr[1]);
+  var z1 = parseFloat(arr[2]);
 
-  var x2 = arr[3];
-  var y2 = arr[4];
-  var z2 = arr[5];
+  var x2 = parseFloat(arr[3]);
+  var y2 = parseFloat(arr[4]);
+  var z2 = parseFloat(arr[5]);
 
-  var x3 = arr[6];
-  var y3 = arr[7];
-  var z3 = arr[8];
+  var x3 = parseFloat(arr[6]);
+  var y3 = parseFloat(arr[7]);
+  var z3 = parseFloat(arr[8]);
 
 	this.vertices = [
           x1,y1,z1,
