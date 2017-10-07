@@ -1172,10 +1172,13 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
     // Traverses nodes.
     var children = nodesNode.children;
-    console.log(this.defaultMaterialID);
-    if(nodesNode.materialID == null){
-      console.log("Material is NULL");
+
+
+    if(nodesNode.nodeID == null){
+      console.log("ROOT NODE");
       nodesNode.materialID = this.defaultMaterialID;
+      nodesNode.nodeID = "root";
+      nodesNode.transformMatrix = this.initialTransforms;
     }
 
     this.nodeIDS = [];
@@ -1281,6 +1284,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
 
                     mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
+
+                    mat4.multiply(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, nodesNode.transformMatrix);
+
                     break;
                 case "ROTATION":
                     // Retrieves rotation parameters.
@@ -1298,6 +1304,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
 
                     mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
+                    mat4.multiply(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, nodesNode.transformMatrix);
                     break;
                 case "SCALE":
                     // Retrieves scale parameters.
@@ -1326,6 +1333,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
 
                     mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
+                    mat4.multiply(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, nodesNode.transformMatrix);
                     break;
                 default:
                     break;
