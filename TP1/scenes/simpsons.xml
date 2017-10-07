@@ -3,11 +3,11 @@
 <!-- Initial values -->
 <INITIALS>
     <frustum near="0.1" far="500"/>
-    <translation x="-1" y="1" z="0" />
+    <translation x="0" y="0" z="0" />
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="z" angle="0" />
-    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <scale sx="1" sy="1" sz="1" />
     <reference length="5" />
 </INITIALS>
 
@@ -106,11 +106,11 @@
     <!-- The floor -->
     <NODE id="chao">
         <MATERIAL id= "null" />
-        <TEXTURE id= "rocks" />
+        <TEXTURE id= "null" />
 
-        <SCALE sx="6" sy="1" sz="5" />
+        <SCALE sx="1" sy="1" sz="1" />
         <TRANSLATION x="0" y="0" z="5" />
-        <ROTATION axis="x" angle="-90" />
+        <ROTATION axis="x" angle="0" />
 
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 5 5 0" />
@@ -120,7 +120,7 @@
 <!-- The Table  -->
       <NODE id="mesa">
           <MATERIAL id="null" />
-          <TEXTURE id="rocks" />
+          <TEXTURE id="null" />
           <DESCENDANTS>
             <NODEREF id="perna1" />
             <NODEREF id="perna2" />
@@ -224,7 +224,7 @@
 
     <NODE id="perna">
       <MATERIAL id="defaultMaterial" />
-      <TEXTURE id="rocks" />
+      <TEXTURE id="null" />
 
       <SCALE sx="1" sy="1" sz="1" />
       <TRANSLATION x="0" y="0" z="0" />
@@ -243,7 +243,7 @@
     <!-- Another cube face -->
           <NODE id="faceperna1">
              <MATERIAL id="defaultMaterial" />
-             <TEXTURE id="rocks" />
+             <TEXTURE id="null" />
 
              <TRANSLATION x="1" y="0" z="1" />
              <ROTATION axis="y" angle="90" />
@@ -257,7 +257,7 @@
         <!-- Another cube face -->
               <NODE id="faceperna2">
                  <MATERIAL id="defaultMaterial" />
-                 <TEXTURE id="rocks" />
+                 <TEXTURE id="null" />
 
                  <TRANSLATION x="0" y="2" z="0" />
                  <ROTATION axis="x" angle="180" />
@@ -271,7 +271,7 @@
     <!-- Another cube face -->
           <NODE id="faceperna3">
              <MATERIAL id="defaultMaterial" />
-             <TEXTURE id="rocks" />
+             <TEXTURE id="null" />
 
              <TRANSLATION x="0" y="0" z="0" />
              <ROTATION axis="y" angle="-90" />
@@ -285,7 +285,7 @@
   <!-- Another cube face -->
         <NODE id="faceperna4">
            <MATERIAL id="defaultMaterial" />
-           <TEXTURE id="rocks" />
+           <TEXTURE id="null" />
 
            <TRANSLATION x="0" y="0" z="1" />
            <ROTATION axis="x" angle="0" />
@@ -299,7 +299,7 @@
 <!-- Another cube face -->
     <NODE id="faceperna5">
        <MATERIAL id="defaultMaterial" />
-       <TEXTURE id="rocks" />
+       <TEXTURE id="null" />
 
        <TRANSLATION x="0" y="0" z="0" />
        <ROTATION axis="x" angle="90" />
@@ -313,7 +313,7 @@
 <!-- Another cube face -->
 <NODE id="faceperna6">
    <MATERIAL id="defaultMaterial" />
-   <TEXTURE id="rocks" />
+   <TEXTURE id="null" />
 
    <TRANSLATION x="0" y="2" z="1" />
    <ROTATION axis="x" angle="-90" />
@@ -345,7 +345,7 @@
 
 <NODE id="basecandeeiro">
    <MATERIAL id="defaultMaterial" />
-   <TEXTURE id="rocks" />
+   <TEXTURE id="null" />
 
    <TRANSLATION x="0" y="6" z="0" />
    <ROTATION axis="x" angle="90" />
@@ -359,7 +359,7 @@
 
 <NODE id="troncocandeeiro">
    <MATERIAL id="defaultMaterial" />
-   <TEXTURE id="rocks" />
+   <TEXTURE id="null" />
 
    <TRANSLATION x="0" y="8" z="0" />
    <ROTATION axis="x" angle="90" />
@@ -373,7 +373,7 @@
 
 <NODE id="cabecacandeeiro">
    <MATERIAL id="defaultMaterial" />
-   <TEXTURE id="rocks" />
+   <TEXTURE id="null" />
 
    <TRANSLATION x="0" y="9" z="0" />
    <ROTATION axis="x" angle="90" />

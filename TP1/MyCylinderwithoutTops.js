@@ -99,9 +99,6 @@ MyCylinderwithoutTops.prototype.initBuffers = function() {
              this.indices.push(i * this.slices, i * this.slices + this.slices, (i + 1) * this.slices + this.slices - 1);
          }
 
-  console.log(this.vertices);
-  console.log(this.indices);
-  console.log(this.normals);
 
 
   this.primitiveType = this.scene.gl.TRIANGLES;
