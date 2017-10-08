@@ -10,11 +10,7 @@ function MyCylinderwithoutTops(scene, slice, stack, bottomRadius, topRadius) {
   this.bottomRadius=bottomRadius;
   this.topRadius=topRadius;
 
-  console.log(this.stacks);
-	console.log(this.slices);
-	//console.log(this.height);
-	console.log(this.bottomRadius);
-	console.log(this.topRadius);
+  ;
 
   this.initBuffers();
 };

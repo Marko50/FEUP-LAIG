@@ -9,7 +9,7 @@ function MyGraphNode(graph, nodeID) {
     this.nodeID = nodeID;
 
     // IDs of child nodes.
-    this.children = [];
+    this.children  = [];
 
     // IDs of child nodes.
     this.leaves = [];
@@ -24,6 +24,7 @@ function MyGraphNode(graph, nodeID) {
     mat4.identity(this.transformMatrix);
 
 }
+
 
 /**
  * Adds the reference (ID) of another node to this node's children array.
@@ -56,6 +57,17 @@ MyGraphNode.prototype.addLeaf = function(leaf,coords) {
 
 MyGraphNode.prototype.display = function(){
   for(var i = 0; i < this.leaves.length; i++){
+    console.log("rip");
+    this.graph.materials[this.materialID].apply();
+    if (this.textureID != "null" && this.textureID != "clear") {
+      this.graph.textures[this.textureID][0].bind();
+    }
+    this.scene.pushMatrix();
+    this.scene.multMatrix(this.transformMatrix);
     this.leaves[i].display();
+    this.scene.popMatrix();
+    if (this.textureID != "null" && this.textureID != "clear") {
+      this.graph.textures[this.textureID][0].unbind();
+    }
   }
 }
