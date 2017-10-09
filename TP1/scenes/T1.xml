@@ -1,0 +1,1944 @@
+<SCENE>
+
+<!-- Initial values -->
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="-3" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.3" sy="0.3" sz="0.3" />
+    <reference length="5" />
+</INITIALS>
+
+
+<!-- Illumination and clear colour -->
+<ILLUMINATION>
+    <ambient r="0.2" g="0.2" b="0.2" a="1" />
+    <background r="0.5" g="0.8" b="0.95" a="1" />
+</ILLUMINATION>
+
+
+<!-- Lights -->
+<LIGHTS>
+	<LIGHT id="light0">
+        <enable value ="1" />
+        <position  x="20" y="30" z="20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light1">
+        <enable value ="1" />
+        <position x="20" y="30" z="-20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light2">
+        <enable value ="1" />
+        <position x="-20" y="30" z="20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value ="1" />
+        <position x="-20" y="30" z="-20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+    </LIGHT>
+
+</LIGHTS>
+
+<!-- Textures -->
+<TEXTURES>
+
+    <!-- Street bench -->
+    <TEXTURE id="river">
+        <file path="images/river.jpg" />
+        <amplif_factor s="0.2" t="0.2" />
+    </TEXTURE>
+
+    <TEXTURE id="ribeira">
+        <file path="images/porto.jpg" />
+        <amplif_factor s="1.1" t="1.15" />
+    </TEXTURE>
+
+    <TEXTURE id="passeio">
+        <file path="images/passeio.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="passeio1">
+        <file path="images/passeio.png" />
+        <amplif_factor s="1" t="6" />
+    </TEXTURE>
+
+    <TEXTURE id="passeio2">
+        <file path="images/passeio.png" />
+        <amplif_factor s="2" t="6" />
+    </TEXTURE>
+
+    <TEXTURE id="boia">
+        <file path="images/boia.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="borracha">
+        <file path="images/borracha.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="azul">
+        <file path="images/azul.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="preto">
+        <file path="images/preto.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="cinza">
+        <file path="images/cinza.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="vidro">
+        <file path="images/vidro.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="red-bull">
+        <file path="images/red-bull.png" />
+        <amplif_factor s="1" t="1.3" />
+    </TEXTURE>
+
+    <TEXTURE id="cimento">
+        <file path="images/cimento.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="estrada">
+        <file path="images/estrada.jpg" />
+        <amplif_factor s="0.2" t="1" />
+    </TEXTURE>
+
+</TEXTURES>
+
+
+<MATERIALS>
+    <!-- A default material -->
+    <MATERIAL id="defaultMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="aluminio">
+        <shininess value="1" />
+        <specular r="0.8" g="0.8" b="0.8" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.0" g="0.0" b="0.0" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="vidral">
+        <shininess value="50" />
+        <specular r="1.0" g="1.0" b="1.0" a="1" />
+        <diffuse r="0.6" g="0.6" b="1.0" a="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="agua">
+        <shininess value="50" />
+        <specular r="1.0" g="1.0" b="1.0" a="1" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+
+</MATERIALS>
+
+
+<!-- The leaves -->
+<LEAVES>
+</LEAVES>
+
+
+<!-- The nodes -->
+<NODES>
+
+    <ROOT id="root" />
+
+    <!-- The root node -->
+    <NODE id="root">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="rio" />
+            <NODEREF id="porto" />
+            <NODEREF id="passPorto" />
+            <NODEREF id="passGaia" />
+            <NODEREF id="obstaculos" />
+            <NODEREF id="aviao" />
+            <NODEREF id="ponte" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Rio -->
+    <NODE id="rio">
+        <MATERIAL id="agua" />
+        <TEXTURE id="river" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="50" sy="50" sz="1" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+				</DESCENDANTS>
+
+    </NODE>
+
+    <!-- Porto -->
+    <NODE id="porto">
+        <MATERIAL id="null" />
+        <TEXTURE id="ribeira" />
+
+        <TRANSLATION x="-26" y="20" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="50" sy="40" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Passadiço Porto -->
+    <NODE id="passPorto">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-22" y="0" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="passadico" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Passadiço Gaia -->
+    <NODE id="passGaia">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="22" y="0" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="passadico" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Passadiço -->
+    <NODE id="passadico">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="passadicoTop" />
+                    <NODEREF id="passadicoBottom" />
+                    <NODEREF id="passadicol1" />
+                    <NODEREF id="passadicol2" />
+                    <NODEREF id="passadicol3" />
+                    <NODEREF id="passadicol4" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Base cima Passadiço -->
+    <NODE id="passadicoTop">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio" />
+
+        <TRANSLATION x="0" y="1" z="0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="50" sy="8" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Base baixo Passadiço -->
+    <NODE id="passadicoBottom">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="50" sy="8" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- lateral 1 Passadiço -->
+    <NODE id="passadicol1">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio1" />
+
+        <TRANSLATION x="0" y="0.5" z="4" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="50" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- lateral 2 Passadiço -->
+    <NODE id="passadicol2">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio1" />
+
+        <TRANSLATION x="0" y="0.5" z="-4" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="50" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- lateral 3 Passadiço -->
+    <NODE id="passadicol3">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio2" />
+
+        <TRANSLATION x="25" y="0.5" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="8" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- lateral 4 Passadiço -->
+    <NODE id="passadicol4">
+        <MATERIAL id="null" />
+        <TEXTURE id="passeio2" />
+
+        <TRANSLATION x="-25" y="0.5" z="0" />
+        <ROTATION axis="y" angle="-90" />
+        <SCALE sx="8" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+
+    <!-- Obstaculos -->
+    <NODE id="obstaculos">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="0" y="0" z="16" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="0.7" sy="1" sz="0.7" />
+
+        <DESCENDANTS>
+                    <NODEREF id="obstaculol" />
+                    <NODEREF id="obstaculor" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Obstaculo esquerda -->
+    <NODE id="obstaculol">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="-5" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="obsbase" />
+                    <NODEREF id="obsmid" />
+                    <NODEREF id="obstop" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Obstaculo direita -->
+    <NODE id="obstaculor">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="5" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="obsbase" />
+                    <NODEREF id="obsmid" />
+                    <NODEREF id="obstop" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Base Obstaculo -->
+    <NODE id="obsbase">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="borracha" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="2" sy="1" sz="2" />
+
+        <DESCENDANTS>
+                    <NODEREF id="obsbase1" />
+                    <NODEREF id="obsbase2" />
+                    <NODEREF id="obsbase3" />
+                    <NODEREF id="obsbase4" />
+                    <NODEREF id="obsbase5" />
+                    <NODEREF id="obsbase6" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 1 Base Obstaculo -->
+    <NODE id="obsbase1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="2" sy="0.5" sz="2" />
+        <TRANSLATION x="0" y="0.5" z="0.5" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 2 Base Obstaculo -->
+    <NODE id="obsbase2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="1" y="0.25" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="2" sy="0.5" sz="2" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 3 Base Obstaculo -->
+    <NODE id="obsbase3">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0.25" z="-1" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="2" sy="0.5" sz="2" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 4 Base Obstaculo -->
+    <NODE id="obsbase4">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-1" y="0.25" z="0" />
+        <ROTATION axis="y" angle="270" />
+        <SCALE sx="2" sy="0.5" sz="2" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 5 Base Obstaculo -->
+    <NODE id="obsbase5">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="2" sy="2" sz="2" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- face 6 Base Obstaculo -->
+    <NODE id="obsbase6">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0.5" z="0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="2" sy="2" sz="2" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- meio do Obstaculo -->
+    <NODE id="obsmid">
+        <MATERIAL id="null" />
+        <TEXTURE id="boia" />
+
+        <TRANSLATION x="0" y="0.5" z="0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="cylinder" args="7 1.4 0.5 20 20 0 0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- topo do Obstaculo -->
+    <NODE id="obstop">
+        <MATERIAL id="null" />
+        <TEXTURE id="boia" />
+
+        <TRANSLATION x="0" y="7.5" z="0" />
+        <ROTATION axis="x" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="sphere" args="0.5 20 20" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Aviao -->
+    <NODE id="aviao">
+        <MATERIAL id="aluminio" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="2" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="0.5" sy="0.5" sz="0.5" />
+
+        <DESCENDANTS>
+                    <NODEREF id="aviao_corpo" />
+                    <NODEREF id="aviao_cockpit" />
+                    <NODEREF id="aviao_frente" />
+                    <NODEREF id="asa1" />
+                    <NODEREF id="asa2" />
+                    <NODEREF id="asa3" />
+                    <NODEREF id="asa4" />
+                    <NODEREF id="asa5" />
+                    <NODEREF id="helice" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa1">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0.5" y="0" z="-2.5" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="3" sy="3.5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asa" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa2">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="180" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asa1" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa3">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0.2" y="0" z="-12.5" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="1" sy="1.5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asa" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa4">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0.4" z="-12.5" />
+        <ROTATION axis="x" angle="90" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="1" sy="1.5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asa" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa5">
+            <MATERIAL id="null" />
+            <TEXTURE id="azul" />
+
+            <TRANSLATION x="-0.2" y="0" z="-12.5" />
+            <ROTATION axis="y" angle="180" />
+            <ROTATION axis="x" angle="-90" />
+            <SCALE sx="1" sy="1.5" sz="1" />
+
+            <DESCENDANTS>
+                        <NODEREF id="asa" />
+                    </DESCENDANTS>
+        </NODE>
+
+    <NODE id="helice">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="0" y="0" z="0" />
+            <ROTATION axis="y" angle="0" />
+            <SCALE sx="1" sy="1" sz="1" />
+
+            <DESCENDANTS>
+                         <NODEREF id="helice_sphere" />
+                         <NODEREF id="hel1" />
+                         <NODEREF id="hel2" />
+                         <NODEREF id="hel3" />
+                         <NODEREF id="hel4" />
+                    </DESCENDANTS>
+        </NODE>
+
+    <NODE id="helice_sphere">
+        <MATERIAL id="aluminio" />
+        <TEXTURE id="cinza" />
+
+        <TRANSLATION x="0" y="0" z="0.7" />
+        <ROTATION axis="y" angle="180" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="0.7" sy="1" sz="1" />
+
+              <DESCENDANTS>
+                     <LEAF  type="sphere" args= "0.5 20 20" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="hel1">
+        <MATERIAL id="null" />
+        <TEXTURE id="preto" />
+
+        <TRANSLATION x="0.15" y="-1.5" z="0.9" />
+        <ROTATION axis="y" angle="0" />
+        <ROTATION axis="z" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+              <DESCENDANTS>
+                     <LEAF  type="rectangle" args= "0 0.3 3 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="hel2">
+            <MATERIAL id="null" />
+            <TEXTURE id="preto" />
+
+            <TRANSLATION x="0.15" y="1.5" z="0.9" />
+            <ROTATION axis="x" angle="-180" />
+            <ROTATION axis="z" angle="90" />
+            <SCALE sx="1" sy="1" sz="1" />
+
+                <DESCENDANTS>
+                        <LEAF  type="rectangle" args= "0 0.3 3 0.0" />
+                    </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="hel3">
+            <MATERIAL id="null" />
+            <TEXTURE id="preto" />
+
+            <TRANSLATION x="-1.5" y="-0.15" z="0.9" />
+            <ROTATION axis="x" angle="-180" />
+            <SCALE sx="1" sy="1" sz="1" />
+
+                <DESCENDANTS>
+                        <LEAF  type="rectangle" args= "0 0.3 3 0.0" />
+                    </DESCENDANTS>
+        </NODE>
+
+        <NODE id="hel4">
+            <MATERIAL id="null" />
+            <TEXTURE id="preto" />
+
+            <TRANSLATION x="-1.5" y="-0.15" z="0.9" />
+            <ROTATION axis="x" angle="0" />
+            <SCALE sx="1" sy="1" sz="1" />
+
+                <DESCENDANTS>
+                        <LEAF  type="rectangle" args= "0 0.3 3 0.0" />
+                    </DESCENDANTS>
+        </NODE>
+
+
+    <NODE id="asa">
+        <MATERIAL id="null" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="0.5" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asap1" />
+                    <NODEREF id="asap2" />
+                    <NODEREF id="asap3" />
+                    <NODEREF id="asap4" />
+                    <NODEREF id="asap5" />
+                    <NODEREF id="asap6" />
+                    <NODEREF id="asap7" />
+                    <NODEREF id="asap8" />
+                </DESCENDANTS>
+    </NODE>
+
+
+
+    <NODE id="asap1">
+        <MATERIAL id="null" />
+        <TEXTURE id="red-bull" />
+
+        <TRANSLATION x="0" y="0" z="0.2" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 0.5 2 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap2">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0.5" z="0.2" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="triangle" args="0 0 0 2 0 0 0 0.5 0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap3">
+        <MATERIAL id="null" />
+        <TEXTURE id="red-bull" />
+
+        <TRANSLATION x="2" y="0" z="-0.2" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 0.5 2 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap4">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="2" y="0.5" z="-0.2" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="triangle" args="0 0 0 2 0 0 2 0.5 0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap5">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0" z="-0.2" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 0.4 2 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap6">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0" z="-0.2" />
+        <ROTATION axis="y" angle="-90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 1 0.4 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap7">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="2" y="0" z="0.2" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 0.5 0.4 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap8">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="2" y="0.5" z="-0.2" />
+        <ROTATION axis="z" angle="-14.04"  />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="asap8.1" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asap8.1">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="0 0.4 -2.06155281281 0.0" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="aviao_corpo">
+        <MATERIAL id="null" />
+        <TEXTURE id="azul" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="0"  />
+        <SCALE sx="1" sy="1.3" sz="2.3" />
+
+        <DESCENDANTS>
+                    <NODEREF id="aviao_corpo1" />
+                    <NODEREF id="aviao_corpo2" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="aviao_corpo1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="180" />
+        <SCALE sx="1" sy="1.5" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="cylinder" args="5 0.8 0.5 20 20 0 0" />
+                </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="aviao_corpo2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="-5" />
+        <ROTATION axis="x" angle="0" />
+        <SCALE sx="1" sy="1.5" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="sphere" args="0.5 20 20" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Frente do avião -->
+    <NODE id="aviao_frente">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="x" angle="0" />
+        <SCALE sx="1" sy="1.95" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="sphere" args="0.8 20 20" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Cockpit do avião -->
+    <NODE id="aviao_cockpit">
+        <MATERIAL id="vidral" />
+        <TEXTURE id="vidro" />
+
+        <TRANSLATION x="0" y="1" z="-4" />
+        <ROTATION axis="x" angle="0" />
+        <SCALE sx="0.7" sy="1.2" sz="4" />
+
+        <DESCENDANTS>
+                    <LEAF  type="sphere" args="0.8 20 20" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Cubo unitário -->
+    <NODE id="cubo">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo_face1" />
+                    <NODEREF id="cubo_face2" />
+                    <NODEREF id="cubo_face3" />
+                    <NODEREF id="cubo_face4" />
+                    <NODEREF id="cubo_face5" />
+                    <NODEREF id="cubo_face6" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face frente cubo -->
+    <NODE id="cubo_face1">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face direita cubo -->
+    <NODE id="cubo_face2">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0.5" y="0" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face trás cubo -->
+    <NODE id="cubo_face3">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="-0.5" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face esquerda cubo -->
+    <NODE id="cubo_face4">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-0.5" y="0" z="0" />
+        <ROTATION axis="y" angle="270" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face cima cubo -->
+    <NODE id="cubo_face5">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0.5" z="0.0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Face baixo cubo -->
+    <NODE id="cubo_face6">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="-0.5" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Ponte da Arrábida -->
+    <NODE id="ponte">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="0" y="1" z="-20" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1.2" sy="1.7" sz="1.2" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_tabuleiro" />
+                    <NODEREF id="ponte_estrada" />
+                    <NODEREF id="ponte_barreiras" />
+                    <NODEREF id="ponte_pilares" />
+                    <NODEREF id="ponte_arco" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Tabuleiro Superior da Ponte -->
+    <NODE id="ponte_tabuleiro">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="clear" />
+
+        <TRANSLATION x="0" y="11" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="5" sy="0.2" sz="44" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Estrada do tabuleiro superior da Ponte -->
+    <NODE id="ponte_estrada">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="estrada" />
+
+        <TRANSLATION x="0" y="11.15" z="0" />
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="44" sy="5" sz="1" />
+
+        <DESCENDANTS>
+                    <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Barreiras de proteção da Ponte -->
+    <NODE id="ponte_barreiras">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="cimento" />
+
+        <TRANSLATION x="0" y="11.15" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_barreira_esq" />
+                    <NODEREF id="ponte_barreira_dir" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Barreira de proteção esquerda da Ponte -->
+    <NODE id="ponte_barreira_esq">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="2.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="44" sy="0.5" sz="0.1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Barreira de proteção direita da Ponte -->
+    <NODE id="ponte_barreira_dir">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="-2.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="44" sy="0.5" sz="0.1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Conjunto pilares da Ponte -->
+    <NODE id="ponte_pilares">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="cimento" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_pilar_1" />
+                    <NODEREF id="ponte_pilar_2" />
+                    <NODEREF id="ponte_pilar_3" />
+                    <NODEREF id="ponte_pilar_4" />
+                    <NODEREF id="ponte_pilar_5" />
+                    <NODEREF id="ponte_pilar_6" />
+                    <NODEREF id="ponte_pilar_7" />
+                    <NODEREF id="ponte_pilar_8" />
+                    <NODEREF id="ponte_pilar_9" />
+                    <NODEREF id="ponte_pilar_10" />
+                    <NODEREF id="ponte_pilar_11" />
+                    <NODEREF id="ponte_pilar_12" />
+                    <NODEREF id="ponte_pilar_13" />
+                    <NODEREF id="ponte_pilar_14" />
+
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Pilares da Ponte -->
+    <NODE id="ponte_pilar_1">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-18" y="7.5" z="3" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="15" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_2">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-18" y="7.5" z="-3" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="15" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_3">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="18" y="7.5" z="3" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="15" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_4">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="18" y="7.5" z="-3" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="15" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_5">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-18" y="10.5" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="5" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_6">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="18" y="10.5" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="5" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_7">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-15" y="8.5" z="-1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_8">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-15" y="8.5" z="1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_9">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="15" y="8.5" z="-1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_10">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="15" y="8.5" z="1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="5" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_11">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-10" y="10" z="-1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="2.1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_12">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-10" y="10" z="1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="2.1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_13">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="10" y="10" z="-1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="2.1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_pilar_14">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="10" y="10" z="1.5" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="2.1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Arco completo da Ponte -->
+    <NODE id="ponte_arco">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="cimento" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_arco_1" />
+                    <NODEREF id="ponte_arco_2" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Metade esquerda do arco da Ponte-->
+    <NODE id="ponte_arco_2">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="cimento" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="180" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_arco_1" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Metade direita do arco da Ponte-->
+    <NODE id="ponte_arco_1">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="cimento" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="y" angle="0" />
+        <SCALE sx="1.8" sy="1.07" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="ponte_arco_p1" />
+                    <NODEREF id="ponte_arco_p2" />
+                    <NODEREF id="ponte_arco_p3" />
+                    <NODEREF id="ponte_arco_p4" />
+                    <NODEREF id="ponte_arco_p5" />
+                    <NODEREF id="ponte_arco_p6" />
+                    <NODEREF id="ponte_arco_p7" />
+                    <NODEREF id="ponte_arco_p8" />
+                    <NODEREF id="ponte_arco_p9" />
+                    <NODEREF id="ponte_arco_p10" />
+                    <NODEREF id="ponte_arco_p11" />
+                    <NODEREF id="ponte_arco_p12" />
+                    <NODEREF id="ponte_arco_p13" />
+                    <NODEREF id="ponte_arco_p14" />
+                    <NODEREF id="ponte_arco_p15" />
+                    <NODEREF id="ponte_arco_p16" />
+                    <NODEREF id="ponte_arco_p17" />
+                    <NODEREF id="ponte_arco_p18" />
+                    <NODEREF id="ponte_arco_p19" />
+                    <NODEREF id="ponte_arco_p20" />
+                    <NODEREF id="ponte_arco_p21" />
+                    <NODEREF id="ponte_arco_p22" />
+                    <NODEREF id="ponte_arco_p23" />
+                    <NODEREF id="ponte_arco_p24" />
+                    <NODEREF id="ponte_arco_p25" />
+                    <NODEREF id="ponte_arco_p26" />
+                    <NODEREF id="ponte_arco_p27" />
+                    <NODEREF id="ponte_arco_p28" />
+                    <NODEREF id="ponte_arco_p29" />
+                    <NODEREF id="ponte_arco_p30" />
+                    <NODEREF id="ponte_arco_p31" />
+                    <NODEREF id="ponte_arco_p32" />
+                    <NODEREF id="ponte_arco_p33" />
+                    <NODEREF id="ponte_arco_p34" />
+                    <NODEREF id="ponte_arco_p35" />
+                    <NODEREF id="ponte_arco_p36" />
+                    <NODEREF id="ponte_arco_p37" />
+                    <NODEREF id="ponte_arco_p38" />
+                    <NODEREF id="ponte_arco_p39" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- 39 peças de metade do arco da Ponte -->
+    <NODE id="ponte_arco_p1">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="0" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p2">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-2.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p3">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p4">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-7.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p5">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-10" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p6">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-12.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p7">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-15" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p8">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-17.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p9">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-20" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p10">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-22.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p11">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-25" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p12">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-27.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p13">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-30" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p14">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-32.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p15">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-35" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p16">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-32.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p17">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-35" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p18">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-37.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="ponte_arco_p19">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-40" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p20">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-42.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p21">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-45" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p22">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-47.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p23">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-50" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p24">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-52.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p25">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-55" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p26">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-57.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p27">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-60" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p28">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-62.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p29">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-65" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p30">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-67.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p31">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-70" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p32">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-72.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p33">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-75" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p34">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-77.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p35">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-80" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p36">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-82.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p37">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-85" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p38">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-87.5" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ponte_arco_p39">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0" />
+        <ROTATION axis="z" angle="-90" />
+        <SCALE sx="1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+                    <NODEREF id="peca_arco" />
+                </DESCENDANTS>
+    </NODE>
+
+    <!-- Peça base do arco da Ponte -->
+    <NODE id="peca_arco">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="10" z="0" />
+        <ROTATION axis="z" angle="0" />
+        <SCALE sx="1" sy="0.5" sz="5" />
+
+        <DESCENDANTS>
+                    <NODEREF id="cubo" />
+                </DESCENDANTS>
+    </NODE>
+
+
+
+
+</NODES>
+
+</SCENE>
