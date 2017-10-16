@@ -22,6 +22,10 @@ function MySceneGraph(filename, scene) {
 
   this.nodes = [];
 
+  this.stackTextures = new Array();
+  this.stackMaterials = new Array();
+
+
 
 
 
@@ -1323,8 +1327,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
     }
 
     console.log("Parsed nodes");
-    this.nodes["root"].materialID = this.defaultMaterialID;
-    this.nodes["root"].transformMatrix = this.initialTransforms;
+
+    this.stackTextures.push("clear");
+    this.stackMaterials.push(this.defaultMaterialID);
+
     return null ;
 }
 
@@ -1368,34 +1374,62 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
   this.materials[this.defaultMaterialID] = materialDefault;
 }
 
-MySceneGraph.prototype.displayNode = function(node, materialID, textureID, appliedMaterial) {
+MySceneGraph.prototype.displayNode = function(node) {
+    let tID;
+    let mID;
+
+    if(node.materialID == "null"){
+      mID = this.stackMaterials[this.stackMaterials.length-1];
+    }
+    else{
+      mID = node.materialID;
+    }
+    if(node.textureID == "null"){
+      tID = this.stackTextures[this.stackTextures.length - 1];
+
+    }
+    else{
+      tID = node.textureID;
+    }
+
     this.scene.pushMatrix();
     this.scene.multMatrix(node.transformMatrix);
-    if (materialID == "null" && node.materialID != "null") {
-        materialID = node.materialID;
-    }
-    if (textureID == "null" && (node.textureID != "null" && node.textureID != "clear")) {
-        textureID = node.textureID;
-    }
-    if (!appliedMaterial && materialID != "null" && textureID != "null") {
-        this.materials[materialID].setTexture(this.textures[textureID][0]);
-        this.materials[materialID].apply();
-        appliedMaterial = true;
-    }
-    if (appliedMaterial && node.textureID == "clear") {
-        appliedMaterial = false;
-    }
+    this.stackMaterials.push(mID);
+    this.stackTextures.push(tID);
 
     for (let i = 0; i < node.children.length; i++) { //missing transformations
         let childName = node.children[i];
         let child = this.nodes[childName];
-        this.displayNode(child, materialID, textureID, appliedMaterial);
-
+        this.displayNode(child);
     }
+
+  //  if(tID != "clear")
+    //  this.materials[mID].setTexture(this.textures[tID][0]);
+    if(tID != "clear")
+    {
+      this.materials[mID].setTexture(this.textures[tID][0])
+      //let aux = this.textures[tID][0].bind();
+      //console.log(aux);
+    }
+
+    else if( tID == "clear"){
+    
+      this.materials[mID].setTexture(null);
+    }
+
+
+    this.materials[mID].apply();
+
     for (let i = 0; i < node.leaves.length; i++) {
         node.leaves[i].display();
     }
-    this.scene.popMatrix();
+
+    //if(tID != "clear")
+      //this.textures[tID][0].unbind();
+
+    this.stackMaterials.pop();
+    this.stackTextures.pop();
+    this.scene.popMatrix()
 }
 
 /**
@@ -1416,5 +1450,5 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
   let rootNode = this.nodes[this.idRoot];
-  this.displayNode(rootNode, "null", "null", false);
+  this.displayNode(rootNode);
 }
