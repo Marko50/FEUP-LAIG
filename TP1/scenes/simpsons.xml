@@ -21,39 +21,7 @@
 
 <!-- Lights -->
 <LIGHTS>
-	<LIGHT id="light0">
-        <enable value ="1" />
-        <position  x="0" y="10" z="0" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-    </LIGHT>
-
-	<LIGHT id="light1">
-        <enable value ="1" />
-        <position x="30" y="10" z="0" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-    </LIGHT>
-
-	<LIGHT id="light2">
-        <enable value ="1" />
-        <position x="0" y="10" z="20" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-    </LIGHT>
-
-    <LIGHT id="light3">
-        <enable value ="1" />
-        <position x="30" y="10" z="20" w="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-        <specular r="0.6" g="0.6" b="0.6" a="1.0" />
-    </LIGHT>
-
-    <LIGHT id="light4">
+    <LIGHT id="light0">
         <enable value ="1" />
         <position x="3" y="2.5" z="1" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
@@ -61,7 +29,7 @@
         <specular r="0.6" g="0.6" b="0.6" a="1.0" />
     </LIGHT>
 
-    <LIGHT id="light5">
+    <LIGHT id="light1">
         <enable value ="1" />
         <position x="13.9" y="5.4" z="1.55" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
@@ -69,50 +37,24 @@
         <specular r="0.6" g="0.6" b="0.6" a="1.0" />
     </LIGHT>
 
+    <LIGHT id="light2">
+        <enable value ="1" />
+        <position x="5.0" y="12.5" z="5.0" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+    </LIGHT>
+
+
+
 
 </LIGHTS>
 
 <!-- Textures -->
 <TEXTURES>
-  <!-- Rocks -->
-  <TEXTURE id="rocks">
-      <file path="images/rocks.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- Floor -->
-  <TEXTURE id="floor">
-      <file path="images/floor.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- BodyTV -->
-  <TEXTURE id="bodytv">
-      <file path="images/bodytv.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- LegsTV -->
-  <TEXTURE id="legstv">
-      <file path="images/legstv.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
   <!-- ScreenTV -->
   <TEXTURE id="screentv">
       <file path="images/screentv.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- Orange -->
-  <TEXTURE id="orange">
-      <file path="images/orange.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- Brown -->
-  <TEXTURE id="brown">
-      <file path="images/brown.jpg" />
       <amplif_factor s="1" t="1" />
   </TEXTURE>
 
@@ -120,23 +62,6 @@
   <TEXTURE id="paiting">
       <file path="images/paiting.jpg" />
       <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-  <!-- Sofa -->
-  <TEXTURE id="sofa">
-      <file path="images/sofa.jpg" />
-      <amplif_factor s="1" t="1" />
-  </TEXTURE>
-
-
-  <TEXTURE id="purple">
-       <file path="images/purple.jpg"/>
-       <amplif_factor s="1" t="1"/>
-     </TEXTURE>
-
-  <TEXTURE id="lightpink">
-       <file path="images/lightpink.jpg"/>
-       <amplif_factor s="1" t="1"/>
   </TEXTURE>
 
 </TEXTURES>
@@ -159,6 +84,14 @@
       <ambient r="0.4" g="0.4" b="0.4" a="1"/>
       <emission r="0.0" g="0.0" b="0.0" a="1"/>
   </MATERIAL>
+
+  <MATERIAL id="test">
+    <shininess value="100"/>
+    <specular r="1.0" g="1.0" b="1.0" a="1"/>
+    <diffuse r="1.0" g="0" b="0" a="1"/>
+    <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+    <emission r="0.0" g="0.0" b="0.0" a="1"/>
+</MATERIAL>
 
 </MATERIALS>
 
@@ -205,7 +138,7 @@
 
         <NODE id="wall2">
           <MATERIAL id="defaultMaterial"/>
-          <TEXTURE id="lightpink"/>
+          <TEXTURE id="clear"/>
           <TRANSLATION x="0" y="0" z="10"/>
           <SCALE sx = "3" sy= "2.5" sz="2"/>
           <ROTATION axis="y" angle ="90"/>
@@ -227,7 +160,7 @@
 
         <NODE id="cylinderbase">
       <MATERIAL id="metalic"/>
-      <TEXTURE id="purple"/>
+      <TEXTURE id="clear"/>
       <TRANSLATION x="13.8" y="0.2" z="0.5"/>
       <ROTATION axis="x" angle="90"/>
       <SCALE sx="0.2" sy="0.2" sz="0.2"/>
@@ -238,7 +171,7 @@
 
     <NODE id="cylinderstand">
     <MATERIAL id="metalic"/>
-    <TEXTURE id="purple"/>
+    <TEXTURE id="clear"/>
     <TRANSLATION x="13.8" y="5.2" z="0.5"/>
     <ROTATION axis="x" angle="90"/>
     <SCALE sx="0.05" sy="0.05" sz="5"/>
@@ -249,7 +182,7 @@
 
   <NODE id="cylinderbulb">
   <MATERIAL id="defaultMaterial"/>
-  <TEXTURE id="orange"/>
+  <TEXTURE id="clear"/>
   <TRANSLATION x="13.8" y="5.5" z="0.5"/>
   <ROTATION axis="x" angle="90"/>
   <SCALE sx="0.5" sy="0.5" sz="0.5"/>
@@ -262,7 +195,7 @@
   <!-- The floor -->
   <NODE id="chao">
       <MATERIAL id= "null" />
-      <TEXTURE id= "floor" />
+      <TEXTURE id= "clear" />
 
       <SCALE sx="1" sy="1" sz="1" />
       <TRANSLATION x="0" y="0" z="10" />
@@ -276,7 +209,7 @@
 <!-- The Table  -->
     <NODE id="mesa">
         <MATERIAL id="null" />
-        <TEXTURE id="purple" />
+        <TEXTURE id="clear" />
 
         <TRANSLATION x="2" y="0" z="0.1" />
 
@@ -505,7 +438,7 @@
 
 <NODE id="basecandeeiro">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="orange" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="2" z="0" />
  <ROTATION axis="x" angle="90" />
@@ -519,7 +452,7 @@
 
 <NODE id="troncocandeeiro">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="floor" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="3" z="0" />
  <ROTATION axis="x" angle="90" />
@@ -533,7 +466,7 @@
 
 <NODE id="cabecacandeeiro">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="purple" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="3.5" z="0" />
  <ROTATION axis="x" angle="90" />
@@ -566,7 +499,7 @@
 
 <NODE id="facepintura1">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="brown" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="5" z="0.5" />
  <ROTATION axis="x" angle="0" />
@@ -580,7 +513,7 @@
 
 <NODE id="facepintura2">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="brown" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="5" z="0" />
  <ROTATION axis="x" angle="90" />
@@ -594,7 +527,7 @@
 
 <NODE id="facepintura3">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="brown" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="3" y="5" z="0.5" />
  <ROTATION axis="y" angle="90" />
@@ -608,7 +541,7 @@
 
 <NODE id="facepintura4">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="brown" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="5" z="0" />
  <ROTATION axis="y" angle="-90" />
@@ -622,7 +555,7 @@
 
 <NODE id="facepintura5">
 <MATERIAL id="defaultMaterial" />
-<TEXTURE id="brown" />
+<TEXTURE id="clear" />
 
 <TRANSLATION x="0" y="7" z="0.5" />
 <ROTATION axis="x" angle="-90" />
@@ -668,7 +601,7 @@
 
 <NODE id="bodytv">
  <MATERIAL id="null" />
- <TEXTURE id="bodytv" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="0" y="0" z="0" />
 
@@ -786,7 +719,7 @@
 
 <NODE id="buttontv1">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="legstv" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="5.3" y="1" z="2.8" />
  <ROTATION axis="x" angle="0" />
@@ -800,7 +733,7 @@
 
 <NODE id="buttontv2">
  <MATERIAL id="defaultMaterial" />
- <TEXTURE id="legstv" />
+ <TEXTURE id="clear" />
 
  <TRANSLATION x="5.3" y="2" z="2.8" />
  <ROTATION axis="x" angle="0" />
@@ -814,7 +747,7 @@
 
 <NODE id="pernastv">
 <MATERIAL id="defaultMaterial" />
-<TEXTURE id="legstv" />
+<TEXTURE id="clear" />
 
 <SCALE sx="1" sy="1" sz="1" />
 <TRANSLATION x="0" y="0" z="0" />
@@ -889,12 +822,13 @@
 <!--  Sofa  -->
 <NODE id="sofa">
  <MATERIAL id="null" />
- <TEXTURE id="sofa" />
+ <TEXTURE id="clear" />
 
- <TRANSLATION x="6" y="0" z="0.1" />
+ <TRANSLATION x="6" y="0" z="0.5" />
 
  <DESCENDANTS>
      <NODEREF id="bodysofa" />
+     <NODEREF id="bodysofa2"/>
      <NODEREF id="pillow1" />
      <NODEREF id="pillow2" />
      <NODEREF id="pillow3" />
@@ -902,6 +836,67 @@
  </DESCENDANTS>
 
 </NODE>
+
+<NODE id="bodysofa2">
+ <MATERIAL id="test" />
+ <TEXTURE id="null" />
+
+ <DESCENDANTS>
+     <NODEREF id="facebodysofa1" />
+     <NODEREF id="facebodysofa2" />
+     <NODEREF id="facebodysofa3" />
+     <NODEREF id="toppart" />
+ </DESCENDANTS>
+</NODE>
+
+<NODE id="facebodysofa1">
+ <MATERIAL id="null" />
+ <TEXTURE id="null" />
+ <TRANSLATION x="7.0" y="0" z="0"/>
+ <ROTATION axis="z" angle="90"/>
+ <SCALE sx="3" sy="7.0" sz="1"/>
+ <DESCENDANTS>
+     <LEAF type="rectangle" args="0 1 1 0"/>
+ </DESCENDANTS>
+</NODE>
+
+
+<NODE id="facebodysofa2">
+ <MATERIAL id="null" />
+ <TEXTURE id="null" />
+ <TRANSLATION x="7.0" y="0" z="0"/>
+ <SCALE sx="0.1" sy="2.0" sz="0.1"/>
+ <ROTATION axis="y" angle="90"/>
+ <DESCENDANTS>
+     <LEAF type="rectangle" args="0 1.5 5 0"/>
+ </DESCENDANTS>
+</NODE>
+
+<NODE id="facebodysofa3">
+ <MATERIAL id="null" />
+ <TEXTURE id="null" />
+ <TRANSLATION x="0.0" y="0" z="-0.5"/>
+ <SCALE sx="0.1" sy="2.0" sz="0.1"/>
+ <ROTATION axis="y" angle="-90"/>
+ <DESCENDANTS>
+     <LEAF type="rectangle" args="0 1.5 5 0"/>
+ </DESCENDANTS>
+</NODE>
+
+
+
+
+<NODE id="toppart">
+ <MATERIAL id="null" />
+ <TEXTURE id="null" />
+ <TRANSLATION x="4" y="3" z="0"/>
+ <SCALE sx="0.4" sy="0.4" sz="0.4"/>
+ <ROTATION axis="y" angle="-90"/>
+ <DESCENDANTS>
+     <LEAF  type="cylinder" args="8 1 1 1 20 1 1" />
+ </DESCENDANTS>
+</NODE>
+
 
 
 
@@ -922,10 +917,8 @@
      <NODEREF id="facesofa8" />
      <NODEREF id="facesofa9" />
      <NODEREF id="facesofa10" />
-     <NODEREF id="facesofa11" />
-     <NODEREF id="trianglesofa1" />
-     <NODEREF id="trianglesofa2" />
-     <NODEREF id="facesofa12" />
+     <NODEREF id="armrest1" />
+     <NODEREF id="armrest2" />
  </DESCENDANTS>
 
 </NODE>
@@ -1072,61 +1065,33 @@
 
 </NODE>
 
-<NODE id="facesofa11">
+<NODE id="armrest1">
  <MATERIAL id="defaultMaterial" />
  <TEXTURE id="null" />
 
- <TRANSLATION x="1" y="1.5" z="0" />
- <ROTATION axis="x" angle="0" />
- <SCALE sx="1" sy="1" sz="1" />
+ <TRANSLATION x="6.5" y="3" z="0" />
+ <SCALE sx="0.5" sy="0.5" sz="0.5" />
 
  <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 1.5 5 0" />
+   <LEAF  type="cylinder" args="4 1 1 1 20 1 1"/>
  </DESCENDANTS>
 
 </NODE>
 
-<NODE id="trianglesofa1">
+<NODE id="armrest2">
  <MATERIAL id="defaultMaterial" />
  <TEXTURE id="null" />
 
- <TRANSLATION x="6" y="3" z="0" />
- <ROTATION axis="x" angle="0" />
- <SCALE sx="1" sy="1" sz="1" />
+ <TRANSLATION x="0.5" y="3" z="0" />
+  <SCALE sx="0.5" sy="0.5" sz="0.5" />
 
  <DESCENDANTS>
-   <LEAF  type="triangle" args="0 0 0 0 1 0 1 0 0" />
+   <LEAF  type="cylinder" args="4 1 1 1 20 1 1"/>
  </DESCENDANTS>
 
 </NODE>
 
-<NODE id="trianglesofa2">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
 
- <TRANSLATION x="0" y="3" z="0" />
- <ROTATION axis="x" angle="0" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="triangle" args="0 0 0 1 1 0 1 0 0" />
- </DESCENDANTS>
-
-</NODE>
-
-<NODE id="facesofa12">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="1" y="3" z="0" />
- <ROTATION axis="x" angle="0" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 1 5 0" />
- </DESCENDANTS>
-
-</NODE>
 
 
 
