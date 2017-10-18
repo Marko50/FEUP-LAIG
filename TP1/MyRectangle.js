@@ -31,7 +31,7 @@
  	    3, 2, 1
  	  ];
 
-    this.texCoords = [
+    this.FirstTexCoords = [
      1,1,
      1,0,
      0,1,
@@ -44,7 +44,16 @@
      0,0,1,
      0,0,1
     ];
-
+  this.texCoords = this.FirstTexCoords;
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
 };
+
+MyRectangle.prototype.updateTexCoords = function(s,t){
+    for (var i = 0; i < this.texCoords.length; i += 2) {
+      this.texCoords[i] = this.FirstTexCoords[i] / s;
+      this.texCoords[i + 1] = this.FirstTexCoords[i+1] / t;
+    }
+
+    this.updateTexCoordsGLBuffers();
+}

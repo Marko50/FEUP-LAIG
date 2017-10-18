@@ -64,6 +64,12 @@
       <amplif_factor s="1" t="1" />
   </TEXTURE>
 
+  <!-- leather -->
+  <TEXTURE id="leather">
+      <file path="images/leather.jpg" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+
 </TEXTURES>
 
 
@@ -85,7 +91,7 @@
       <emission r="0.0" g="0.0" b="0.0" a="1"/>
   </MATERIAL>
 
-  <MATERIAL id="test">
+  <MATERIAL id="leatherSofa">
     <shininess value="100"/>
     <specular r="1.0" g="1.0" b="1.0" a="1"/>
     <diffuse r="1.0" g="0" b="0" a="1"/>
@@ -122,19 +128,29 @@
           <NODEREF id="wall1" />
           <NODEREF id="wall2" />
           <NODEREF id="candeeiromaior" />
+          <NODEREF id="trianguloTest"/>
       </DESCENDANTS>
 
   </NODE>
 
+  <NODE id="trianguloTest">
+    <MATERIAL id="defaultMaterial"/>
+    <TEXTURE id= "paiting"/>
+
+    <DESCENDANTS>
+      <LEAF type="triangle" args ="5 5 5 10 10 10 5 10 10"/>
+    </DESCENDANTS>
+  </NODE>
+
   <NODE id="wall1">
-        <MATERIAL id="defaultMaterial"/>
-        <TEXTURE id="clear"/>
-        <TRANSLATION x="0" y="0" z="0"/>
-        <SCALE sx = "3" sy= "2.5" sz="2"/>
-        <DESCENDANTS>
-          <LEAF type="rectangle" args ="0 5 5 0"/>
-        </DESCENDANTS>
-        </NODE>
+    <MATERIAL id="defaultMaterial"/>
+    <TEXTURE id="clear"/>
+    <TRANSLATION x="0" y="0" z="0"/>
+    <SCALE sx = "3" sy= "2.5" sz="2"/>
+    <DESCENDANTS>
+      <LEAF type="rectangle" args ="0 5 5 0"/>
+    </DESCENDANTS>
+  </NODE>
 
         <NODE id="wall2">
           <MATERIAL id="defaultMaterial"/>
@@ -822,7 +838,7 @@
 <!--  Sofa  -->
 <NODE id="sofa">
  <MATERIAL id="null" />
- <TEXTURE id="clear" />
+ <TEXTURE id= "leather" />
 
  <TRANSLATION x="6" y="0" z="0.5" />
 
@@ -838,13 +854,11 @@
 </NODE>
 
 <NODE id="bodysofa2">
- <MATERIAL id="test" />
+ <MATERIAL id="null" />
  <TEXTURE id="null" />
 
  <DESCENDANTS>
      <NODEREF id="facebodysofa1" />
-     <NODEREF id="facebodysofa2" />
-     <NODEREF id="facebodysofa3" />
      <NODEREF id="toppart" />
  </DESCENDANTS>
 </NODE>
@@ -852,48 +866,22 @@
 <NODE id="facebodysofa1">
  <MATERIAL id="null" />
  <TEXTURE id="null" />
- <TRANSLATION x="7.0" y="0" z="0"/>
+ <TRANSLATION x="7.0" y="0" z="0.1"/>
  <ROTATION axis="z" angle="90"/>
- <SCALE sx="3" sy="7.0" sz="1"/>
+ <SCALE sx="3" sy="7.0" sz="1.0"/>
  <DESCENDANTS>
      <LEAF type="rectangle" args="0 1 1 0"/>
  </DESCENDANTS>
 </NODE>
 
-
-<NODE id="facebodysofa2">
- <MATERIAL id="null" />
- <TEXTURE id="null" />
- <TRANSLATION x="7.0" y="0" z="0"/>
- <SCALE sx="0.1" sy="2.0" sz="0.1"/>
- <ROTATION axis="y" angle="90"/>
- <DESCENDANTS>
-     <LEAF type="rectangle" args="0 1.5 5 0"/>
- </DESCENDANTS>
-</NODE>
-
-<NODE id="facebodysofa3">
- <MATERIAL id="null" />
- <TEXTURE id="null" />
- <TRANSLATION x="0.0" y="0" z="-0.5"/>
- <SCALE sx="0.1" sy="2.0" sz="0.1"/>
- <ROTATION axis="y" angle="-90"/>
- <DESCENDANTS>
-     <LEAF type="rectangle" args="0 1.5 5 0"/>
- </DESCENDANTS>
-</NODE>
-
-
-
-
 <NODE id="toppart">
  <MATERIAL id="null" />
  <TEXTURE id="null" />
- <TRANSLATION x="4" y="3" z="0"/>
- <SCALE sx="0.4" sy="0.4" sz="0.4"/>
- <ROTATION axis="y" angle="-90"/>
+ <TRANSLATION x="3.5" y="3.2" z="0"/>
+ <SCALE sx="3.4" sy="1.0" sz="0.1"/>
+ <ROTATION axis="y" angle="0"/>
  <DESCENDANTS>
-     <LEAF  type="cylinder" args="8 1 1 1 20 1 1" />
+     <LEAF  type="cylinder" args="1 1 1 1 20 1 1" />
  </DESCENDANTS>
 </NODE>
 
@@ -1156,85 +1144,14 @@
  <MATERIAL id="null" />
  <TEXTURE id="null" />
 
- <TRANSLATION x="0" y="0" z="0" />
+ <TRANSLATION x="0.5" y="4.2" z="-1.75" />
 
  <DESCENDANTS>
-   <NODEREF id="facepillow1" />
-   <NODEREF id="facepillow2" />
-   <NODEREF id="facepillow3" />
-   <NODEREF id="facepillow4" />
-   <NODEREF id="facepillow5" />
+   <LEAF  type="cylinder" args="2 1 1 1 20 1 1"/>
  </DESCENDANTS>
 
 </NODE>
 
-<NODE id="facepillow1">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="0" y="5" z="0" />
- <ROTATION axis="x" angle="-90" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 1.5 1 0" />
- </DESCENDANTS>
-
-</NODE>
-
-<NODE id="facepillow2">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="1" y="4.5" z="0" />
- <ROTATION axis="y" angle="90" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 0.5 1.5 0" />
- </DESCENDANTS>
-
-</NODE>
-
-<NODE id="facepillow3">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="0" y="4.5" z="0" />
- <ROTATION axis="x" angle="0" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 0.5 1 0" />
- </DESCENDANTS>
-
-</NODE>
-
-<NODE id="facepillow4">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="0" y="5" z="-1.5" />
- <ROTATION axis="x" angle="180" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 0.5 1 0" />
- </DESCENDANTS>
-
-</NODE>
-
-<NODE id="facepillow5">
- <MATERIAL id="defaultMaterial" />
- <TEXTURE id="null" />
-
- <TRANSLATION x="0" y="4.5" z="-1.5" />
- <ROTATION axis="y" angle="-90" />
- <SCALE sx="1" sy="1" sz="1" />
-
- <DESCENDANTS>
-   <LEAF  type="rectangle" args="0 0.5 1.5 0" />
- </DESCENDANTS>
 
 
 </NODES>
