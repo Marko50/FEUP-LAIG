@@ -65,6 +65,6 @@ MyCylinder.prototype.display = function() {
     this.scene.popMatrix();
   }
 }
-MySphere.prototype.updateTexCoords = function(s,t){
+MyCylinder.prototype.updateTexCoords = function(s,t){
 
 }

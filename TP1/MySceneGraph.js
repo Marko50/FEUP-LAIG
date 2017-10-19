@@ -1403,17 +1403,17 @@ MySceneGraph.prototype.displayNode = function(node) {
         this.displayNode(child);
     }
 
-  //  if(tID != "clear")
-    //  this.materials[mID].setTexture(this.textures[tID][0]);
+    let s = 1;
+    let t = 1;
+
     if(tID != "clear")
     {
       this.materials[mID].setTexture(this.textures[tID][0])
-      //let aux = this.textures[tID][0].bind();
-      //console.log(aux);
+      s = this.textures[tID][1];
+      t = this.textures[tID][2];
     }
 
     else if( tID == "clear"){
-
       this.materials[mID].setTexture(null);
     }
 
@@ -1421,6 +1421,7 @@ MySceneGraph.prototype.displayNode = function(node) {
     this.materials[mID].apply();
 
     for (let i = 0; i < node.leaves.length; i++) {
+        node.leaves[i].updateTexCoords(s, t);
         node.leaves[i].display();
     }
 

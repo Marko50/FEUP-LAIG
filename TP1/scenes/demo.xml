@@ -72,7 +72,7 @@
     <!-- Rocks -->
     <TEXTURE id="rocks">
         <file path="images/rocks.jpg" />
-        <amplif_factor s="1" t="1" />
+        <amplif_factor s="0.5" t="0.5" />
     </TEXTURE>
 
     <!-- Glass work -->
