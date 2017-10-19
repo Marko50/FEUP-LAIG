@@ -36,25 +36,38 @@ MyTriangle.prototype.initBuffers = function (coords) {
             2, 1, 0
         ];
 
-	this.normals = [
+
+	/*this.normals = [
 			x3,y3,z3,
 		  x2,y2,z2,
       x1,y1,z1
-		];
+		];*/
+
+	this.calcNormals(x1,y1,z1,x2,y2,z2,x3,y3,z3);
 
 	this.generateTexCoords(x1,y1,z1,x2,y2,z2,x3,y3,z3);
 
 	this.texCoords = this.FirstTexCoords.slice();
-	/*this.texCoords = [
-		0,1,
-		0.5,0,
-		1,1
-	];*/
-	console.log(this.FirstTexCoords);
+
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 
 };
+
+MyTriangle.prototype.calcNormals = function(x1,y1,z1,x2,y2,z2,x3,y3,z3){
+	let v1 = vec3.fromValues(x2-x1 , y2-y1, z2-z1);
+	let v2 = vec3.fromValues(x3 - x1, y3 - y1, z3 - z1);
+	let normal = vec3.create();
+	vec3.cross(normal, v1,v2);
+
+	this.normals = [
+			normal[0],normal[1],normal[2],
+		  normal[0],normal[1],normal[2],
+      normal[0],normal[1],normal[2]
+		];
+	console.log(this.normals);
+}
+
 
 MyTriangle.prototype.generateTexCoords = function(x1,y1,z1,x2,y2,z2,x3,y3,z3){
 	let c = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2));
@@ -75,18 +88,6 @@ MyTriangle.prototype.generateTexCoords = function(x1,y1,z1,x2,y2,z2,x3,y3,z3){
 	a = a/max;
 	h = h/max;
 
-
-	console.log("a: " + a);
-	console.log("b: " + b);
-	console.log("c: " + c);
-
-	console.log("h: " + h);
-
-	console.log("cosB: " + cosB);
-	console.log("sinB: " + sinB);
-
-	//this.FirstTexCoords = [0,1,c,1,c-a*cosB, 1- a*sinB];
-	//this.FirstTexCoords = [0.5,0,1,1,0,1];
 	this.FirstTexCoords = [c-a*cosB,1-h,c,1,0,1];
 }
 

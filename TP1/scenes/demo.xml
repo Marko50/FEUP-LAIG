@@ -78,7 +78,7 @@
     <!-- Glass work -->
     <TEXTURE id="vidral">
         <file path="images/vidral.jpg" />
-        <amplif_factor s="15" t="10" />
+        <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Street bench -->
