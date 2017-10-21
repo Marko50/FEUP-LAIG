@@ -1301,12 +1301,50 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
             //var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
             var coords = this.reader.getString(descendants[j], 'args');
             if (type != null) {
+                if (type == 'patch'){
+
+             var degreeU=0;
+             var degreeV=-1;
+             var arr = [];
+             arr = coords.split(" ");
+             var uDivs = parseFloat(arr[0]);
+             var vDivs = parseFloat(arr[1]);
+             let aux = descendants[j].children;
+             this.log("tamanho " +  descendants[j].children.length);
+             degreeU= aux.length-1;
+             this.log("Length1: "  + aux.length);
+             this.log("Length2: "  + aux[1].children.length);
+             this.log("Leaf: " + type);
+             this.log("uDivs " + uDivs);
+             this.log("vDivs " + vDivs);
+             this.log("ID " + nodeID);
+             degreeV= aux[0].children.length-1;
+             var controlp = [];
+             for(var i=0; i<aux.length;i++){
+               var line =[];
+               for(var j=0; j<aux[i].children.length;j++){
+                 var points =[];
+                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'xx')));
+                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'yy')));
+                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'zz')));
+                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'ww')));
+                 line.push(points);
+               }
+               controlp.push(line);
+             }
+             this.log("Leaf: " + type);
+             this.log("degreeU " + degreeU);
+             this.log("degreeV " + degreeV);
+             console.log(controlp);
+             this.nodes[nodeID].addPatch(uDivs,vDivs,degreeU,degreeV,controlp);
+           }
+              else{
               this.nodes[nodeID].addLeaf(type, coords);
-              this.log("Leaf: " + type);
+              this.log("Leaf: " + type);}
             }
 						else
 							this.warn("Error in leaf");
@@ -1377,6 +1415,8 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
     let tID;
     let mID;
+    //console.log(node);
+
 
     if(node.materialID == "null"){
       mID = this.stackMaterials[this.stackMaterials.length-1];
@@ -1402,6 +1442,7 @@ MySceneGraph.prototype.displayNode = function(node) {
         let child = this.nodes[childName];
         this.displayNode(child);
     }
+
 
     let s = 1;
     let t = 1;
@@ -1452,4 +1493,5 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
   let rootNode = this.nodes[this.idRoot];
   this.displayNode(rootNode);
+  //console.log(this.nodes["nurbsT"]);
 }

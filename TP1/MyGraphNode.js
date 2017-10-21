@@ -51,7 +51,11 @@ MyGraphNode.prototype.addLeaf = function(leaf,coords) {
   {
     this.leaves.push(new MySphere(this.scene, coords));
   }
+}
 
+MyGraphNode.prototype.addPatch = function(uDivs,vDivs,degreeU,degreeV,controlp){
+
+  this.leaves.push(new MyPatch(this.scene,uDivs,vDivs,degreeU,degreeV,controlp));
 }
 
 
