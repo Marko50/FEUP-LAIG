@@ -39,18 +39,31 @@
    ];
 
 
-    this.normals = [
-     0,0,1,
-     0,0,1,
-     0,0,1,
-     0,0,1
-    ];
+  this.calcNormals(x1,y1,x2,y2);
 
   this.texCoords = this.FirstTexCoords.slice();
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
 };
+
+MyRectangle.prototype.calcNormals = function(x1,y1,x2,y2){
+  let x3 = x2;
+  let y3 = y1;
+
+  let v1 = vec2.fromValues(x3 - x1, y3 - y1);
+  let v2 = vec2.fromValues(x2 - x3, y2 - y3);
+
+  let normal = vec2.create();
+  vec2.cross(normal, v1,v2);
+
+  this.normals = [
+    normal[0], normal[1], 1,
+    normal[0], normal[1], 1,
+    normal[0], normal[1], 1,
+    normal[0], normal[1], 1
+  ];
+}
 
 MyRectangle.prototype.updateTexCoords = function(s,t){
 

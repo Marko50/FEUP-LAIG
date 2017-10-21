@@ -60,7 +60,6 @@ MyPatch.prototype.getKnotsVector = function(degree) {
 }
 
 MyPatch.prototype.display = function () {
-  console.log("lel");
   this.scene.pushMatrix();
 	this.nurbsObject.display();
   this.scene.popMatrix();
