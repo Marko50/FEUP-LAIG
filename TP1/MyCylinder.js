@@ -1,5 +1,7 @@
 /**
- * CylinderwithTops
+ * Represents a cylinder
+ * @param {XMLscene} scene CGFscene where the Cylinder will be displayed
+ * @param {String} coords - coordinates parsed from the XML file
  * @constructor
  */
 function MyCylinder(scene, coords) {
@@ -38,12 +40,12 @@ MyCylinder.prototype = Object.create(CGFobject.prototype);
 MyCylinder.prototype.constructor = MyCylinder;
 
 /**
- * Adds the base and the top of the cylinder. Updates cylinder's height
+ * Displays the cylinder
+ * @function
+ * @memberof MyCylinder
+ * @name display
  */
-
 MyCylinder.prototype.display = function() {
-
-
   this.scene.pushMatrix();
   this.scene.scale(1, 1, this.height);
   this.cyl.display();
@@ -65,6 +67,20 @@ MyCylinder.prototype.display = function() {
     this.scene.popMatrix();
   }
 }
-MyCylinder.prototype.updateTexCoords = function(s,t){
 
+/**
+ * Updates top and bottom tex coords.
+ * @function
+ * @name updateTexCoords
+ * @memberof MyCylinder
+ * @param {number} s - the amplification factor on S axis
+ * @param {number} t - the amplification factor on t axis
+ */
+MyCylinder.prototype.updateTexCoords = function(s,t){
+  if(this.booltop==1){
+    this.top.updateTexCoords(s,t);
+  }
+  if(this.boolbot==1){
+    this.bot.updateTexCoords(s,t);
+  }
 }

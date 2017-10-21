@@ -1,8 +1,9 @@
 /**
- * MyGraphNode class, representing an intermediate node in the scene graph.
+ * MyGraphNode
+ * @param {MySceneGraph} graph - graph passed to the node constructor.
+ * @param {String} nodeID - the identifier of the node
  * @constructor
 **/
-
 function MyGraphNode(graph, nodeID) {
     this.graph = graph;
     this.scene = graph.scene;
@@ -28,6 +29,10 @@ function MyGraphNode(graph, nodeID) {
 
 /**
  * Adds the reference (ID) of another node to this node's children array.
+ * @function
+ * @memberof MyGraphNode
+ * @name addChild
+ * @param {String} nodeID - identifier of the child node to be added
  */
 MyGraphNode.prototype.addChild = function(nodeID) {
     this.children.push(nodeID);
@@ -35,9 +40,13 @@ MyGraphNode.prototype.addChild = function(nodeID) {
 
 /**
  * Adds a leaf to this node's leaves array.
+ * @function
+ * @memberof MyGraphNode
+ * @name addLeaf
+ * @param {String} leaf - the type of the leaf
+ * @param {String} coords - coordinates from the primitive parsed from the XML file
  */
 MyGraphNode.prototype.addLeaf = function(leaf,coords) {
-  //  this.leaves.push(leaf);
   if(leaf == "rectangle"){
     this.leaves.push(new MyRectangle(this.scene,coords));
   }
@@ -53,25 +62,18 @@ MyGraphNode.prototype.addLeaf = function(leaf,coords) {
   }
 }
 
+
+/**
+ * Adds a patch leaf to this node's leaves array.
+ * @function
+ * @memberof MyGraphNode
+ * @name addPatch
+ * @param {number} uDivs - uDivs
+ * @param {number} vDivs - vDivs
+ * @param {number} degreeU - degree on the U axis
+ * @param {number} degreeV - degree on the V axis
+ * @param {Array} controlp - control points of the patch
+ */
 MyGraphNode.prototype.addPatch = function(uDivs,vDivs,degreeU,degreeV,controlp){
-
   this.leaves.push(new MyPatch(this.scene,uDivs,vDivs,degreeU,degreeV,controlp));
-}
-
-
-MyGraphNode.prototype.display = function(){
-  for(var i = 0; i < this.leaves.length; i++){
-    console.log("rip");
-    this.graph.materials[this.materialID].apply();
-    if (this.textureID != "null" && this.textureID != "clear") {
-      this.graph.textures[this.textureID][0].bind();
-    }
-    this.scene.pushMatrix();
-    this.scene.multMatrix(this.transformMatrix);
-    this.leaves[i].display();
-    this.scene.popMatrix();
-    if (this.textureID != "null" && this.textureID != "clear") {
-      this.graph.textures[this.textureID][0].unbind();
-    }
-  }
 }

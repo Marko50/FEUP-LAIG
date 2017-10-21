@@ -1,6 +1,8 @@
 /**
  * MyRectangle
  * @constructor
+ * @param {XMLscene} scene - CGFscene where the rectangle will be displayed
+ * @param {String} coords - coordinates parsed from the XML file
  */
  function MyRectangle(scene, coords) {
  	CGFobject.call(this,scene);
@@ -11,6 +13,13 @@
  MyRectangle.prototype = Object.create(CGFobject.prototype);
  MyRectangle.prototype.constructor = MyRectangle;
 
+/**
+  * Create all the vertexes needed for the rectangle. Initiates GL Buffers
+  * @function
+  * @memberof MyRectangle
+  * @name initBuffers
+  * @param {String} coords - coordinates parsed from the XML file
+*/
  MyRectangle.prototype.initBuffers = function(coords) {
   var arr = [];
   arr = coords.split(" ");
@@ -47,6 +56,16 @@
  	this.initGLBuffers();
 };
 
+/**
+  * Calculation of the rectangle normals. Will always return 0,0,1 because the rectangle is drawn on xy plane
+  * @function
+  * @memberof MyRectangle
+  * @name calcNormals
+  * @param {number} x1 - x coordinate of the top left point
+  * @param {number} y1 - y coordinate of the top left point
+  * @param {number} x2 - x coordinate of the bottom right point
+  * @param {number} y2 - y coordinate of the bottom right point
+*/
 MyRectangle.prototype.calcNormals = function(x1,y1,x2,y2){
   let x3 = x2;
   let y3 = y1;
@@ -65,6 +84,15 @@ MyRectangle.prototype.calcNormals = function(x1,y1,x2,y2){
   ];
 }
 
+
+/**
+ * Updates primitive tex coords.
+ * @function
+ * @name updateTexCoords
+ * @memberof MyRectangle
+ * @param {number} s - the amplification factor on S axis
+ * @param {number} t - the amplification factor on t axis
+ */
 MyRectangle.prototype.updateTexCoords = function(s,t){
 
     for (var i = 0; i < this.texCoords.length; i += 2) {

@@ -3,7 +3,7 @@
  * @constructor
  */
 function MyInterface() {
-    //call CGFinterface constructor 
+    //call CGFinterface constructor
     CGFinterface.call(this);
 }
 ;
@@ -13,6 +13,9 @@ MyInterface.prototype.constructor = MyInterface;
 
 /**
  * Initializes the interface.
+ * @function
+ * @name init
+ * @memberof MyInterface
  * @param {CGFapplication} application
  */
 MyInterface.prototype.init = function(application) {
@@ -21,16 +24,19 @@ MyInterface.prototype.init = function(application) {
 
     // init GUI. For more information on the methods, check:
     //  http://workshop.chromeexperiments.com/examples/gui
-    
+
     this.gui = new dat.GUI();
 
     // add a group of controls (and open/expand by defult)
-    
+
     return true;
 };
 
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
+ * @function
+ * @name addLightsGroup
+ * @memberof MyInterface
  */
 MyInterface.prototype.addLightsGroup = function(lights) {
 
@@ -47,4 +53,3 @@ MyInterface.prototype.addLightsGroup = function(lights) {
         }
     }
 }
-

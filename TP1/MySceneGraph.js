@@ -11,6 +11,8 @@ var NODES_INDEX = 6;
 
 /**
  * MySceneGraph class, representing the scene graph.
+ * @param {String} filename - name of the XML file
+ * @param {XMLscene} scene - Scene where the objects will be drawn
  * @constructor
  */
 function MySceneGraph(filename, scene) {
@@ -24,11 +26,6 @@ function MySceneGraph(filename, scene) {
 
   this.stackTextures = new Array();
   this.stackMaterials = new Array();
-
-
-
-
-
   this.idRoot = null; // The id of the root element.
 
   this.axisCoords = [];
@@ -48,8 +45,11 @@ function MySceneGraph(filename, scene) {
   this.reader.open('scenes/' + filename, this);
 }
 
-/*
+/**
  * Callback to be executed after successful reading
+ * @function
+ * @memberof MySceneGraph
+ * @name onXMLReady
  */
 MySceneGraph.prototype.onXMLReady = function() {
   console.log("XML Loading finished.");
@@ -71,6 +71,10 @@ MySceneGraph.prototype.onXMLReady = function() {
 
 /**
  * Parses the LSX file, processing each block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} rootElement - First tag of the XML
+ * @name parseLSXFile
  */
 MySceneGraph.prototype.parseLSXFile = function(rootElement) {
   if (rootElement.nodeName != "SCENE")
@@ -78,15 +82,12 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 
   var nodes = rootElement.children;
 
-
-
   // Reads the names of the nodes to an auxiliary buffer.
   var nodeNames = [];
 
   for (var i = 0; i < nodes.length; i++) {
     nodeNames.push(nodes[i].nodeName);
   }
-
 
   var error;
 
@@ -163,6 +164,10 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 
 /**
  * Parses the <INITIALS> block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} initialsNode - First Tag of the initials Block
+ * @name parseInitials
  */
 MySceneGraph.prototype.parseInitials = function(initialsNode) {
 
@@ -403,6 +408,10 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 
 /**
  * Parses the <ILLUMINATION> block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} illuminationNode - First Tag of the ILLUMINATION Block
+ * @name parseIllumination
  */
 MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
@@ -528,6 +537,10 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
 /**
  * Parses the <LIGHTS> node.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} lightsNode - First Tag of the Lights Block
+ * @name parseLights
  */
 MySceneGraph.prototype.parseLights = function(lightsNode) {
 
@@ -810,6 +823,10 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
 /**
  * Parses the <TEXTURES> block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} texturesNode - First Tag of the TEXTURES Block
+ * @name parseTextures
  */
 MySceneGraph.prototype.parseTextures = function(texturesNode) {
 
@@ -887,6 +904,10 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 
 /**
  * Parses the <MATERIALS> node.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} materialsNode - First Tag of the MATERIALS Block
+ * @name parseMaterials
  */
 MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
@@ -1120,6 +1141,10 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
 /**
  * Parses the <NODES> block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} nodesNode - First Tag of the NODES Block
+ * @name parseNodes
  */
 MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
@@ -1373,8 +1398,12 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 }
 
 
-/*
+/**
  * Callback to be executed on any read error
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} message - error message
+ * @name onXMLError
  */
 MySceneGraph.prototype.onXMLError = function(message) {
   console.error("XML Loading Error: " + message);
@@ -1383,11 +1412,21 @@ MySceneGraph.prototype.onXMLError = function(message) {
 
 /**
  * Callback to be executed on any minor error, showing a warning on the console.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} message - warning message
+ * @name onXMLMinorError
  */
 MySceneGraph.prototype.onXMLMinorError = function(message) {
   console.warn("Warning: " + message);
 }
-
+/**
+  LOG to be executed upon a step.
+  * @function
+  * @memberof MySceneGraph
+  * @param {String} message - message to show
+  * @name log
+*/
 MySceneGraph.prototype.log = function(message) {
   console.log("   " + message);
 }
@@ -1395,6 +1434,9 @@ MySceneGraph.prototype.log = function(message) {
 /**
  * Generates a default material, with a random name. This material will be passed onto the root node, which
  * may override it.
+ * @function
+ * @memberof MySceneGraph
+ * @name generateDefaultMaterial
  */
 MySceneGraph.prototype.generateDefaultMaterial = function() {
   var materialDefault = new CGFappearance(this.scene);
@@ -1412,12 +1454,18 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
   this.materials[this.defaultMaterialID] = materialDefault;
 }
 
+/**
+ * Recursive fucntion that visits the graph and displays its leaves
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} node - graph node
+ * @name displayNode
+*/
+
 MySceneGraph.prototype.displayNode = function(node) {
     let tID;
     let mID;
     //console.log(node);
-
-
     if(node.materialID == "null"){
       mID = this.stackMaterials[this.stackMaterials.length-1];
     }
@@ -1434,6 +1482,7 @@ MySceneGraph.prototype.displayNode = function(node) {
 
     this.scene.pushMatrix();
     this.scene.multMatrix(node.transformMatrix);
+
     this.stackMaterials.push(mID);
     this.stackTextures.push(tID);
 
@@ -1466,9 +1515,6 @@ MySceneGraph.prototype.displayNode = function(node) {
         node.leaves[i].display();
     }
 
-    //if(tID != "clear")
-      //this.textures[tID][0].unbind();
-
     this.stackMaterials.pop();
     this.stackTextures.pop();
     this.scene.popMatrix()
@@ -1476,6 +1522,10 @@ MySceneGraph.prototype.displayNode = function(node) {
 
 /**
  * Generates a random string of the specified length.
+ * @function
+ * @memberof MySceneGraph
+ * @param {number} length - length of the random string
+ * @name generateRandomString
  */
 MySceneGraph.generateRandomString = function(length) {
   // Generates an array of random integer ASCII codes of the specified length
@@ -1489,9 +1539,11 @@ MySceneGraph.generateRandomString = function(length) {
 
 /**
  * Displays the scene, processing each node, starting in the root node.
+ * @function
+ * @memberof MySceneGraph
+ * @name displayScene
  */
 MySceneGraph.prototype.displayScene = function() {
   let rootNode = this.nodes[this.idRoot];
   this.displayNode(rootNode);
-  //console.log(this.nodes["nurbsT"]);
 }

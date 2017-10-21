@@ -25,18 +25,7 @@
  MyPatch.prototype.constructor = MyPatch;
 
  MyPatch.prototype.initBuffers =function(){
-   console.log("im here");
-   console.log("degreeU: " + this.degreeU);
-   console.log("degreeV: " + this.degreeV);
-   console.log("knots1: " + this.knots1);
-   console.log("knots2: " + this.knots2);
-   console.log(this.controlPoints);
-   var a = this.controlPoints[0][0];
-   console.log("a " + a);
-   console.log("type :" + typeof a);
-
    var nurbsSurface = new CGFnurbsSurface(this.degreeU, this.degreeV, this.knots1, this.knots2, this.controlPoints);
-
    getSurfacePoint = function(u, v){
    		return nurbsSurface.getPoint(u, v);
    	};
