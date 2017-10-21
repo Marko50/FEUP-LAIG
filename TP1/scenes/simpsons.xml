@@ -129,9 +129,33 @@
           <NODEREF id="wall2" />
           <NODEREF id="candeeiromaior" />
           <NODEREF id="trianguloTest"/>
+          <NODEREF id="nurbsT" />
       </DESCENDANTS>
 
   </NODE>
+
+  <NODE id="nurbsT">
+    <MATERIAL id= "defaultMaterial"/>
+    <TEXTURE  id= "null"/>
+
+    <TRANSLATION x="2" y="2" z="2"/>
+    <SCALE sx = "5" sy= "5" sz="5"/>
+
+    <DESCENDANTS>
+      <LEAF type="patch" args="20 20" >
+        <CPLINE>
+          <CPOINT xx="-2" yy="-2" zz="0" ww="1" />
+          <CPOINT xx="-2" yy="2" zz="0" ww="1" />
+        </CPLINE>
+
+        <CPLINE>
+          <CPOINT xx="2" yy="-2" zz="0" ww="1" />
+          <CPOINT xx="2" yy="2" zz="0" ww="1" />
+        </CPLINE>
+      </LEAF>
+    </DESCENDANTS>
+  </NODE>
+
 
   <NODE id="trianguloTest">
     <MATERIAL id="defaultMaterial"/>
