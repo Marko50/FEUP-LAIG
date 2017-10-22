@@ -178,9 +178,6 @@
       <emission r="0.0" g="0.0" b="0.0" a="1"/>
     </MATERIAL>
 
-
-
-
   </MATERIALS>
 
   <!-- The leaves -->
@@ -206,10 +203,11 @@
         <NODEREF id="wall1"/>
         <NODEREF id="wall2"/>
         <NODEREF id="candeeiromaior"/>
+        <NODEREF id="nurbsT"/>
         <NODEREF id="rug"/>
       </DESCENDANTS>
-
     </NODE>
+
     <NODE id="rug">
       <MATERIAL id="null"/>
       <TEXTURE id="clear"/>
@@ -220,6 +218,31 @@
         <NODEREF id="bottomrug"/>
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="nurbsT">
+      <MATERIAL id="defaultMaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="0" z="0"/>
+      <SCALE sx="1" sy="1" sz="1"/>
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 20">
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="-1.5" zz="0" ww="1"/>
+            <CPOINT xx="-1.5" yy="1.5" zz="0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-1.5" zz="3" ww="1"/>
+            <CPOINT xx="0" yy="1.5" zz="3" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="0" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="0" ww="1"/>
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+
 
     <NODE id="toprug">
       <MATERIAL id="Trug"/>

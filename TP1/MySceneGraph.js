@@ -1331,7 +1331,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             var coords = this.reader.getString(descendants[j], 'args');
             if (type != null) {
                 if (type == 'patch'){
-
              var degreeU=0;
              var degreeV=-1;
              var arr = [];
@@ -1339,14 +1338,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
              var uDivs = parseFloat(arr[0]);
              var vDivs = parseFloat(arr[1]);
              let aux = descendants[j].children;
-             this.log("tamanho " +  descendants[j].children.length);
              degreeU= aux.length-1;
-             this.log("Length1: "  + aux.length);
-             this.log("Length2: "  + aux[1].children.length);
-             this.log("Leaf: " + type);
-             this.log("uDivs " + uDivs);
-             this.log("vDivs " + vDivs);
-             this.log("ID " + nodeID);
              degreeV= aux[0].children.length-1;
              var controlp = [];
              for(var i=0; i<aux.length;i++){
@@ -1361,10 +1353,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                }
                controlp.push(line);
              }
-             this.log("Leaf: " + type);
-             this.log("degreeU " + degreeU);
-             this.log("degreeV " + degreeV);
-             console.log(controlp);
+
              this.nodes[nodeID].addPatch(uDivs,vDivs,degreeU,degreeV,controlp);
            }
               else{
@@ -1465,7 +1454,6 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
     let tID;
     let mID;
-    //console.log(node);
     if(node.materialID == "null"){
       mID = this.stackMaterials[this.stackMaterials.length-1];
     }
@@ -1544,6 +1532,5 @@ MySceneGraph.generateRandomString = function(length) {
  * @name displayScene
  */
 MySceneGraph.prototype.displayScene = function() {
-  let rootNode = this.nodes[this.idRoot];
-  this.displayNode(rootNode);
+  this.displayNode(this.nodes[this.idRoot]);
 }
