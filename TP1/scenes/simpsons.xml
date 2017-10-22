@@ -208,33 +208,6 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="nurbsT">
-      <MATERIAL id="defaultMaterial"/>
-      <TEXTURE id="clear"/>
-      <TRANSLATION x="0" y="0" z="0"/>
-      <SCALE sx="1" sy="1" sz="1"/>
-      <DESCENDANTS>
-        <LEAF type="patch" args="20 20">
-          <CPLINE>
-            <CPOINT xx="-1.5" yy="-1.5" zz="0" ww="1"/>
-            <CPOINT xx="-1.5" yy="1.5" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="-1.5" zz="3" ww="1"/>
-            <CPOINT xx="0" yy="1.5" zz="3" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="1.5" yy="-1.5" zz="0" ww="1"/>
-            <CPOINT xx="1.5" yy="1.5" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="1.5" yy="-1.5" zz="3" ww="1"/>
-            <CPOINT xx="1.5" yy="1.5" zz="3" ww="1"/>
-          </CPLINE>
-        </LEAF>
-      </DESCENDANTS>
-    </NODE>
-
     <NODE id="wall1">
       <MATERIAL id="wallmaterial"/>
       <TEXTURE id="clear"/>
@@ -324,11 +297,72 @@
         <NODEREF id="cylinderbase"/>
         <NODEREF id="cylinderstand"/>
         <NODEREF id="cylinderbulb"/>
+        <NODEREF id="cylinderholder"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="cylinderbase">
+    <NODE id="cylinderholder">
       <MATERIAL id="metalic"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <NODEREF id="cylinderholderfirsthalf"/>
+        <NODEREF id="cylinderholdersecondhalf"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cylinderholderfirsthalf">
+      <MATERIAL id="metalic"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <NODEREF id="nurbsT"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cylinderholdersecondhalf">
+      <MATERIAL id="metalic"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="2" y="2" z="2"/>
+      <DESCENDANTS>
+        <NODEREF id="nurbsT"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nurbsT">
+      <MATERIAL id="defaultMaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="0" z="0"/>
+      <SCALE sx="0.5" sy="0.5" sz="0.5"/>
+      <ROTATION axis="y" angle="-90"/>
+      <SCALE sx="1" sy="1" sz="1"/>
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 20">
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="-1.5" zz="0" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="0" ww="1"/>
+            <CPOINT xx="0.0" yy="0.0" zz="1.5" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="-1.5" zz="2.0" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="0" ww="1"/>
+            <CPOINT xx="0.0" yy="0.0" zz="1.5" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="-2.0" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="2.0" zz="2.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="-2.0" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="2.0" zz="2.0" ww="1"/>
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="cylinderbase">
+      <MATERIAL id="purple"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="13.8" y="0.2" z="0.5"/>
       <ROTATION axis="x" angle="90"/>
@@ -339,7 +373,7 @@
     </NODE>
 
     <NODE id="cylinderstand">
-      <MATERIAL id="metalic"/>
+      <MATERIAL id="purple"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="13.8" y="5.2" z="0.5"/>
       <ROTATION axis="x" angle="90"/>
@@ -350,7 +384,7 @@
     </NODE>
 
     <NODE id="cylinderbulb">
-      <MATERIAL id="defaultMaterial"/>
+      <MATERIAL id="floormaterial"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="13.8" y="5.5" z="0.5"/>
       <ROTATION axis="x" angle="90"/>

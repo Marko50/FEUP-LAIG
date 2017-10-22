@@ -1440,7 +1440,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
   let tID;
   let mID;
-  //console.log(node);
+
   if (node.materialID == "null") {
     mID = this.stackMaterials[this.stackMaterials.length - 1];
   } else {
