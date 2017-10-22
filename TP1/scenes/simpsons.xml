@@ -203,19 +203,8 @@
         <NODEREF id="wall1"/>
         <NODEREF id="wall2"/>
         <NODEREF id="candeeiromaior"/>
-        <NODEREF id="nurbsT"/>
         <NODEREF id="rug"/>
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="rug">
-      <MATERIAL id="null"/>
-      <TEXTURE id="clear"/>
-      <DESCENDANTS>
-        <NODEREF id="toprug"/>
-        <NODEREF id="middlerug1"/>
-        <NODEREF id="middlerug2"/>
-        <NODEREF id="bottomrug"/>
+        <NODEREF id="nurbsT"/>
       </DESCENDANTS>
     </NODE>
 
@@ -238,11 +227,45 @@
             <CPOINT xx="1.5" yy="-1.5" zz="0" ww="1"/>
             <CPOINT xx="1.5" yy="1.5" zz="0" ww="1"/>
           </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="3" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="3" ww="1"/>
+          </CPLINE>
         </LEAF>
       </DESCENDANTS>
     </NODE>
 
+    <NODE id="wall1">
+      <MATERIAL id="wallmaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="0" z="0"/>
+      <SCALE sx="3" sy="2.5" sz="2"/>
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 5 5 0"/>
+      </DESCENDANTS>
+    </NODE>
 
+    <NODE id="wall2">
+      <MATERIAL id="wallmaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="0" z="10"/>
+      <SCALE sx="3" sy="2.5" sz="2"/>
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 5 5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="rug">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <NODEREF id="toprug"/>
+        <NODEREF id="middlerug"/>
+        <NODEREF id="middlerugg"/>
+        <NODEREF id="bottomrug"/>
+      </DESCENDANTS>
+    </NODE>
 
     <NODE id="toprug">
       <MATERIAL id="Trug"/>
@@ -254,7 +277,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="middlerug1">
+    <NODE id="middlerug">
       <MATERIAL id="rug1"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="3.5" y="0.06" z="2.0"/>
@@ -264,7 +287,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="middlerug2">
+    <NODE id="middlerugg">
       <MATERIAL id="rug2"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="1.8" y="0.05" z="1.0"/>
@@ -290,27 +313,6 @@
       <ROTATION axis="x" angle="-90"/>
       <DESCENDANTS>
         <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="wall1">
-      <MATERIAL id="wallmaterial"/>
-      <TEXTURE id="clear"/>
-      <TRANSLATION x="0" y="0" z="0"/>
-      <SCALE sx="3" sy="2.5" sz="2"/>
-      <DESCENDANTS>
-        <LEAF type="rectangle" args="0 5 5 0"/>
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="wall2">
-      <MATERIAL id="wallmaterial"/>
-      <TEXTURE id="clear"/>
-      <TRANSLATION x="0" y="0" z="10"/>
-      <SCALE sx="3" sy="2.5" sz="2"/>
-      <ROTATION axis="y" angle="90"/>
-      <DESCENDANTS>
-        <LEAF type="rectangle" args="0 5 5 0"/>
       </DESCENDANTS>
     </NODE>
 
@@ -1284,6 +1286,8 @@
       </DESCENDANTS>
 
     </NODE>
+
+
 
   </NODES>
 

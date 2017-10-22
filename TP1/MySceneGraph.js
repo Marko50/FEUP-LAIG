@@ -1148,242 +1148,228 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
  */
 MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
-    // Traverses nodes.
-    this.nodeIDS = [];
-    var children = nodesNode.children;
+  // Traverses nodes.
+  this.nodeIDS = [];
+  var children = nodesNode.children;
+  console.log(children);
+  for (var i = 0; i < children.length; i++) {
+    var nodeName;
+    if ((nodeName = children[i].nodeName) == "ROOT") {
+      // Retrieves root node.
+      if (this.idRoot != null)
+        return "there can only be one root node";
+      else {
+        var root = this.reader.getString(children[i], 'id');
+        if (root == null)
+          return "failed to retrieve root node ID";
+        this.idRoot = root;
+      }
+    } else if (nodeName == "NODE") {
+      // Retrieves node ID.
+      var nodeID = this.reader.getString(children[i], 'id');
+      if (nodeID == null)
+        return "failed to retrieve node ID";
+      // Checks if ID is valid.
+      if (this.nodes[nodeID] != null)
+        return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
-    for (var i = 0; i < children.length; i++) {
-        var nodeName;
-        if ((nodeName = children[i].nodeName) == "ROOT") {
-            // Retrieves root node.
-            if (this.idRoot != null )
-                return "there can only be one root node";
-            else {
-                var root = this.reader.getString(children[i], 'id');
-                if (root == null )
-                    return "failed to retrieve root node ID";
-                this.idRoot = root;
+      this.log("Processing node " + nodeID);
+
+      // Creates node.
+      this.nodeIDS.push(nodeID);
+      this.nodes[nodeID] = new MyGraphNode(this, nodeID);
+
+      // Gathers child nodes.
+      var nodeSpecs = children[i].children;
+      var specsNames = [];
+      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+      for (var j = 0; j < nodeSpecs.length; j++) {
+        var name = nodeSpecs[j].nodeName;
+        specsNames.push(nodeSpecs[j].nodeName);
+
+        // Warns against possible invalid tag names.
+        if (possibleValues.indexOf(name) == -1)
+          this.onXMLMinorError("unknown tag <" + name + ">");
+      }
+
+      // Retrieves material ID.
+      var materialIndex = specsNames.indexOf("MATERIAL");
+      if (materialIndex == -1)
+        return "material must be defined (node ID = " + nodeID + ")";
+      var materialID = this.reader.getString(nodeSpecs[materialIndex], 'id');
+      if (materialID == null)
+        return "unable to parse material ID (node ID = " + nodeID + ")";
+      if (materialID != "null" && this.materials[materialID] == null)
+        return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
+
+      this.nodes[nodeID].materialID = materialID;
+
+      // Retrieves texture ID.
+      var textureIndex = specsNames.indexOf("TEXTURE");
+      if (textureIndex == -1)
+        return "texture must be defined (node ID = " + nodeID + ")";
+      var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
+      if (textureID == null)
+        return "unable to parse texture ID (node ID = " + nodeID + ")";
+      if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null)
+        return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
+
+      this.nodes[nodeID].textureID = textureID;
+
+      // Retrieves possible transformations.
+      for (var j = 0; j < nodeSpecs.length; j++) {
+        switch (nodeSpecs[j].nodeName) {
+          case "TRANSLATION":
+            // Retrieves translation parameters.
+            var x = this.reader.getFloat(nodeSpecs[j], 'x');
+            if (x == null) {
+              this.onXMLMinorError("unable to parse x-coordinate of translation; discarding transform");
+              break;
+            } else if (isNaN(x))
+              return "non-numeric value for x-coordinate of translation (node ID = " + nodeID + ")";
+
+            var y = this.reader.getFloat(nodeSpecs[j], 'y');
+            if (y == null) {
+              this.onXMLMinorError("unable to parse y-coordinate of translation; discarding transform");
+              break;
+            } else if (isNaN(y))
+              return "non-numeric value for y-coordinate of translation (node ID = " + nodeID + ")";
+
+            var z = this.reader.getFloat(nodeSpecs[j], 'z');
+            if (z == null) {
+              this.onXMLMinorError("unable to parse z-coordinate of translation; discarding transform");
+              break;
+            } else if (isNaN(z))
+              return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
+
+            mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
+            break;
+          case "ROTATION":
+            // Retrieves rotation parameters.
+            var axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']);
+            if (axis == null) {
+              this.onXMLMinorError("unable to parse rotation axis; discarding transform");
+              break;
             }
+            var angle = this.reader.getFloat(nodeSpecs[j], 'angle');
+            if (angle == null) {
+              this.onXMLMinorError("unable to parse rotation angle; discarding transform");
+              break;
+            } else if (isNaN(angle))
+              return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
+
+            mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
+            break;
+          case "SCALE":
+            // Retrieves scale parameters.
+            var sx = this.reader.getFloat(nodeSpecs[j], 'sx');
+            if (sx == null) {
+              this.onXMLMinorError("unable to parse x component of scaling; discarding transform");
+              break;
+            } else if (isNaN(sx))
+              return "non-numeric value for x component of scaling (node ID = " + nodeID + ")";
+
+            var sy = this.reader.getFloat(nodeSpecs[j], 'sy');
+            if (sy == null) {
+              this.onXMLMinorError("unable to parse y component of scaling; discarding transform");
+              break;
+            } else if (isNaN(sy))
+              return "non-numeric value for y component of scaling (node ID = " + nodeID + ")";
+
+            var sz = this.reader.getFloat(nodeSpecs[j], 'sz');
+            if (sz == null) {
+              this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
+              break;
+            } else if (isNaN(sz))
+              return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
+
+            mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
+            break;
+          default:
+            break;
         }
-        else if (nodeName == "NODE") {
-            // Retrieves node ID.
-            var nodeID = this.reader.getString(children[i], 'id');
-            if (nodeID == null )
-                return "failed to retrieve node ID";
-            // Checks if ID is valid.
-            if (this.nodes[nodeID] != null )
-                return "node ID must be unique (conflict: ID = " + nodeID + ")";
+      }
 
-            this.log("Processing node "+nodeID);
+      // Retrieves information about children.
+      var descendantsIndex = specsNames.indexOf("DESCENDANTS");
+      if (descendantsIndex == -1)
+        return "an intermediate node must have descendants";
 
-            // Creates node.
-            this.nodeIDS.push(nodeID);
-            this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+      var descendants = nodeSpecs[descendantsIndex].children;
 
-            // Gathers child nodes.
-            var nodeSpecs = children[i].children;
-            var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
-            for (var j = 0; j < nodeSpecs.length; j++) {
-                var name = nodeSpecs[j].nodeName;
-                specsNames.push(nodeSpecs[j].nodeName);
+      var sizeChildren = 0;
+      for (var j = 0; j < descendants.length; j++) {
+        if (descendants[j].nodeName == "NODEREF") {
 
-                // Warns against possible invalid tag names.
-                if (possibleValues.indexOf(name) == -1)
-                    this.onXMLMinorError("unknown tag <" + name + ">");
-            }
+          var curId = this.reader.getString(descendants[j], 'id');
 
-            // Retrieves material ID.
-            var materialIndex = specsNames.indexOf("MATERIAL");
-            if (materialIndex == -1)
-                return "material must be defined (node ID = " + nodeID + ")";
-            var materialID = this.reader.getString(nodeSpecs[materialIndex], 'id');
-            if (materialID == null )
-                return "unable to parse material ID (node ID = " + nodeID + ")";
-            if (materialID != "null" && this.materials[materialID] == null )
-                return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
+          this.log("   Descendant: " + curId);
 
-            this.nodes[nodeID].materialID = materialID;
-
-            // Retrieves texture ID.
-            var textureIndex = specsNames.indexOf("TEXTURE");
-            if (textureIndex == -1)
-                return "texture must be defined (node ID = " + nodeID + ")";
-            var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
-            if (textureID == null )
-                return "unable to parse texture ID (node ID = " + nodeID + ")";
-            if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
-                return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
-
-            this.nodes[nodeID].textureID = textureID;
-
-            // Retrieves possible transformations.
-            for (var j = 0; j < nodeSpecs.length; j++) {
-                switch (nodeSpecs[j].nodeName) {
-                case "TRANSLATION":
-                    // Retrieves translation parameters.
-                    var x = this.reader.getFloat(nodeSpecs[j], 'x');
-                    if (x == null ) {
-                        this.onXMLMinorError("unable to parse x-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(x))
-                        return "non-numeric value for x-coordinate of translation (node ID = " + nodeID + ")";
-
-                    var y = this.reader.getFloat(nodeSpecs[j], 'y');
-                    if (y == null ) {
-                        this.onXMLMinorError("unable to parse y-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(y))
-                        return "non-numeric value for y-coordinate of translation (node ID = " + nodeID + ")";
-
-                    var z = this.reader.getFloat(nodeSpecs[j], 'z');
-                    if (z == null ) {
-                        this.onXMLMinorError("unable to parse z-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(z))
-                        return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
-
-                    mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
-                    break;
-                case "ROTATION":
-                    // Retrieves rotation parameters.
-                    var axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']);
-                    if (axis == null ) {
-                        this.onXMLMinorError("unable to parse rotation axis; discarding transform");
-                        break;
-                    }
-                    var angle = this.reader.getFloat(nodeSpecs[j], 'angle');
-                    if (angle == null ) {
-                        this.onXMLMinorError("unable to parse rotation angle; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(angle))
-                        return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
-
-                    mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-                    break;
-                case "SCALE":
-                    // Retrieves scale parameters.
-                    var sx = this.reader.getFloat(nodeSpecs[j], 'sx');
-                    if (sx == null ) {
-                        this.onXMLMinorError("unable to parse x component of scaling; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(sx))
-                        return "non-numeric value for x component of scaling (node ID = " + nodeID + ")";
-
-                    var sy = this.reader.getFloat(nodeSpecs[j], 'sy');
-                    if (sy == null ) {
-                        this.onXMLMinorError("unable to parse y component of scaling; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(sy))
-                        return "non-numeric value for y component of scaling (node ID = " + nodeID + ")";
-
-                    var sz = this.reader.getFloat(nodeSpecs[j], 'sz');
-                    if (sz == null ) {
-                        this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(sz))
-                        return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
-
-                    mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
-                    break;
-                default:
-                    break;
+          if (curId == null)
+            this.onXMLMinorError("unable to parse descendant id");
+          else if (curId == nodeID)
+            return "a node may not be a child of its own";
+          else {
+            this.nodes[nodeID].addChild(curId);
+            sizeChildren++;
+          }
+        } else
+        if (descendants[j].nodeName == "LEAF") {
+          let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
+          //var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+          let coords = this.reader.getString(descendants[j], 'args');
+          if (type != null) {
+            if (type == 'patch') {
+              let degreeU = 0;
+              let degreeV = -1;
+              let arr = [];
+              arr = coords.split(" ");
+              let uDivs = parseFloat(arr[0]);
+              let vDivs = parseFloat(arr[1]);
+              let aux = descendants[j].children;
+              degreeU = aux.length - 1;
+              degreeV = aux[0].children.length - 1;
+              var controlp = [];
+              for (let i = 0; i < aux.length; i++) {
+                var line = [];
+                for (let j = 0; j < aux[i].children.length; j++) {
+                  var points = [];
+                  points.push(parseFloat(this.reader.getString(aux[i].children[j], 'xx')));
+                  points.push(parseFloat(this.reader.getString(aux[i].children[j], 'yy')));
+                  points.push(parseFloat(this.reader.getString(aux[i].children[j], 'zz')));
+                  points.push(parseFloat(this.reader.getString(aux[i].children[j], 'ww')));
+                  line.push(points);
                 }
-            }
+                controlp.push(line);
+              }
 
-            // Retrieves information about children.
-            var descendantsIndex = specsNames.indexOf("DESCENDANTS");
-            if (descendantsIndex == -1)
-                return "an intermediate node must have descendants";
-
-            var descendants = nodeSpecs[descendantsIndex].children;
-
-            var sizeChildren = 0;
-            for (var j = 0; j < descendants.length; j++) {
-                if (descendants[j].nodeName == "NODEREF")
-				{
-
-					var curId = this.reader.getString(descendants[j], 'id');
-
-					this.log("   Descendant: "+curId);
-
-                    if (curId == null )
-                        this.onXMLMinorError("unable to parse descendant id");
-                    else if (curId == nodeID)
-                        return "a node may not be a child of its own";
-                    else {
-                        this.nodes[nodeID].addChild(curId);
-                        sizeChildren++;
-                    }
-                }
-                else
-					if (descendants[j].nodeName == "LEAF")
-					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
-            //var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-            var coords = this.reader.getString(descendants[j], 'args');
-            if (type != null) {
-                if (type == 'patch'){
-             var degreeU=0;
-             var degreeV=-1;
-             var arr = [];
-             arr = coords.split(" ");
-             var uDivs = parseFloat(arr[0]);
-             var vDivs = parseFloat(arr[1]);
-             let aux = descendants[j].children;
-             degreeU= aux.length-1;
-             degreeV= aux[0].children.length-1;
-             var controlp = [];
-             for(var i=0; i<aux.length;i++){
-               var line =[];
-               for(var j=0; j<aux[i].children.length;j++){
-                 var points =[];
-                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'xx')));
-                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'yy')));
-                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'zz')));
-                 points.push(parseFloat(this.reader.getString(aux[i].children[j], 'ww')));
-                 line.push(points);
-               }
-               controlp.push(line);
-             }
-
-             this.nodes[nodeID].addPatch(uDivs,vDivs,degreeU,degreeV,controlp);
-           }
-              else{
+              this.nodes[nodeID].addPatch(uDivs, vDivs, degreeU, degreeV, controlp);
+            } else {
               this.nodes[nodeID].addLeaf(type, coords);
-              this.log("Leaf: " + type);}
+              this.log("Leaf: " + type);
             }
-						else
-							this.warn("Error in leaf");
+          } else
+            this.warn("Error in leaf");
 
-						//parse leaf
-						//this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]);
-                        sizeChildren++;
-					}
-					else
-						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+          //parse leaf
+          //this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]);
+          sizeChildren++;
+        } else
+          this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
-            }
-            if (sizeChildren == 0)
-                return "at least one descendant must be defined for each intermediate node";
-        }
-        else
-            this.onXMLMinorError("unknown tag name <" + nodeName);
-    }
+      }
+      if (sizeChildren == 0)
+        return "at least one descendant must be defined for each intermediate node";
+    } else
+      this.onXMLMinorError("unknown tag name <" + nodeName);
+  }
 
-    console.log("Parsed nodes");
+  console.log("Parsed nodes");
 
-    this.stackTextures.push("clear");
-    this.stackMaterials.push(this.defaultMaterialID);
+  this.stackTextures.push("clear");
+  this.stackMaterials.push(this.defaultMaterialID);
 
-    return null ;
+  return null;
 }
 
 
@@ -1449,63 +1435,59 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
  * @memberof MySceneGraph
  * @param {String} node - graph node
  * @name displayNode
-*/
+ */
 
 MySceneGraph.prototype.displayNode = function(node) {
-    let tID;
-    let mID;
-    if(node.materialID == "null"){
-      mID = this.stackMaterials[this.stackMaterials.length-1];
-    }
-    else{
-      mID = node.materialID;
-    }
-    if(node.textureID == "null"){
-      tID = this.stackTextures[this.stackTextures.length - 1];
+  let tID;
+  let mID;
+  //console.log(node);
+  if (node.materialID == "null") {
+    mID = this.stackMaterials[this.stackMaterials.length - 1];
+  } else {
+    mID = node.materialID;
+  }
+  if (node.textureID == "null") {
+    tID = this.stackTextures[this.stackTextures.length - 1];
 
-    }
-    else{
-      tID = node.textureID;
-    }
+  } else {
+    tID = node.textureID;
+  }
 
-    this.scene.pushMatrix();
-    this.scene.multMatrix(node.transformMatrix);
+  this.scene.pushMatrix();
+  this.scene.multMatrix(node.transformMatrix);
 
-    this.stackMaterials.push(mID);
-    this.stackTextures.push(tID);
+  this.stackMaterials.push(mID);
+  this.stackTextures.push(tID);
 
-    for (let i = 0; i < node.children.length; i++) { //missing transformations
-        let childName = node.children[i];
-        let child = this.nodes[childName];
-        this.displayNode(child);
-    }
-
-
-    let s = 1;
-    let t = 1;
-
-    if(tID != "clear")
-    {
-      this.materials[mID].setTexture(this.textures[tID][0])
-      s = this.textures[tID][1];
-      t = this.textures[tID][2];
-    }
-
-    else if( tID == "clear"){
-      this.materials[mID].setTexture(null);
-    }
+  for (let i = 0; i < node.children.length; i++) { //missing transformations
+    let childName = node.children[i];
+    let child = this.nodes[childName];
+    this.displayNode(child);
+  }
 
 
-    this.materials[mID].apply();
+  let s = 1;
+  let t = 1;
 
-    for (let i = 0; i < node.leaves.length; i++) {
-        node.leaves[i].updateTexCoords(s, t);
-        node.leaves[i].display();
-    }
+  if (tID != "clear") {
+    this.materials[mID].setTexture(this.textures[tID][0])
+    s = this.textures[tID][1];
+    t = this.textures[tID][2];
+  } else if (tID == "clear") {
+    this.materials[mID].setTexture(null);
+  }
 
-    this.stackMaterials.pop();
-    this.stackTextures.pop();
-    this.scene.popMatrix()
+
+  this.materials[mID].apply();
+
+  for (let i = 0; i < node.leaves.length; i++) {
+    node.leaves[i].updateTexCoords(s, t);
+    node.leaves[i].display();
+  }
+
+  this.stackMaterials.pop();
+  this.stackTextures.pop();
+  this.scene.popMatrix()
 }
 
 /**
