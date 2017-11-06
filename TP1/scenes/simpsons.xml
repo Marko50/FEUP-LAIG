@@ -210,8 +210,20 @@
         <NODEREF id="wall2"/>
         <NODEREF id="candeeiromaior"/>
         <NODEREF id="rug"/>
+        <NODEREF id="trianguloTest"/>
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="trianguloTest">
+      <MATERIAL id="defaultMaterial"/>
+      <TEXTURE id= "paiting"/>
+      <TRANSLATION x="-5" y="-10" z="-5"/>
+
+      <DESCENDANTS>
+        <LEAF type="triangle" args ="5 10 10 10 10 10 7.5 15 10"/>
+      </DESCENDANTS>
+    </NODE>
+
 
     <NODE id="wall1">
       <MATERIAL id="wallmaterial"/>
