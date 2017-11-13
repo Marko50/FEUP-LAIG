@@ -6,7 +6,7 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
+var ANIMATIONS_INDEX = 5;
 var NODES_INDEX = 6;
 
 /**
@@ -26,6 +26,7 @@ function MySceneGraph(filename, scene) {
 
   this.stackTextures = new Array();
   this.stackMaterials = new Array();
+  this.stackAnimations = new Array();
   this.idRoot = null; // The id of the root element.
 
   this.axisCoords = [];
@@ -54,7 +55,7 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.onXMLReady = function() {
   console.log("XML Loading finished.");
   var rootElement = this.reader.xmlDoc.documentElement;
-
+  console.log(rootElement);
   // Here should go the calls for different functions to parse the various blocks
   var error = this.parseLSXFile(rootElement);
 
@@ -146,6 +147,17 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
       this.onXMLMinorError("tag <MATERIALS> out of order");
 
     if ((error = this.parseMaterials(nodes[index])) != null)
+      return error;
+  }
+
+  // ANIMATIONS
+  if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+    return "tag <ANIMATIONS> missing";
+  else {
+    if (index != ANIMATIONS_INDEX)
+      this.onXMLMinorError("tag <ANIMATIONS> out of order");
+
+    if ((error = this.parseAnimations(nodes[index])) != null)
       return error;
   }
 
@@ -911,7 +923,7 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
  */
 MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
-  var children = materialsNode.children;
+  let children = materialsNode.children;
   // Each material.
 
   this.materials = [];
@@ -1140,6 +1152,74 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 }
 
 /**
+ * Parses the <ANIMATIONS> block.
+ * @function
+ * @memberof MySceneGraph
+ * @param {String} animationsNode - First Tag of the ANIMATIONS Block
+ * @name parseAnimations
+ */
+MySceneGraph.prototype.parseAnimations = function(animationsNode) {
+  this.animations = [];
+  let animationChildren = animationsNode.children;
+  for (let i = 0; i < animationChildren.length; i++) {
+    let nodeName = animationChildren[i].nodeName;
+    if (nodeName != "ANIMATION") {
+      this.onXMLMinorError("unknown tag name <" + children[i].nodeName + ">");
+      continue;
+    }
+    let animationID = this.reader.getString(animationChildren[i], 'id');
+    if (animationID == null)
+      return "no ID defined for animation";
+    if (this.animations[animationID] != null)
+      return "ID must be unique for each animation (conflict: ID = " + animation + ")";
+    let animationSpeedString = this.reader.getString(animationChildren[i], 'speed');
+    if (animationSpeedString == null)
+      return "no speed defined for animation";
+    let animationSpeed = parseFloat(animationSpeedString);
+    if (animationSpeed <= 0)
+      return "speed must be a value >= 0, instead was " + animationSpeed;
+    let type = this.reader.getString(animationChildren[i], 'type');
+    if (type == null)
+      return "no type specified for animation";
+    let animationSpecs = animationChildren[i].children;
+    let controlpoints = [];
+    if (type == "linear") {
+      for(let j = 0; j < animationSpecs.length; j++){
+          let animationSpecName = animationSpecs[j].nodeName;
+          if(animationSpecName != "controlpoint"){
+            this.onXMLMinorError("unknown animation spec name <" + animationSpecName);
+            continue;
+          }
+          else{
+            let x = this.reader.getFloat(animationSpecs[j], "xx");
+            let y = this.reader.getFloat(animationSpecs[j], "yy");
+            let z = this.reader.getFloat(animationSpecs[j], "zz");
+            if(x == null || y == null || z == null || x < 0 || y < 0 || z < 0){
+              this.onXMLMinorError("invalid animation control point");
+              continue;
+            }
+            controlpoints.push(x);
+            controlpoints.push(y);
+            controlpoints.push(z);
+          }
+      }
+      this.animations[animationID] = new LinearAnimation(this.scene, animationID, animationSpeed, controlpoints);
+    } else if (type == "circular") {
+
+    } else if (type == "bezier") {
+
+    } else if (type == "combo") {
+
+    } else {
+      this.onXMLMinorError("unknown type name " + type);
+      continue;
+    }
+  }
+  console.log("Parsed Animations\n");
+}
+
+
+/**
  * Parses the <NODES> block.
  * @function
  * @memberof MySceneGraph
@@ -1150,8 +1230,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
   // Traverses nodes.
   this.nodeIDS = [];
-  var children = nodesNode.children;
-  console.log(children);
+  let children = nodesNode.children;
   for (var i = 0; i < children.length; i++) {
     var nodeName;
     if ((nodeName = children[i].nodeName) == "ROOT") {
@@ -1182,7 +1261,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       // Gathers child nodes.
       var nodeSpecs = children[i].children;
       var specsNames = [];
-      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS" ,"DESCENDANTS"];
       for (var j = 0; j < nodeSpecs.length; j++) {
         var name = nodeSpecs[j].nodeName;
         specsNames.push(nodeSpecs[j].nodeName);
@@ -1289,6 +1368,24 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             break;
         }
       }
+
+      // Retrieves animation IDS.
+      let animationIndex = specsNames.indexOf("ANIMATIONREFS");
+      if (animationIndex != -1)
+      {
+        let animationDescendants = nodeSpecs[animationIndex].children;
+        for(let cont = 0; cont < animationDescendants.length; cont++){
+          if(animationDescendants[cont].nodeName != "ANIMATIONREF"){
+            this.onXMLError("Unkown tag " + animationDescendants[cont].nodeName + "instead of ANIMATIONREF\n");
+            continue;
+          }
+          let anID = this.reader.getString(animationDescendants[cont], 'id');
+          if (anID == null)
+            return "unable to parse animation ID (node ID = " + nodeID+ ")";
+          this.nodes[nodeID].addAnimation(this.animations[anID]);
+        }
+      }
+
 
       // Retrieves information about children.
       var descendantsIndex = specsNames.indexOf("DESCENDANTS");
@@ -1440,7 +1537,6 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
   let tID;
   let mID;
-
   if (node.materialID == "null") {
     mID = this.stackMaterials[this.stackMaterials.length - 1];
   } else {
@@ -1448,27 +1544,24 @@ MySceneGraph.prototype.displayNode = function(node) {
   }
   if (node.textureID == "null") {
     tID = this.stackTextures[this.stackTextures.length - 1];
-
   } else {
     tID = node.textureID;
   }
-
   this.scene.pushMatrix();
   this.scene.multMatrix(node.transformMatrix);
-
   this.stackMaterials.push(mID);
   this.stackTextures.push(tID);
-
+  /*
+  for(let contador = 0 ; contador < node.animations.length; contador++){
+    this.stackTextures.push(node.animations[contador]);
+  }*/
   for (let i = 0; i < node.children.length; i++) { //missing transformations
     let childName = node.children[i];
     let child = this.nodes[childName];
     this.displayNode(child);
   }
-
-
   let s = 1;
   let t = 1;
-
   if (tID != "clear") {
     this.materials[mID].setTexture(this.textures[tID][0])
     s = this.textures[tID][1];
@@ -1476,17 +1569,19 @@ MySceneGraph.prototype.displayNode = function(node) {
   } else if (tID == "clear") {
     this.materials[mID].setTexture(null);
   }
-
-
   this.materials[mID].apply();
-
+  let currentTime = Date.now()/1000.0;
+  node.updateAnimations(currentTime);
   for (let i = 0; i < node.leaves.length; i++) {
     node.leaves[i].updateTexCoords(s, t);
     node.leaves[i].display();
   }
-
   this.stackMaterials.pop();
   this.stackTextures.pop();
+  /*
+  for(let contador = 0 ; contador < node.animations.length; contador++){
+    this.stackTextures.pop();
+  }*/
   this.scene.popMatrix()
 }
 

@@ -125,7 +125,6 @@ MyRectangle.prototype.rotateTexCoords = function(teta){
        x1,y1,
        x0,y0
      ];
-    console.log(this.FirstTexCoords);
 }
 
 /**
