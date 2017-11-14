@@ -47,7 +47,7 @@ class LinearAnimation extends Animation{
     if(this.index == this.cp.length - 1){
       this.moving = false;
     }
-    else if(this.posX == this.cp[this.index+1][0] && this.posY == this.cp[this.index+1][2]){
+    else if(this.posX == this.cp[this.index+1][0] && this.posZ == this.cp[this.index+1][2]){
       index++;
       this.calcLength();
       this.calcAngle();
@@ -56,19 +56,25 @@ class LinearAnimation extends Animation{
   }
 
   update(currentTime){
-    console.log("CurrentTime: " + currentTime);
+    //console.log("CurrentTime: " + currentTime);
     let deltaTime = currentTime - this.lastTime;
     this.lastTime = currentTime;
+    //console.log(this.index);
     if(this.moving){
       this.posX += deltaTime * this.vx;
       this.posZ += deltaTime * this.vz;
-      console.log("posX: " + this.posX);
-      console.log("posZ: " + this.posZ);
-      this.scene.pushMatrix();
-      this.scene.translate(this.posx, 0, this.posZ);
-      this.scene.translate(0,0,0);
-      this.scene.rotate(this.angle, 0, 1, 0);
-      this.scene.popMatrix();
+      //console.log("posX: " + this.posX);
+    //  console.log("posZ: " + this.posZ);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.posX, 0,this.posZ]);
+      //mat4.translate(this.transformMatrix, this.transformMatrix, [this.cp[this.index][0],this.cp[this.index][1],this.cp[this.index][2]]);
+      //mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle , [0, 1, 0]);
+      this.scene.multMatrix(this.transformMatrix);
+    }
+    else{
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.posX, 0,this.posZ]);
+    //  mat4.translate(this.transformMatrix, this.transformMatrix, [this.cp[this.index][0],this.cp[this.index][1],this.cp[this.index][2]]);
+    //  mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle , [0, 1, 0]);
+      this.scene.multMatrix(this.transformMatrix);
     }
     this.checkPositionStatus();
   }
