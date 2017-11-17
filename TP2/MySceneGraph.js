@@ -55,7 +55,6 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.onXMLReady = function() {
   console.log("XML Loading finished.");
   var rootElement = this.reader.xmlDoc.documentElement;
-  console.log(rootElement);
   // Here should go the calls for different functions to parse the various blocks
   var error = this.parseLSXFile(rootElement);
 
@@ -1548,14 +1547,12 @@ MySceneGraph.prototype.displayNode = function(node) {
     tID = node.textureID;
   }
   this.scene.pushMatrix();
+  node.update();
   this.scene.multMatrix(node.transformMatrix);
   this.stackMaterials.push(mID);
   this.stackTextures.push(tID);
-  /*
-  for(let contador = 0 ; contador < node.animations.length; contador++){
-    this.stackTextures.push(node.animations[contador]);
-  }*/
-  for (let i = 0; i < node.children.length; i++) { //missing transformations
+
+  for (let i = 0; i < node.children.length; i++) {
     let childName = node.children[i];
     let child = this.nodes[childName];
     this.displayNode(child);
@@ -1570,18 +1567,11 @@ MySceneGraph.prototype.displayNode = function(node) {
     this.materials[mID].setTexture(null);
   }
   this.materials[mID].apply();
-  let currentTime = Date.now()/1000.0;
-  node.updateAnimations(currentTime);
-  for (let i = 0; i < node.leaves.length; i++) {
-    node.leaves[i].updateTexCoords(s, t);
-    node.leaves[i].display();
-  }
+
+  node.display(s, t);
+
   this.stackMaterials.pop();
   this.stackTextures.pop();
-  /*
-  for(let contador = 0 ; contador < node.animations.length; contador++){
-    this.stackTextures.pop();
-  }*/
   this.scene.popMatrix()
 }
 

@@ -9,8 +9,12 @@ function MyGraphNode(graph, nodeID) {
   this.scene = graph.scene;
   this.nodeID = nodeID;
 
+  this.animationINDEX = 0;
+
   // IDs of child nodes.
   this.children = [];
+
+  this.moving = false;
 
   // IDs of child nodes.
   this.leaves = [];
@@ -24,20 +28,28 @@ function MyGraphNode(graph, nodeID) {
   //ANIMATIONS_INDEX
   this.animations = [];
 
+
   this.transformMatrix = mat4.create();
   mat4.identity(this.transformMatrix);
-
 }
 
 
 MyGraphNode.prototype.addAnimation = function(animation){
+  this.moving = true;
   this.animations.push(animation);
 }
 
 
 MyGraphNode.prototype.updateAnimations = function(currentTime){
-  for(let cont = 0; cont < this.animations.length; cont++){
-    this.animations[cont].update(currentTime);
+  if(this.animations[this.animationINDEX].moving){
+    this.animations[this.animationINDEX].update(currentTime);
+  }
+  else{
+    this.animationINDEX++;
+    if(this.animationINDEX == this.animations.length){
+      this.animationINDEX--;
+      this.moving = false;
+    }
   }
 }
 
@@ -87,4 +99,24 @@ MyGraphNode.prototype.addLeaf = function(leaf, coords) {
  */
 MyGraphNode.prototype.addPatch = function(uDivs, vDivs, degreeU, degreeV, controlp) {
   this.leaves.push(new MyPatch(this.scene, uDivs, vDivs, degreeU, degreeV, controlp));
+}
+
+MyGraphNode.prototype.update = function(){
+  let currentTime = Date.now();
+  if(this.moving)
+  {
+    this.updateAnimations(currentTime);
+  }
+  if(this.animations.length > 0)
+  {
+    this.scene.multMatrix(this.animations[this.animationINDEX].transformMatrix);
+  }
+
+}
+
+MyGraphNode.prototype.display = function(s, t){
+  for (let i = 0; i < this.leaves.length; i++) {
+    this.leaves[i].updateTexCoords(s, t);
+    this.leaves[i].display();
+  }
 }
