@@ -28,6 +28,8 @@ function MyGraphNode(graph, nodeID) {
   //ANIMATIONS_INDEX
   this.animations = [];
 
+  this.animationsMatrix = mat4.create();
+  mat4.identity(this.animationsMatrix);
 
   this.transformMatrix = mat4.create();
   mat4.identity(this.transformMatrix);
@@ -43,6 +45,7 @@ MyGraphNode.prototype.addAnimation = function(animation){
 MyGraphNode.prototype.updateAnimations = function(currentTime){
   if(this.animations[this.animationINDEX].moving){
     this.animations[this.animationINDEX].update(currentTime);
+    this.animationsMatrix = this.animations[this.animationINDEX].transformMatrix;
   }
   else{
     this.animationINDEX++;
@@ -107,11 +110,7 @@ MyGraphNode.prototype.update = function(){
   {
     this.updateAnimations(currentTime);
   }
-  if(this.animations.length > 0)
-  {
-    this.scene.multMatrix(this.animations[this.animationINDEX].transformMatrix);
-  }
-
+  this.scene.multMatrix(this.animationsMatrix);
 }
 
 MyGraphNode.prototype.display = function(s, t){

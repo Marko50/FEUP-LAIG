@@ -1181,30 +1181,40 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
     if (type == null)
       return "no type specified for animation";
     let animationSpecs = animationChildren[i].children;
-    let controlpoints = [];
-    if (type == "linear") {
-      for(let j = 0; j < animationSpecs.length; j++){
-          let animationSpecName = animationSpecs[j].nodeName;
-          if(animationSpecName != "controlpoint"){
-            this.onXMLMinorError("unknown animation spec name <" + animationSpecName);
+    if (type === "linear") {
+      let controlpoints = [];
+      for (let j = 0; j < animationSpecs.length; j++) {
+        let animationSpecName = animationSpecs[j].nodeName;
+        if (animationSpecName != "controlpoint") {
+          this.onXMLMinorError("unknown animation spec name <" + animationSpecName);
+          continue;
+        } else {
+          let x = this.reader.getFloat(animationSpecs[j], "xx");
+          let y = this.reader.getFloat(animationSpecs[j], "yy");
+          let z = this.reader.getFloat(animationSpecs[j], "zz");
+          if (x == null || y == null || z == null) {
+            this.onXMLMinorError("invalid linear animation control point");
             continue;
           }
-          else{
-            let x = this.reader.getFloat(animationSpecs[j], "xx");
-            let y = this.reader.getFloat(animationSpecs[j], "yy");
-            let z = this.reader.getFloat(animationSpecs[j], "zz");
-            if(x == null || y == null || z == null || x < 0 || y < 0 || z < 0){
-              this.onXMLMinorError("invalid animation control point");
-              continue;
-            }
-            controlpoints.push(x);
-            controlpoints.push(y);
-            controlpoints.push(z);
-          }
+          controlpoints.push(x);
+          controlpoints.push(y);
+          controlpoints.push(z);
+        }
       }
       this.animations[animationID] = new LinearAnimation(this.scene, animationID, animationSpeed, controlpoints);
     } else if (type == "circular") {
-
+      let  x = this.reader.getFloat(animationChildren[i], 'centerx');
+      let  y = this.reader.getFloat(animationChildren[i], 'centery');
+      let  z = this.reader.getFloat(animationChildren[i], 'centerz');
+      let center = [x,y,z];
+      let radius = this.reader.getFloat(animationChildren[i], 'radius');
+      let startang = this.reader.getFloat(animationChildren[i], 'startang');
+      let rotang = this.reader.getFloat(animationChildren[i], 'rotang');
+      if(x == null || y == null || z == null || center == null || radius == null || startang == null || rotang == null){
+        this.onXMLMinorError("invalid circular animation variables");
+        continue;
+      }
+      this.animations[animationID] = new CircularAnimation(this.scene,animationID, animationSpeed, center, radius, startang, rotang);
     } else if (type == "bezier") {
 
     } else if (type == "combo") {
@@ -1260,7 +1270,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       // Gathers child nodes.
       var nodeSpecs = children[i].children;
       var specsNames = [];
-      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS" ,"DESCENDANTS"];
+      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
       for (var j = 0; j < nodeSpecs.length; j++) {
         var name = nodeSpecs[j].nodeName;
         specsNames.push(nodeSpecs[j].nodeName);
@@ -1370,17 +1380,16 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
       // Retrieves animation IDS.
       let animationIndex = specsNames.indexOf("ANIMATIONREFS");
-      if (animationIndex != -1)
-      {
+      if (animationIndex != -1) {
         let animationDescendants = nodeSpecs[animationIndex].children;
-        for(let cont = 0; cont < animationDescendants.length; cont++){
-          if(animationDescendants[cont].nodeName != "ANIMATIONREF"){
+        for (let cont = 0; cont < animationDescendants.length; cont++) {
+          if (animationDescendants[cont].nodeName != "ANIMATIONREF") {
             this.onXMLError("Unkown tag " + animationDescendants[cont].nodeName + "instead of ANIMATIONREF\n");
             continue;
           }
           let anID = this.reader.getString(animationDescendants[cont], 'id');
           if (anID == null)
-            return "unable to parse animation ID (node ID = " + nodeID+ ")";
+            return "unable to parse animation ID (node ID = " + nodeID + ")";
           this.nodes[nodeID].addAnimation(this.animations[anID]);
         }
       }

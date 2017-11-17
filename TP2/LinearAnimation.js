@@ -6,8 +6,8 @@ class LinearAnimation extends Animation {
       this.cp.push(vec3.fromValues(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2]));
     }
     this.index = 0;
-    this.moving = true;
-    this.atualPosition = vec3.create();
+    this.aux = mat4.create();
+    mat4.identity(this.aux);
     this.calcLength();
     this.calcAngle();
     this.calcVelocity();
@@ -15,8 +15,8 @@ class LinearAnimation extends Animation {
 
   calcLength() {
     this.posX = this.cp[this.index][0];
-    this.posZ = this.cp[this.index][2];;
-    this.posY = this.cp[this.index][1];;
+    this.posZ = this.cp[this.index][2];
+    this.posY = this.cp[this.index][1];
     let direction = vec3.create();
     vec3.sub(direction, this.cp[this.index], this.cp[this.index + 1]);
     this.length= vec3.length(direction);
@@ -28,7 +28,6 @@ class LinearAnimation extends Animation {
     this.cosAngle = (this.cp[this.index + 1][0] - this.cp[this.index][0]) / this.length;
     this.yModifier = (this.cp[this.index + 1][1] - this.cp[this.index][1])/Math.abs(this.cp[this.index + 1][1] - this.cp[this.index][1]);
     this.sinAngle = (this.cp[this.index + 1][2] - this.cp[this.index][2]) / this.length;
-    this.angle;
     if(this.cosAngle == 0){
       this.angle = Math.PI/2;
     }
@@ -67,24 +66,22 @@ class LinearAnimation extends Animation {
   }
 
   update(currentTime) {
-    let aux = mat4.create();
-    mat4.identity(aux);
-    let deltaTime = (currentTime - this.lastTime) / 1000.0;
-    this.elapsedTime += deltaTime;
-    this.lastTime = currentTime;
     if (this.moving) {
+      let deltaTime = (currentTime - this.lastTime) / 1000.0;
+      this.elapsedTime += deltaTime;
+      this.lastTime = currentTime;
       this.posX += deltaTime * this.vx;
       this.posZ += deltaTime * this.vz;
       this.posY += deltaTime * this.vy;
-      mat4.translate(this.transformMatrix, aux, [this.posX, this.posY, this.posZ]);
+      mat4.translate(this.transformMatrix, this.aux, [this.posX, this.posY, this.posZ]);
       mat4.translate(this.transformMatrix, this.transformMatrix ,[0,0,0]);
       mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
+      this.checkPositionStatus();
     } else {
-      mat4.translate(this.transformMatrix, aux, [this.posX, this.posY, this.posZ]);
+      mat4.translate(this.transformMatrix, this.aux, [this.posX, this.posY, this.posZ]);
       mat4.translate(this.transformMatrix, this.transformMatrix, [0,0,0]);
       mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
     }
-    this.checkPositionStatus();
   }
 
 
