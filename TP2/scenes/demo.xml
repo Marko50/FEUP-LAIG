@@ -88,6 +88,12 @@
   <ANIMATION id ="animacaoTesteCircular" speed="2" type="circular"
     centerx ="0" centery="0" centerz="0" radius="5" startang="0" rotang="360">
   </ANIMATION>
+  <ANIMATION id ="animacaoTesteBezier" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="10"/>
+    <controlpoint xx="5" yy="0" zz="0"/>
+    <controlpoint xx="10" yy="0" zz="0"/>
+    <controlpoint xx="15" yy="0" zz="10"/>
+  </ANIMATION>
 </ANIMATIONS>
 
 <!-- The nodes -->
@@ -110,10 +116,8 @@
     <NODE id="chao">
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
-        <TRANSLATION x="0" y="5" z="0"/>
-        <ROTATION axis="x" angle="-90" />
         <ANIMATIONREFS>
-          <ANIMATIONREF id="animacaoTesteCircular"/>
+          <ANIMATIONREF id="animacaoTesteLinear"/>
         </ANIMATIONREFS>
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />

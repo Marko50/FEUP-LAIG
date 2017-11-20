@@ -1181,7 +1181,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
     if (type == null)
       return "no type specified for animation";
     let animationSpecs = animationChildren[i].children;
-    if (type === "linear") {
+    if (type === "linear" || type == "bezier") {
       let controlpoints = [];
       for (let j = 0; j < animationSpecs.length; j++) {
         let animationSpecName = animationSpecs[j].nodeName;
@@ -1201,7 +1201,11 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
           controlpoints.push(z);
         }
       }
-      this.animations[animationID] = new LinearAnimation(this.scene, animationID, animationSpeed, controlpoints);
+      if(type == "linear")
+        this.animations[animationID] = new LinearAnimation(this.scene, animationID, animationSpeed, controlpoints);
+      else if(type == "bezier")
+        this.animations[animationID] = new BezierAnimation(this.scene, animationID, animationSpeed, controlpoints);
+
     } else if (type == "circular") {
       let  x = this.reader.getFloat(animationChildren[i], 'centerx');
       let  y = this.reader.getFloat(animationChildren[i], 'centery');
@@ -1215,8 +1219,6 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
         continue;
       }
       this.animations[animationID] = new CircularAnimation(this.scene,animationID, animationSpeed, center, radius, startang, rotang);
-    } else if (type == "bezier") {
-
     } else if (type == "combo") {
 
     } else {
