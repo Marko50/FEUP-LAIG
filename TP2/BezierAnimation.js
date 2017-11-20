@@ -67,6 +67,8 @@ class BezierAnimation extends Animation{
     let newY = param1 * this.p1[1] + param2 * this.p2[1] + param3 * this.p3[1] + param4 * this.p4[1];
     let newZ = param1 * this.p1[2] + param2 * this.p2[2] + param3 * this.p3[2] + param4 * this.p4[2];
 
+    this.angle = Math.atan2(newX - this.x, newZ - this.z);
+
     this.x = newX;
     this.y = newY;
     this.z = newZ;
@@ -86,11 +88,13 @@ class BezierAnimation extends Animation{
     this.lastTime = currentTime;
     if(this.moving){
       mat4.translate(this.transformMatrix,this.aux, [this.x,this.y,this.z]);
+      mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
       this.calcPosition(deltaTime);
       this.checkPositionStatus();
     }
     else{
       mat4.translate(this.transformMatrix,this.aux, [this.x,this.y,this.z]);
+      mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
     }
   }
 
