@@ -116,9 +116,6 @@
     <NODE id="chao">
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="animacaoTesteCircular"/>
-        </ANIMATIONREFS>
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
 				</DESCENDANTS>

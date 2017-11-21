@@ -1220,7 +1220,19 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
       }
       this.animations[animationID] = new CircularAnimation(this.scene,animationID, animationSpeed, center, radius, startang, rotang);
     } else if (type == "combo") {
+      let comboAns = [];
+      for (let j = 0; j < animationSpecs.length; j++) {
+        let animationSpecName = animationSpecs[j].nodeName;
+        if (animationSpecName != "SPANREF") {
+          this.onXMLMinorError("unknown animation spec name <" + animationSpecName);
+          continue;
+        } else {
+          let comboID = this.reader.getString(animationSpecs[j], "id");
+          comboAns.push(this.animations[comboID]);
+        }
 
+      }
+      this.animations[animationID] = new ComboAnimation(this.scene,animationID,animationSpeed, comboAns);
     } else {
       this.onXMLMinorError("unknown type name " + type);
       continue;
