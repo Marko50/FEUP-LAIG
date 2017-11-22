@@ -1,6 +1,6 @@
 class CircularAnimation extends Animation{
-  constructor(scene, id, velocity, center, radius, startang, rotang){
-    super(scene, id, velocity);
+  constructor(scene,velocity, center, radius, startang, rotang){
+    super(scene,velocity);
     var DEGREE_TO_RAD = Math.PI/180;
     this.animationCenter = vec3.fromValues(center[0],center[1],center[2]);
     this.startAngle = startang * DEGREE_TO_RAD;

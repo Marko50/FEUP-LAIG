@@ -1,6 +1,6 @@
 class BezierAnimation extends Animation{
-  constructor(scene, id, velocity, controlPoints){
-    super(scene, id, velocity);
+  constructor(scene,velocity, controlPoints){
+    super(scene,velocity);
     this.s = 0;
     this.aux = mat4.create();
     mat4.identity(this.aux);

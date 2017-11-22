@@ -1,6 +1,6 @@
 class ComboAnimation extends Animation{
-  constructor(scene, id, velocity, animations){
-    super(scene, id, velocity);
+  constructor(scene, velocity, animations){
+    super(scene, velocity);
     this.animations = animations;
     this.index = 0;
   }
@@ -15,12 +15,15 @@ class ComboAnimation extends Animation{
   }
 
   update(currentTime){
+    console.log(this.index);
     if(this.moving){
         this.animations[this.index].update(currentTime);
+        this.transformMatrix = this.animations[this.index].transformMatrix;
         this.checkStatus();
     }
     else{
       this.animations[this.index].update(currentTime);
+      this.transformMatrix = this.animations[this.index].transformMatrix;
     }
 
   }

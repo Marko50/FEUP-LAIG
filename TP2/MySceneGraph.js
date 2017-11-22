@@ -1172,9 +1172,10 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
     if (this.animations[animationID] != null)
       return "ID must be unique for each animation (conflict: ID = " + animation + ")";
     let animationSpeedString = this.reader.getString(animationChildren[i], 'speed');
-    if (animationSpeedString == null)
-      return "no speed defined for animation";
-    let animationSpeed = parseFloat(animationSpeedString);
+    let animationSpeed;
+    if (animationSpeedString != null)
+      animationSpeed = parseFloat(animationSpeedString);
+
     if (animationSpeed <= 0)
       return "speed must be a value >= 0, instead was " + animationSpeed;
     let type = this.reader.getString(animationChildren[i], 'type');
@@ -1202,9 +1203,9 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
         }
       }
       if(type == "linear")
-        this.animations[animationID] = new LinearAnimation(this.scene, animationID, animationSpeed, controlpoints);
+        this.animations[animationID] = new LinearAnimation(this.scene,animationSpeed, controlpoints);
       else if(type == "bezier")
-        this.animations[animationID] = new BezierAnimation(this.scene, animationID, animationSpeed, controlpoints);
+        this.animations[animationID] = new BezierAnimation(this.scene,animationSpeed, controlpoints);
 
     } else if (type == "circular") {
       let  x = this.reader.getFloat(animationChildren[i], 'centerx');
@@ -1218,7 +1219,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
         this.onXMLMinorError("invalid circular animation variables");
         continue;
       }
-      this.animations[animationID] = new CircularAnimation(this.scene,animationID, animationSpeed, center, radius, startang, rotang);
+      this.animations[animationID] = new CircularAnimation(this.scene, animationSpeed, center, radius, startang, rotang);
     } else if (type == "combo") {
       let comboAns = [];
       for (let j = 0; j < animationSpecs.length; j++) {
@@ -1228,11 +1229,12 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
           continue;
         } else {
           let comboID = this.reader.getString(animationSpecs[j], "id");
-          comboAns.push(this.animations[comboID]);
+          let clone = Object.assign(Object.create(Object.getPrototypeOf(this.animations[comboID])),this.animations[comboID]);
+          comboAns.push(clone);
         }
 
       }
-      this.animations[animationID] = new ComboAnimation(this.scene,animationID,animationSpeed, comboAns);
+      this.animations[animationID] = new ComboAnimation(this.scene, animationSpeed, comboAns);
     } else {
       this.onXMLMinorError("unknown type name " + type);
       continue;
@@ -1404,7 +1406,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
           let anID = this.reader.getString(animationDescendants[cont], 'id');
           if (anID == null)
             return "unable to parse animation ID (node ID = " + nodeID + ")";
-          this.nodes[nodeID].addAnimation(this.animations[anID]);
+
+          let clone = Object.assign( Object.create( Object.getPrototypeOf(this.animations[anID])),this.animations[anID]);
+          this.nodes[nodeID].addAnimation(clone);
         }
       }
 

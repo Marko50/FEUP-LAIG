@@ -1,6 +1,6 @@
 class LinearAnimation extends Animation {
-  constructor(scene, id, velocity, controlPoints) {
-    super(scene, id, velocity);
+  constructor(scene, velocity, controlPoints) {
+    super(scene, velocity);
     this.cp = [];
     for (let i = 0; i < controlPoints.length; i += 3) {
       this.cp.push(vec3.fromValues(controlPoints[i], controlPoints[i + 1], controlPoints[i + 2]));
