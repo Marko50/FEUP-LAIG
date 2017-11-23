@@ -33,6 +33,8 @@ function MyGraphNode(graph, nodeID) {
 
   this.transformMatrix = mat4.create();
   mat4.identity(this.transformMatrix);
+
+  this.lastTime = Date.now();
 }
 
 
@@ -48,6 +50,7 @@ MyGraphNode.prototype.updateAnimations = function(currentTime){
     this.animationsMatrix = this.animations[this.animationINDEX].transformMatrix;
   }
   else{
+    this.lastTime = Date.now();
     this.animationINDEX++;
     if(this.animationINDEX == this.animations.length){
       this.animationINDEX--;
@@ -105,10 +108,12 @@ MyGraphNode.prototype.addPatch = function(uDivs, vDivs, degreeU, degreeV, contro
 }
 
 MyGraphNode.prototype.update = function(){
-  let currentTime = Date.now();
   if(this.moving)
   {
-    this.updateAnimations(currentTime);
+    let currentTime = Date.now();
+    let deltaTime = (currentTime - this.lastTime) / 1000.0;
+    this.lastTime = currentTime;
+    this.updateAnimations(deltaTime);
   }
   this.scene.multMatrix(this.animationsMatrix);
 }

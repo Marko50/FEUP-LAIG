@@ -14,15 +14,14 @@ class ComboAnimation extends Animation{
     }
   }
 
-  update(currentTime){
-    console.log(this.index);
+  update(deltaTime){
     if(this.moving){
-        this.animations[this.index].update(currentTime);
+        this.animations[this.index].update(deltaTime);
         this.transformMatrix = this.animations[this.index].transformMatrix;
         this.checkStatus();
     }
     else{
-      this.animations[this.index].update(currentTime);
+      this.animations[this.index].update(deltaTime);
       this.transformMatrix = this.animations[this.index].transformMatrix;
     }
 

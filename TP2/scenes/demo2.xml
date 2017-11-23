@@ -167,6 +167,9 @@
   <ANIMATION id ="animacaoTesteCombo" type="combo">
     <SPANREF id ="animacaoTesteCircular"/>
     <SPANREF id ="animacaoTesteCircular"/>
+    <SPANREF id ="animacaoTesteBezier"/>
+    <SPANREF id ="animacaoTesteBezier"/>
+    <SPANREF id ="animacaoTesteLinear"/>
   </ANIMATION>
 </ANIMATIONS>
 

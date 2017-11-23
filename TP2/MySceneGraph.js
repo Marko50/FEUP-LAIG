@@ -1171,18 +1171,17 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
       return "no ID defined for animation";
     if (this.animations[animationID] != null)
       return "ID must be unique for each animation (conflict: ID = " + animation + ")";
-    let animationSpeedString = this.reader.getString(animationChildren[i], 'speed');
-    let animationSpeed;
-    if (animationSpeedString != null)
-      animationSpeed = parseFloat(animationSpeedString);
-
-    if (animationSpeed <= 0)
-      return "speed must be a value >= 0, instead was " + animationSpeed;
     let type = this.reader.getString(animationChildren[i], 'type');
     if (type == null)
       return "no type specified for animation";
     let animationSpecs = animationChildren[i].children;
     if (type === "linear" || type == "bezier") {
+      let animationSpeedString = this.reader.getString(animationChildren[i], 'speed');
+      if(animationSpeedString == null)
+        return "no speed defined for animation!";
+      animationSpeed = parseFloat(animationSpeedString);
+      if (animationSpeed <= 0)
+        return "speed must be a value >= 0, instead was " + animationSpeed;
       let controlpoints = [];
       for (let j = 0; j < animationSpecs.length; j++) {
         let animationSpecName = animationSpecs[j].nodeName;
@@ -1208,6 +1207,12 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
         this.animations[animationID] = new BezierAnimation(this.scene,animationSpeed, controlpoints);
 
     } else if (type == "circular") {
+      let animationSpeedString = this.reader.getString(animationChildren[i], 'speed');
+      if(animationSpeedString == null)
+        return "no speed defined for animation!";
+      animationSpeed = parseFloat(animationSpeedString);
+      if (animationSpeed <= 0)
+        return "speed must be a value >= 0, instead was " + animationSpeed;
       let  x = this.reader.getFloat(animationChildren[i], 'centerx');
       let  y = this.reader.getFloat(animationChildren[i], 'centery');
       let  z = this.reader.getFloat(animationChildren[i], 'centerz');
@@ -1232,8 +1237,8 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
           let clone = Object.assign(Object.create(Object.getPrototypeOf(this.animations[comboID])),this.animations[comboID]);
           comboAns.push(clone);
         }
-
       }
+
       this.animations[animationID] = new ComboAnimation(this.scene, animationSpeed, comboAns);
     } else {
       this.onXMLMinorError("unknown type name " + type);

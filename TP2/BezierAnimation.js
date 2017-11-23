@@ -83,19 +83,10 @@ class BezierAnimation extends Animation{
   }
 
 
-  update(currentTime) {
-    let deltaTime = (currentTime - this.lastTime)/1000.0;
-    this.lastTime = currentTime;
-    if(this.moving){
-      mat4.translate(this.transformMatrix,this.aux, [this.x,this.y,this.z]);
-      mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
-      this.calcPosition(deltaTime);
-      this.checkPositionStatus();
-    }
-    else{
-      mat4.translate(this.transformMatrix,this.aux, [this.x,this.y,this.z]);
-      mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0,1,0]);
-    }
+  update(deltaTime) {
+    mat4.translate(this.transformMatrix, this.aux, [this.x, this.y, this.z]);
+    mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);
+    this.calcPosition(deltaTime);
+    this.checkPositionStatus();
   }
-
 }
