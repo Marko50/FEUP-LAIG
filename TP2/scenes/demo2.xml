@@ -314,7 +314,7 @@
     </NODE>
 
     <!-- Street bench -->
-    <NODE id="bancos">
+    <NODE id="bancos" selectable = "tt">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="clear" />
         <DESCENDANTS>
@@ -540,7 +540,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
         <ANIMATIONREFS>
-          <ANIMATIONREF id="animacaoTesteCombo"/>
+          <ANIMATIONREF id="animacaoTesteLinear"/>
         </ANIMATIONREFS>
         <DESCENDANTS>
        		<NODEREF id="meiaPiramide1" />

@@ -4,7 +4,9 @@
  * @param {String} nodeID - the identifier of the node
  * @constructor
  **/
-function MyGraphNode(graph, nodeID) {
+function MyGraphNode(graph, nodeID, selectable) {
+  this.selectable = selectable;
+  this.selected = false;
   this.graph = graph;
   this.scene = graph.scene;
   this.nodeID = nodeID;

@@ -26,7 +26,7 @@ function MySceneGraph(filename, scene) {
 
   this.stackTextures = new Array();
   this.stackMaterials = new Array();
-  this.stackAnimations = new Array();
+  this.stackSelected = new Array();
   this.idRoot = null; // The id of the root element.
 
   this.axisCoords = [];
@@ -66,6 +66,7 @@ MySceneGraph.prototype.onXMLReady = function() {
   this.loadedOk = true;
 
   // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+
   this.scene.onGraphLoaded();
 }
 
@@ -1257,7 +1258,6 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
  * @name parseNodes
  */
 MySceneGraph.prototype.parseNodes = function(nodesNode) {
-
   // Traverses nodes.
   this.nodeIDS = [];
   let children = nodesNode.children;
@@ -1281,13 +1281,19 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       // Checks if ID is valid.
       if (this.nodes[nodeID] != null)
         return "node ID must be unique (conflict: ID = " + nodeID + ")";
+      let selectable;
+      let select = this.reader.getString(children[i],'selectable');
+      if(select == null || select != 'tt'){
+        selectable = false;
+      }
+      else selectable = true;
+
 
       this.log("Processing node " + nodeID);
 
       // Creates node.
       this.nodeIDS.push(nodeID);
-      this.nodes[nodeID] = new MyGraphNode(this, nodeID);
-
+      this.nodes[nodeID] = new MyGraphNode(this, nodeID, selectable);
       // Gathers child nodes.
       var nodeSpecs = children[i].children;
       var specsNames = [];
@@ -1496,6 +1502,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
   this.stackTextures.push("clear");
   this.stackMaterials.push(this.defaultMaterialID);
+  this.stackSelected.push(false);
 
   return null;
 }
@@ -1568,6 +1575,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
   let tID;
   let mID;
+  let selected;
   if (node.materialID == "null") {
     mID = this.stackMaterials[this.stackMaterials.length - 1];
   } else {
@@ -1578,11 +1586,13 @@ MySceneGraph.prototype.displayNode = function(node) {
   } else {
     tID = node.textureID;
   }
+  selected = this.stackSelected[this.stackSelected.length - 1] | node.selected;
   this.scene.pushMatrix();
   node.update();
   this.scene.multMatrix(node.transformMatrix);
   this.stackMaterials.push(mID);
   this.stackTextures.push(tID);
+  this.stackSelected.push(selected);
 
   for (let i = 0; i < node.children.length; i++) {
     let childName = node.children[i];
@@ -1604,6 +1614,7 @@ MySceneGraph.prototype.displayNode = function(node) {
 
   this.stackMaterials.pop();
   this.stackTextures.pop();
+  this.stackSelected.pop();
   this.scene.popMatrix()
 }
 

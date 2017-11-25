@@ -53,3 +53,40 @@ MyInterface.prototype.addLightsGroup = function(lights) {
         }
     }
 }
+
+/**
+ * Adds a folder containing the IDs of the selectable Nodes passed as parameter.
+ * @function
+ * @name addSelectablesGroup
+ * @memberof MyInterface
+ */
+MyInterface.prototype.addSelectablesGroup = function(nodes) {
+    var group = this.gui.addFolder("Selectable Nodes");
+    group.open();
+
+    for(var key in nodes){
+      if(nodes.hasOwnProperty(key) && nodes[key].selectable){
+        this.scene.nodesSelectableValues[key] = nodes[key].selected;
+        group.add(this.scene.nodesSelectableValues, key);
+      }
+    }
+
+}
+
+
+/**
+ * Adds a folder containing the IDs of the shaders passed as parameter.
+ * @function
+ * @name addShadersGroup
+ * @memberof MyInterface
+ */
+MyInterface.prototype.addShadersGroup = function() {
+    let i = 0;
+    let shaders = {};
+    for(let i = 0; i < this.scene.shaders.length; i++){
+      shaders[this.scene.shaders[i][0]]= this.scene.shaders[i][1];
+    }
+    console.log(shaders);
+    this.gui.add(this.scene, 'selectedShader', shaders).name('Shader examples');
+
+}

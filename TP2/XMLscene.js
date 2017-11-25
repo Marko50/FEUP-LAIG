@@ -7,9 +7,8 @@ var DEGREE_TO_RAD = Math.PI / 180;
  */
 function XMLscene(interface) {
     CGFscene.call(this);
-
     this.interface = interface;
-
+    this.nodesSelectableValues = {};
     this.lightValues = {};
 }
 
@@ -33,10 +32,13 @@ XMLscene.prototype.init = function(application) {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
+    this.shaders = [["test" , new CGFshader(this.gl, "shaders/test.vert", "shaders/test.frag")]];
+    this.selectedShader = 0;
 
     this.axis = new CGFaxis(this);
 }
+
+
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -106,6 +108,10 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+    //Ads nodes selectable group
+    this.interface.addSelectablesGroup(this.graph.nodes);
+    //Ads the shaders group
+    this.interface.addShadersGroup();
 }
 
 /**
@@ -139,6 +145,7 @@ XMLscene.prototype.display = function() {
 		this.axis.display();
 
         var i = 0;
+        //Lights
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
                 if (this.lightValues[key]) {
@@ -151,6 +158,27 @@ XMLscene.prototype.display = function() {
                 }
                 this.lights[i].update();
                 i++;
+            }
+        }
+        //Nodes
+        for (var key in this.nodesSelectableValues) {
+            if (this.nodesSelectableValues.hasOwnProperty(key)) {
+                if (this.nodesSelectableValues[key]) {
+                    this.graph.nodes[key].selected = true;
+                }
+                else {
+                  this.graph.nodes[key].selected = false;
+                }
+            }
+        }
+
+        //Shaders
+        for (var key in this.shaders) {
+            if (this.shaders.hasOwnProperty(key)) {
+                if (this.shaders[key][1]) {
+                  this.selectedShader = key;
+                  break;
+                }
             }
         }
 
