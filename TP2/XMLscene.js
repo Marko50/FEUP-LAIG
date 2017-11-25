@@ -34,7 +34,7 @@ XMLscene.prototype.init = function(application) {
   this.gl.depthFunc(this.gl.LEQUAL);
   this.shaders = [
     ["test", new CGFshader(this.gl, "shaders/test.vert", "shaders/test.frag")],
-    ["cenas", new CGFshader(this.gl, "shaders/test.vert", "shaders/test.frag")]
+    ["cenas", new CGFshader(this.gl, "shaders/test.vert", "shaders/test2.frag")]
   ];
   this.selectedShader = 0;
 
