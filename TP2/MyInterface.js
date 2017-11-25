@@ -84,9 +84,8 @@ MyInterface.prototype.addShadersGroup = function() {
     let i = 0;
     let shaders = {};
     for(let i = 0; i < this.scene.shaders.length; i++){
-      shaders[this.scene.shaders[i][0]]= this.scene.shaders[i][1];
+      shaders[this.scene.shaders[i][0]]= i;
     }
-    console.log(shaders);
     this.gui.add(this.scene, 'selectedShader', shaders).name('Shader examples');
 
 }

@@ -535,7 +535,7 @@
     </NODE>
 
     <!-- A pyramid -->
-    <NODE id="piramide">
+    <NODE id="piramide" selectable = "tt">
 
         <MATERIAL id="null" />
         <TEXTURE id="clear" />

@@ -1609,13 +1609,18 @@ MySceneGraph.prototype.displayNode = function(node) {
     this.materials[mID].setTexture(null);
   }
   this.materials[mID].apply();
+  if(selected){
+    this.scene.setActiveShader(this.scene.shaders[this.scene.selectedShader][1]);
+    node.display(s, t);
+    this.scene.setActiveShader(this.scene.defaultShader);
+  }
+  else node.display(s, t);
 
-  node.display(s, t);
 
   this.stackMaterials.pop();
   this.stackTextures.pop();
   this.stackSelected.pop();
-  this.scene.popMatrix()
+  this.scene.popMatrix();
 }
 
 /**
