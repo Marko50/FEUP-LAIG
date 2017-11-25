@@ -6,6 +6,8 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * @param {MyInterface} interface - GUI interface
  */
 function XMLscene(interface) {
+  this.elapsedTime = 0;
+  this.currentTime = Date.now();
   CGFscene.call(this);
   this.interface = interface;
   this.nodesSelectableValues = {};
@@ -34,7 +36,8 @@ XMLscene.prototype.init = function(application) {
   this.gl.depthFunc(this.gl.LEQUAL);
   this.shaders = [
     ["test", new CGFshader(this.gl, "shaders/test.vert", "shaders/test.frag")],
-    ["cenas", new CGFshader(this.gl, "shaders/test.vert", "shaders/test2.frag")]
+    ["cenas", new CGFshader(this.gl, "shaders/test.vert", "shaders/test2.frag")],
+    ["variable", new CGFshader(this.gl, "shaders/variable.vert", "shaders/test.frag")]
   ];
   this.selectedShader = 0;
 
@@ -128,6 +131,14 @@ XMLscene.prototype.display = function() {
   // Clear image and depth buffer everytime we update the scene
   this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
   this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+  let timeF = Math.cos(this.elapsedTime);
+  this.shaders[2][1].setUniformsValues({timeFactor: timeF});
+
+  let time = Date.now();
+  let deltaTime = (time - this.currentTime)/1000;
+  this.elapsedTime += deltaTime;
+  this.currentTime = time;
 
   // Initialize Model-View matrix as identity (no transformation
   this.updateProjectionMatrix();

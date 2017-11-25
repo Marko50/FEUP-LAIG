@@ -46,7 +46,7 @@ class LinearAnimation extends Animation {
   calcVelocity() {
     this.vx = this.velocity * this.cosAngle;
     this.vz = this.velocity * this.sinAngle;
-    this.vy = Math.sqrt(this.velocity * this.velocity - this.vx * this.vx - this.vz * this.vz) * this.yModifier;
+    this.vy = Math.sqrt(Math.round(this.velocity * this.velocity - this.vx * this.vx - this.vz * this.vz,3)) * this.yModifier;
   }
 
   checkPositionStatus() {

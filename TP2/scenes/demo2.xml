@@ -149,7 +149,7 @@
 
 <ANIMATIONS>
   <ANIMATION id ="animacaoTesteLinear" speed="7" type="linear">
-    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="10" yy="0" zz="0"/>
     <controlpoint xx="10" yy="5" zz="0"/>
     <controlpoint xx="10" yy="0" zz="10"/>
     <controlpoint xx="0" yy="5" zz="10"/>
@@ -285,7 +285,7 @@
     </NODE>
 
     <!-- Light bulb -->
-    <NODE id="luz_esfera">
+    <NODE id="luz_esfera" selectable ="tt">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -544,8 +544,8 @@
         </ANIMATIONREFS>
         <DESCENDANTS>
        		<NODEREF id="meiaPiramide1" />
-            <NODEREF id="meiaPiramide2" />
-            <NODEREF id="basePiramide" />
+          <NODEREF id="meiaPiramide2" />
+          <NODEREF id="basePiramide" />
         </DESCENDANTS>
 
     </NODE>
@@ -566,7 +566,7 @@
     </NODE>
 
     <!-- Half a pyramid -->
-    <NODE id="meiaPiramide1">
+    <NODE id="meiaPiramide1" selectable ="tt">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 

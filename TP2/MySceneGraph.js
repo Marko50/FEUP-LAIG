@@ -1282,7 +1282,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       if (this.nodes[nodeID] != null)
         return "node ID must be unique (conflict: ID = " + nodeID + ")";
       let selectable;
-      let select = this.reader.getString(children[i],'selectable');
+      let select = this.reader.getString(children[i],'selectable',false);
       if(select == null || select != 'tt'){
         selectable = false;
       }
@@ -1610,6 +1610,7 @@ MySceneGraph.prototype.displayNode = function(node) {
   }
   this.materials[mID].apply();
   if(selected){
+    
     this.scene.setActiveShader(this.scene.shaders[this.scene.selectedShader][1]);
     node.display(s, t);
     this.scene.setActiveShader(this.scene.defaultShader);
