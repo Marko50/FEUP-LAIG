@@ -26,12 +26,17 @@ class LinearAnimation extends Animation {
 
   calcAngle() {
     this.cosAngle = (this.cp[this.index + 1][0] - this.cp[this.index][0]) / this.length;
-    this.yModifier = (this.cp[this.index + 1][1] - this.cp[this.index][1]) / Math.abs(this.cp[this.index + 1][1] - this.cp[this.index][1]);
+    let aux = (this.cp[this.index + 1][1] - this.cp[this.index][1]);
+    if (aux == 0) this.yModifier = 0;
+    else this.yModifier = (this.cp[this.index + 1][1] - this.cp[this.index][1]) / Math.abs(this.cp[this.index + 1][1] - this.cp[this.index][1]);
     this.sinAngle = (this.cp[this.index + 1][2] - this.cp[this.index][2]) / this.length;
     if (this.cosAngle == 0) {
-      this.angle = Math.PI / 2;
+      if (this.sinAngle == -1) this.angle = Math.PI / 2;
+      else this.angle = 3 * Math.PI / 2;
     } else if (this.sinAngle == 0) {
-      this.angle = 0;
+      if (this.cosAngle == -1) {
+        this.angle = 0;
+      } else this.angle = Math.PI;
     } else if (this.cosAngle > 0 && this.sinAngle > 0) {
       this.angle = Math.acos(this.cosAngle);
     } else if (this.cosAngle > 0 && this.sinAngle < 0) {
@@ -46,7 +51,7 @@ class LinearAnimation extends Animation {
   calcVelocity() {
     this.vx = this.velocity * this.cosAngle;
     this.vz = this.velocity * this.sinAngle;
-    this.vy = Math.sqrt(Math.round(this.velocity * this.velocity - this.vx * this.vx - this.vz * this.vz,3)) * this.yModifier;
+    this.vy = Math.sqrt(Math.round(this.velocity * this.velocity - this.vx * this.vx - this.vz * this.vz, 3)) * this.yModifier;
   }
 
   checkPositionStatus() {
@@ -68,10 +73,9 @@ class LinearAnimation extends Animation {
     this.posZ += deltaTime * this.vz;
     this.posY += deltaTime * this.vy;
     mat4.translate(this.transformMatrix, this.aux, [this.posX, this.posY, this.posZ]);
-    mat4.translate(this.transformMatrix, this.transformMatrix, [0, 0, 0]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);
     this.checkPositionStatus();
+    }
+
+
   }
-
-
-}

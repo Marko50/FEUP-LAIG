@@ -43,7 +43,6 @@
       <specular r="0.6" g="0.6" b="0.6" a="1.0"/>
     </LIGHT>
 
-
   </LIGHTS>
 
   <!-- Textures -->
@@ -79,6 +78,46 @@
       <shininess value="1"/>
       <specular r="0.0" g="0.0" b="0.0" a="1"/>
       <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
+      <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+      <emission r="0.0" g="0.0" b="0.0" a="1"/>
+    </MATERIAL>
+
+    <MATERIAL id="lips">
+      <shininess value="0.2"/>
+      <specular r="1.0" g="1.0" b="1.0" a="1"/>
+      <diffuse r="0.8" g="0.1" b="0.1" a="1"/>
+      <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+      <emission r="0.0" g="0.0" b="0.0" a="1"/>
+    </MATERIAL>
+
+    <MATERIAL id="homerBody">
+      <shininess value="0.2"/>
+      <specular r="1.0" g="1.0" b="1.0" a="1"/>
+      <diffuse r="0.9" g="0.9" b="0.0" a="1"/>
+      <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+      <emission r="0.0" g="0.0" b="0.0" a="1"/>
+    </MATERIAL>
+
+    <MATERIAL id="shirt">
+      <shininess value="0.2"/>
+      <specular r="1.0" g="1.0" b="1.0" a="1"/>
+      <diffuse r="1.0" g="1.0" b="1.0" a="1"/>
+      <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+      <emission r="0.0" g="0.0" b="0.0" a="1"/>
+    </MATERIAL>
+
+    <MATERIAL id="pants">
+      <shininess value="0.2"/>
+      <specular r="1.0" g="1.0" b="1.0" a="1"/>
+      <diffuse r="0.0" g="0.0" b="1.0" a="1"/>
+      <ambient r="0.4" g="0.4" b="0.4" a="1"/>
+      <emission r="0.0" g="0.0" b="0.0" a="1"/>
+    </MATERIAL>
+
+    <MATERIAL id="eyes">
+      <shininess value="0.2"/>
+      <specular r="1.0" g="1.0" b="1.0" a="1"/>
+      <diffuse r="0.0" g="0.0" b="0.0" a="1"/>
       <ambient r="0.4" g="0.4" b="0.4" a="1"/>
       <emission r="0.0" g="0.0" b="0.0" a="1"/>
     </MATERIAL>
@@ -186,6 +225,30 @@
 
   </MATERIALS>
 
+  <ANIMATIONS>
+    <ANIMATION id="animacaoLinearHomer" speed="1" type="linear">
+      <controlpoint xx="10" yy="0" zz="17"/>
+      <controlpoint xx="0" yy="0" zz="17"/>
+    </ANIMATION>
+    <ANIMATION id="animacaoLinearHomer2" speed="1" type="linear">
+      <controlpoint xx="0" yy="0" zz="24"/>
+      <controlpoint xx="10" yy="0" zz="17"/>
+    </ANIMATION>
+    <ANIMATION id ="animacaoRodaHomer" speed="0.1" type="circular"
+      centerx ="0" centery="0" centerz="18" radius="1" startang="0" rotang="180">
+    </ANIMATION>
+    <ANIMATION id="animacaoBezierHomer1" speed="1" type="bezier">
+      <controlpoint xx="0" yy="0" zz="0"/>
+      <controlpoint xx="10" yy="0" zz="0"/>
+      <controlpoint xx="10" yy="0" zz="10"/>
+      <controlpoint xx="0" yy="0" zz="10"/>
+    </ANIMATION>
+    <ANIMATION id ="animacaoHomerCombo" type="combo">
+      <SPANREF id ="animacaoLinearHomer"/>
+      <SPANREF id ="animacaoRodaHomer"/>
+      <SPANREF id ="animacaoLinearHomer2"/>
+    </ANIMATION>
+  </ANIMATIONS>
 
   <!-- The nodes -->
   <NODES>
@@ -208,8 +271,183 @@
         <NODEREF id="wall2"/>
         <NODEREF id="candeeiromaior"/>
         <NODEREF id="rug"/>
+        <NODEREF id="homer"/>
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="homer">
+      <MATERIAL id="homerBody"/>
+      <TEXTURE id="clear"/>
+      <ROTATION axis ="y" angle="90"/>
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="animacaoBezierHomer1"/>
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="cabeca"/>
+        <NODEREF id="tronco"/>
+        <NODEREF id="bracos"/>
+        <NODEREF id="pernas"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cabeca">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <NODEREF id="olhos"/>
+        <NODEREF id="boca"/>
+        <NODEREF id="pescoco"/>
+        <NODEREF id ="cranio"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pescoco">
+      <MATERIAL id="shirt"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="12" y="5" z="4.5"/>
+      <SCALE sx="1.3" sy="1" sz="1"/>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cranio">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="12" y="6.5" z="5"/>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="boca">
+      <MATERIAL id="lips"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="11.7" y="6.2" z="4.1"/>
+      <ROTATION axis="y" angle="90"/>
+      <SCALE sx="0.1" sy="0.1" sz="0.5"/>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="olhos">
+      <MATERIAL id="eyes"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <NODEREF id="olho1"/>
+        <NODEREF id="olho2"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="olho1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="12.5" y="6.8" z="4.2"/>
+      <DESCENDANTS>
+        <NODEREF id="olho"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="olho2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="11.5" y="6.8" z="4.2"/>
+      <DESCENDANTS>
+        <NODEREF id="olho"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="olho">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <SCALE sx ="0.1" sy="0.1" sz="0.1"/>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="tronco">
+      <MATERIAL id="shirt"/>
+      <TEXTURE id="null"/>
+      <TRANSLATION x="12" y="5" z="5"/>
+      <ROTATION axis="x" angle="90"/>
+      <SCALE sx="1.5" sy="1" sz="2.5"/>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="bracos">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <DESCENDANTS>
+        <NODEREF id ="braco1"/>
+        <NODEREF id ="braco2"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="braco1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <TRANSLATION x="13" y="4.5" z="5"/>
+      <ROTATION axis="y" angle="90"/>
+      <ROTATION axis="x" angle="45"/>
+      <DESCENDANTS>
+        <NODEREF id ="membro"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="braco2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <TRANSLATION x="11" y="4.5" z="5"/>
+      <ROTATION axis="y" angle="-90"/>
+      <ROTATION axis="x" angle="45"/>
+      <DESCENDANTS>
+        <NODEREF id ="membro"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pernas">
+      <MATERIAL id="pants"/>
+      <TEXTURE id="null"/>
+      <DESCENDANTS>
+        <NODEREF id ="pernaHomer1"/>
+        <NODEREF id ="pernaHomer2"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pernaHomer1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <TRANSLATION x="11.5" y="3" z="5"/>
+      <ROTATION axis="x" angle="90"/>
+      <DESCENDANTS>
+        <NODEREF id ="membro"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pernaHomer2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <TRANSLATION x="12.5" y="3" z="5"/>
+      <ROTATION axis="x" angle="90"/>
+      <DESCENDANTS>
+        <NODEREF id ="membro"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="membro">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <SCALE sx ="0.3" sy="0.3" sz="3"/>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
+      </DESCENDANTS>
+    </NODE>
+
 
     <NODE id="wall1">
       <MATERIAL id="wallmaterial"/>
@@ -321,7 +559,7 @@
     <NODE id="cylinderholderfirsthalf">
       <MATERIAL id="null"/>
       <TEXTURE id="clear"/>
-        <TRANSLATION x="2" y="2.3" z="2"/>
+      <TRANSLATION x="2" y="2.3" z="2"/>
       <DESCENDANTS>
         <NODEREF id="nurbs1"/>
       </DESCENDANTS>
@@ -336,23 +574,23 @@
       </DESCENDANTS>
     </NODE>
 
-        <NODE id="cylinderholderthirdhalf">
-          <MATERIAL id="null"/>
-          <TEXTURE id="clear"/>
-          <TRANSLATION x="2" y="2" z="2"/>
-          <DESCENDANTS>
-            <NODEREF id="nurbs3"/>
-          </DESCENDANTS>
-        </NODE>
+    <NODE id="cylinderholderthirdhalf">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="2" y="2" z="2"/>
+      <DESCENDANTS>
+        <NODEREF id="nurbs3"/>
+      </DESCENDANTS>
+    </NODE>
 
-        <NODE id="cylinderholder4half">
-          <MATERIAL id="null"/>
-          <TEXTURE id="clear"/>
-          <TRANSLATION x="4" y="2" z="2.2"/>
-          <DESCENDANTS>
-            <NODEREF id="nurbs4"/>
-          </DESCENDANTS>
-        </NODE>
+    <NODE id="cylinderholder4half">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="4" y="2" z="2.2"/>
+      <DESCENDANTS>
+        <NODEREF id="nurbs4"/>
+      </DESCENDANTS>
+    </NODE>
 
     <NODE id="nurbs1">
       <MATERIAL id="null"/>
@@ -363,18 +601,18 @@
       <SCALE sx="0.1" sy="0.1" sz="0.1"/>
 
       <DESCENDANTS>
-        <LEAF type="patch" args="30 30" >
-                <CPLINE>
-                    <CPOINT xx="0" yy="-1" zz="0" ww="1"/>
-                    <CPOINT xx="20" yy="7.5" zz="0" ww="1"/>
-                    <CPOINT xx="40" yy="-1" zz="0" ww="1"/>
-                </CPLINE>
-                <CPLINE>
-                    <CPOINT xx="0" yy="-2" zz="4" ww="1"/>
-                    <CPOINT xx="20" yy="7.5" zz="4" ww="1"/>
-                    <CPOINT xx="40" yy="-2" zz="4" ww="1"/>
-                </CPLINE>
-            </LEAF>
+        <LEAF type="patch" args="30 30">
+          <CPLINE>
+            <CPOINT xx="0" yy="-1" zz="0" ww="1"/>
+            <CPOINT xx="20" yy="7.5" zz="0" ww="1"/>
+            <CPOINT xx="40" yy="-1" zz="0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-2" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="7.5" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="-2" zz="4" ww="1"/>
+          </CPLINE>
+        </LEAF>
       </DESCENDANTS>
     </NODE>
 
@@ -387,21 +625,20 @@
       <SCALE sx="0.1" sy="0.1" sz="0.1"/>
 
       <DESCENDANTS>
-        <LEAF type="patch" args="30 30" >
+        <LEAF type="patch" args="30 30">
           <CPLINE>
-              <CPOINT xx="0" yy="-3" zz="4" ww="1"/>
-              <CPOINT xx="20" yy="7" zz="4" ww="1"/>
-              <CPOINT xx="40" yy="-3" zz="4" ww="1"/>
+            <CPOINT xx="0" yy="-3" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="7" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="-3" zz="4" ww="1"/>
           </CPLINE>
           <CPLINE>
-              <CPOINT xx="0" yy="-3" zz="0" ww="1"/>
-              <CPOINT xx="20" yy="7" zz="0" ww="1"/>
-              <CPOINT xx="40" yy="-3" zz="0" ww="1"/>
+            <CPOINT xx="0" yy="-3" zz="0" ww="1"/>
+            <CPOINT xx="20" yy="7" zz="0" ww="1"/>
+            <CPOINT xx="40" yy="-3" zz="0" ww="1"/>
           </CPLINE>
-            </LEAF>
+        </LEAF>
       </DESCENDANTS>
     </NODE>
-
 
     <NODE id="nurbs3">
       <MATERIAL id="null"/>
@@ -411,18 +648,18 @@
       <SCALE sx="0.1" sy="0.1" sz="0.1"/>
 
       <DESCENDANTS>
-        <LEAF type="patch" args="30 30" >
+        <LEAF type="patch" args="30 30">
           <CPLINE>
-                    <CPOINT xx="0" yy="4.5" zz="4" ww="1"/>
-                    <CPOINT xx="20" yy="13" zz="4" ww="1"/>
-                    <CPOINT xx="40" yy="4.5" zz="4" ww="1"/>
-                </CPLINE>
-                <CPLINE>
-                    <CPOINT xx="0" yy="-1" zz="4" ww="1"/>
-                    <CPOINT xx="20" yy="9" zz="4" ww="1"/>
-                    <CPOINT xx="40" yy="-1" zz="4" ww="1"/>
-                </CPLINE>
-            </LEAF>
+            <CPOINT xx="0" yy="4.5" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="13" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="4.5" zz="4" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-1" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="9" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="-1" zz="4" ww="1"/>
+          </CPLINE>
+        </LEAF>
       </DESCENDANTS>
     </NODE>
 
@@ -434,21 +671,20 @@
       <SCALE sx="0.1" sy="0.1" sz="0.1"/>
 
       <DESCENDANTS>
-        <LEAF type="patch" args="30 30" >
+        <LEAF type="patch" args="30 30">
           <CPLINE>
-                    <CPOINT xx="0" yy="4.5" zz="4" ww="1"/>
-                    <CPOINT xx="20" yy="13" zz="4" ww="1"/>
-                    <CPOINT xx="40" yy="4.5" zz="4" ww="1"/>
-                </CPLINE>
-                <CPLINE>
-                    <CPOINT xx="0" yy="-1" zz="4" ww="1"/>
-                    <CPOINT xx="20" yy="9" zz="4" ww="1"/>
-                    <CPOINT xx="40" yy="-1" zz="4" ww="1"/>
-                </CPLINE>
-            </LEAF>
+            <CPOINT xx="0" yy="4.5" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="13" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="4.5" zz="4" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-1" zz="4" ww="1"/>
+            <CPOINT xx="20" yy="9" zz="4" ww="1"/>
+            <CPOINT xx="40" yy="-1" zz="4" ww="1"/>
+          </CPLINE>
+        </LEAF>
       </DESCENDANTS>
     </NODE>
-
 
     <NODE id="cylinderbase">
       <MATERIAL id="purple"/>
@@ -508,350 +744,350 @@
       </DESCENDANTS>
     </NODE>
 
-    <!-- The Table  -->
-         <NODE id="mesa">
-             <MATERIAL id="purple" />
-             <TEXTURE id="clear" />
+    <!-- The Table -->
+    <NODE id="mesa">
+      <MATERIAL id="purple"/>
+      <TEXTURE id="clear"/>
 
-             <TRANSLATION x="1" y="0" z="0.1" />
-
-             <DESCENDANTS>
-               <NODEREF id="perna1" />
-               <NODEREF id="perna2" />
-               <NODEREF id="perna3" />
-               <NODEREF id="perna4" />
-               <NODEREF id="tampomesa1" />
-               <NODEREF id="tampomesa2" />
-               <NODEREF id="ladomesa1" />
-               <NODEREF id="ladomesa2" />
-               <NODEREF id="ladomesa3" />
-               <NODEREF id="ladomesa4" />
-               <NODEREF id="cilindrogaveta" />
-             </DESCENDANTS>
-         </NODE>
-
-       <NODE id="tampomesa2">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-
-          <TRANSLATION x="-0.125" y="1.5" z="2.5" />
-          <ROTATION axis="x" angle="-90" />
-          <SCALE sx="4.5" sy="2.5" sz="0.3" />
-
-          <DESCENDANTS>
-             <NODEREF id="perna" />
-          </DESCENDANTS>
-     </NODE>
-
-       <NODE id="tampomesa1">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-
-          <TRANSLATION x="0.25" y="0.2" z="2" />
-          <ROTATION axis="x" angle="-90" />
-          <SCALE sx="3" sy="2" sz="0.2" />
-
-          <DESCENDANTS>
-              <NODEREF id="perna" />
-          </DESCENDANTS>
-     </NODE>
-
-         <NODE id="ladomesa1">
-              <MATERIAL id="null" />
-              <TEXTURE id="null" />
-
-              <TRANSLATION x="0.2" y="0.3" z="1.8" />
-              <ROTATION axis="y" angle="90" />
-              <SCALE sx="3.5" sy="1.2" sz="0.1" />
-
-              <DESCENDANTS>
-                 <NODEREF id="perna" />
-              </DESCENDANTS>
-         </NODE>
-
-         <NODE id="ladomesa2">
-              <MATERIAL id="null" />
-              <TEXTURE id="null" />
-
-              <TRANSLATION x="1.8" y="0.3" z="1.8" />
-              <ROTATION axis="y" angle="90" />
-              <SCALE sx="3.5" sy="1.2" sz="0.1" />
-
-              <DESCENDANTS>
-                 <NODEREF id="perna" />
-              </DESCENDANTS>
-         </NODE>
-
-         <NODE id="ladomesa3">
-              <MATERIAL id="null" />
-              <TEXTURE id="null" />
-
-              <TRANSLATION x="0" y="0.3" z="0" />
-              <ROTATION axis="x" angle="0" />
-              <SCALE sx="3.5" sy="1.2" sz="0.1" />
-
-              <DESCENDANTS>
-                 <NODEREF id="perna" />
-              </DESCENDANTS>
-         </NODE>
-
-     <NODE id="ladomesa4">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="0.75" z="2" />
-        <ROTATION axis="x" angle="0" />
-        <SCALE sx="1" sy="1" sz="1" />
-
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 0.75 2 0" />
-        </DESCENDANTS>
-   </NODE>
-
-   <NODE id="cilindrogaveta">
-      <MATERIAL id="rug1" />
-      <TEXTURE id="null" />
-
-      <TRANSLATION x="1" y="1.25" z="2" />
-      <ROTATION axis="x" angle="0" />
-      <SCALE sx="0.1" sy="0.1" sz="0.1" />
+      <TRANSLATION x="1" y="0" z="0.1"/>
 
       <DESCENDANTS>
-        <LEAF  type="cylinder" args="1 1 1 1 20 1 0" />
+        <NODEREF id="perna1"/>
+        <NODEREF id="perna2"/>
+        <NODEREF id="perna3"/>
+        <NODEREF id="perna4"/>
+        <NODEREF id="tampomesa1"/>
+        <NODEREF id="tampomesa2"/>
+        <NODEREF id="ladomesa1"/>
+        <NODEREF id="ladomesa2"/>
+        <NODEREF id="ladomesa3"/>
+        <NODEREF id="ladomesa4"/>
+        <NODEREF id="cilindrogaveta"/>
       </DESCENDANTS>
-   </NODE>
+    </NODE>
 
-       <NODE id="perna1">
-           <MATERIAL id= "null" />
-           <TEXTURE id= "null" />
+    <NODE id="tampomesa2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
 
-           <SCALE sx="0.5" sy="1.5" sz="0.5" />
-           <TRANSLATION x="0" y="0" z="0" />
-           <ROTATION axis="x" angle="0" />
-
-           <DESCENDANTS>
-               <NODEREF id="perna" />
-           </DESCENDANTS>
-       </NODE>
-
-       <NODE id="perna2">
-           <MATERIAL id= "null" />
-           <TEXTURE id= "null" />
-
-           <SCALE sx="0.5" sy="1.5" sz="0.5" />
-           <TRANSLATION x="3.5" y="0" z="0" />
-           <ROTATION axis="x" angle="0" />
-
-           <DESCENDANTS>
-               <NODEREF id="perna" />
-           </DESCENDANTS>
-       </NODE>
-
-       <NODE id="perna3">
-           <MATERIAL id= "null" />
-           <TEXTURE id= "null" />
-
-           <SCALE sx="0.5" sy="1.5" sz="0.5" />
-           <TRANSLATION x="0" y="0" z="3.5" />
-           <ROTATION axis="x" angle="0" />
-
-           <DESCENDANTS>
-               <NODEREF id="perna" />
-           </DESCENDANTS>
-       </NODE>
-
-       <NODE id="perna4">
-           <MATERIAL id= "null" />
-           <TEXTURE id= "null" />
-
-           <SCALE sx="0.5" sy="1.5" sz="0.5" />
-           <TRANSLATION x="3.5" y="0" z="3.5" />
-           <ROTATION axis="x" angle="0" />
-
-           <DESCENDANTS>
-               <NODEREF id="perna" />
-           </DESCENDANTS>
-       </NODE>
-
-       <NODE id="perna">
-         <MATERIAL id="null" />
-         <TEXTURE id="null" />
-
-         <SCALE sx="1" sy="1" sz="1" />
-         <TRANSLATION x="0" y="0" z="0" />
-         <ROTATION axis="x" angle="0" />
-
-         <DESCENDANTS>
-             <NODEREF id="faceperna1" />
-             <NODEREF id="faceperna2" />
-             <NODEREF id="faceperna3" />
-             <NODEREF id="faceperna4" />
-             <NODEREF id="faceperna5" />
-             <NODEREF id="faceperna6" />
-         </DESCENDANTS>
-       </NODE>
-
-       <!-- Another cube face -->
-             <NODE id="faceperna1">
-                <MATERIAL id="null" />
-                <TEXTURE id="null" />
-
-                <TRANSLATION x="0.5" y="0" z="0.5" />
-                <ROTATION axis="y" angle="90" />
-                <SCALE sx="1" sy="2" sz="1" />
-
-                <DESCENDANTS>
-                  <LEAF  type="rectangle" args="0 0.5 0.5 0" />
-                </DESCENDANTS>
-           </NODE>
-
-           <!-- Another cube face -->
-                 <NODE id="faceperna2">
-                    <MATERIAL id="null" />
-                    <TEXTURE id="null" />
-
-                    <TRANSLATION x="0" y="1" z="0" />
-                    <ROTATION axis="x" angle="180" />
-                    <SCALE sx="1" sy="2" sz="1" />
-
-                    <DESCENDANTS>
-                      <LEAF  type="rectangle" args="0 0.5 0.5 0" />
-                    </DESCENDANTS>
-               </NODE>
-
-       <!-- Another cube face -->
-             <NODE id="faceperna3">
-                <MATERIAL id="null" />
-                <TEXTURE id="null" />
-
-                <TRANSLATION x="0" y="0" z="0" />
-                <ROTATION axis="y" angle="-90" />
-                <SCALE sx="1" sy="2" sz="1" />
-
-                <DESCENDANTS>
-                  <LEAF  type="rectangle" args="0 0.5 0.5 0" />
-                </DESCENDANTS>
-           </NODE>
-
-     <!-- Another cube face -->
-           <NODE id="faceperna4">
-              <MATERIAL id="null" />
-              <TEXTURE id="null" />
-
-              <TRANSLATION x="0" y="0" z="0.5" />
-              <ROTATION axis="x" angle="0" />
-              <SCALE sx="1" sy="2" sz="1" />
-
-              <DESCENDANTS>
-                <LEAF  type="rectangle" args="0 0.5 0.5 0" />
-              </DESCENDANTS>
-         </NODE>
-
-   <!-- Another cube face -->
-       <NODE id="faceperna5">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-
-          <TRANSLATION x="0" y="0" z="0" />
-          <ROTATION axis="x" angle="90" />
-          <SCALE sx="1" sy="1" sz="1" />
-
-          <DESCENDANTS>
-            <LEAF  type="rectangle" args="0 0.5 0.5 0" />
-          </DESCENDANTS>
-     </NODE>
-
-   <!-- Another cube face -->
-   <NODE id="faceperna6">
-      <MATERIAL id="null" />
-      <TEXTURE id="null" />
-
-      <TRANSLATION x="0" y="1" z="0.5" />
-      <ROTATION axis="x" angle="-90" />
-      <SCALE sx="1" sy="1" sz="1" />
+      <TRANSLATION x="-0.125" y="1.5" z="2.5"/>
+      <ROTATION axis="x" angle="-90"/>
+      <SCALE sx="4.5" sy="2.5" sz="0.3"/>
 
       <DESCENDANTS>
-        <LEAF  type="rectangle" args="0 0.5 0.5 0" />
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="tampomesa1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0.25" y="0.2" z="2"/>
+      <ROTATION axis="x" angle="-90"/>
+      <SCALE sx="3" sy="2" sz="0.2"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ladomesa1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0.2" y="0.3" z="1.8"/>
+      <ROTATION axis="y" angle="90"/>
+      <SCALE sx="3.5" sy="1.2" sz="0.1"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ladomesa2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="1.8" y="0.3" z="1.8"/>
+      <ROTATION axis="y" angle="90"/>
+      <SCALE sx="3.5" sy="1.2" sz="0.1"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ladomesa3">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="0.3" z="0"/>
+      <ROTATION axis="x" angle="0"/>
+      <SCALE sx="3.5" sy="1.2" sz="0.1"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ladomesa4">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="0.75" z="2"/>
+      <ROTATION axis="x" angle="0"/>
+      <SCALE sx="1" sy="1" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.75 2 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cilindrogaveta">
+      <MATERIAL id="rug1"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="1" y="1.25" z="2"/>
+      <ROTATION axis="x" angle="0"/>
+      <SCALE sx="0.1" sy="0.1" sz="0.1"/>
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="1 1 1 1 20 1 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="perna1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <SCALE sx="0.5" sy="1.5" sz="0.5"/>
+      <TRANSLATION x="0" y="0" z="0"/>
+      <ROTATION axis="x" angle="0"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="perna2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <SCALE sx="0.5" sy="1.5" sz="0.5"/>
+      <TRANSLATION x="3.5" y="0" z="0"/>
+      <ROTATION axis="x" angle="0"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="perna3">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <SCALE sx="0.5" sy="1.5" sz="0.5"/>
+      <TRANSLATION x="0" y="0" z="3.5"/>
+      <ROTATION axis="x" angle="0"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="perna4">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <SCALE sx="0.5" sy="1.5" sz="0.5"/>
+      <TRANSLATION x="3.5" y="0" z="3.5"/>
+      <ROTATION axis="x" angle="0"/>
+
+      <DESCENDANTS>
+        <NODEREF id="perna"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="perna">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <SCALE sx="1" sy="1" sz="1"/>
+      <TRANSLATION x="0" y="0" z="0"/>
+      <ROTATION axis="x" angle="0"/>
+
+      <DESCENDANTS>
+        <NODEREF id="faceperna1"/>
+        <NODEREF id="faceperna2"/>
+        <NODEREF id="faceperna3"/>
+        <NODEREF id="faceperna4"/>
+        <NODEREF id="faceperna5"/>
+        <NODEREF id="faceperna6"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna1">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0.5" y="0" z="0.5"/>
+      <ROTATION axis="y" angle="90"/>
+      <SCALE sx="1" sy="2" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna2">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="1" z="0"/>
+      <ROTATION axis="x" angle="180"/>
+      <SCALE sx="1" sy="2" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna3">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="0" z="0"/>
+      <ROTATION axis="y" angle="-90"/>
+      <SCALE sx="1" sy="2" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna4">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="0" z="0.5"/>
+      <ROTATION axis="x" angle="0"/>
+      <SCALE sx="1" sy="2" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna5">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="0" z="0"/>
+      <ROTATION axis="x" angle="90"/>
+      <SCALE sx="1" sy="1" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceperna6">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+
+      <TRANSLATION x="0" y="1" z="0.5"/>
+      <ROTATION axis="x" angle="-90"/>
+      <SCALE sx="1" sy="1" sz="1"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.5 0.5 0"/>
       </DESCENDANTS>
 
-   </NODE>
+    </NODE>
 
- <!--   -->
+    <!-- -->
 
- <!-- The Candle  -->
+    <!-- The Candle -->
 
- <NODE id="candeeiro">
-  <MATERIAL id="null" />
-  <TEXTURE id="null" />
+    <NODE id="candeeiro">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
 
-  <TRANSLATION x="1.8" y="-0.2" z="1" />
+      <TRANSLATION x="1.8" y="-0.2" z="1"/>
 
-  <DESCENDANTS>
-      <NODEREF id="basecandeeiro" />
-      <NODEREF id="esferacandeeiro" />
-      <NODEREF id="troncocandeeiro" />
-      <NODEREF id="cabecacandeeiro" />
-  </DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="basecandeeiro"/>
+        <NODEREF id="esferacandeeiro"/>
+        <NODEREF id="troncocandeeiro"/>
+        <NODEREF id="cabecacandeeiro"/>
+      </DESCENDANTS>
 
- </NODE>
+    </NODE>
 
- <NODE id="basecandeeiro">
-  <MATERIAL id="Trug" />
-  <TEXTURE id="clear" />
+    <NODE id="basecandeeiro">
+      <MATERIAL id="Trug"/>
+      <TEXTURE id="clear"/>
 
-  <TRANSLATION x="0" y="2.5" z="0" />
-  <ROTATION axis="x" angle="90" />
-  <SCALE sx="0.25" sy="0.25" sz="0.25" />
+      <TRANSLATION x="0" y="2.5" z="0"/>
+      <ROTATION axis="x" angle="90"/>
+      <SCALE sx="0.25" sy="0.25" sz="0.25"/>
 
-  <DESCENDANTS>
-    <LEAF  type="cylinder" args="3 1 1 1 20 1 1" />
-  </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="3 1 1 1 20 1 1"/>
+      </DESCENDANTS>
 
- </NODE>
+    </NODE>
 
- <NODE id="esferacandeeiro">
-  <MATERIAL id="green" />
-  <TEXTURE id="clear" />
+    <NODE id="esferacandeeiro">
+      <MATERIAL id="green"/>
+      <TEXTURE id="clear"/>
 
-  <TRANSLATION x="0" y="2.5" z="0" />
-  <ROTATION axis="x" angle="0" />
-  <SCALE sx="0.25" sy="0.25" sz="0.25" />
+      <TRANSLATION x="0" y="2.5" z="0"/>
+      <ROTATION axis="x" angle="0"/>
+      <SCALE sx="0.25" sy="0.25" sz="0.25"/>
 
-  <DESCENDANTS>
-    <LEAF  type="sphere" args="1 20 20" />
-  </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
 
- </NODE>
+    </NODE>
 
- <NODE id="troncocandeeiro">
-  <MATERIAL id="green" />
-  <TEXTURE id="clear" />
+    <NODE id="troncocandeeiro">
+      <MATERIAL id="green"/>
+      <TEXTURE id="clear"/>
 
-  <TRANSLATION x="0" y="3.5" z="0" />
-  <ROTATION axis="x" angle="90" />
-  <SCALE sx="0.1" sy="0.1" sz="0.4" />
+      <TRANSLATION x="0" y="3.5" z="0"/>
+      <ROTATION axis="x" angle="90"/>
+      <SCALE sx="0.1" sy="0.1" sz="0.4"/>
 
-  <DESCENDANTS>
-    <LEAF  type="cylinder" args="2 1 1 1 20 1 1" />
-  </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="2 1 1 1 20 1 1"/>
+      </DESCENDANTS>
 
- </NODE>
+    </NODE>
 
- <NODE id="cabecacandeeiro">
-  <MATERIAL id="purple" />
-  <TEXTURE id="clear" />
+    <NODE id="cabecacandeeiro">
+      <MATERIAL id="purple"/>
+      <TEXTURE id="clear"/>
 
-  <TRANSLATION x="0" y="3.9" z="0" />
-  <ROTATION axis="x" angle="90" />
-  <SCALE sx="0.4" sy="0.4" sz="0.4" />
+      <TRANSLATION x="0" y="3.9" z="0"/>
+      <ROTATION axis="x" angle="90"/>
+      <SCALE sx="0.4" sy="0.4" sz="0.4"/>
 
-  <DESCENDANTS>
-    <LEAF  type="cylinder" args="2 1 2 1 20 0 0" />
-  </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="2 1 2 1 20 0 0"/>
+      </DESCENDANTS>
 
- </NODE>
+    </NODE>
 
-    <!--  The paiting -->
+    <!-- The paiting -->
 
     <NODE id="quadro">
       <MATERIAL id="boardmaterial"/>
@@ -954,7 +1190,7 @@
 
     </NODE>
 
-    <!--  TV  -->
+    <!-- TV -->
 
     <NODE id="tv">
       <MATERIAL id="tvmaterial"/>
@@ -1187,7 +1423,7 @@
 
     </NODE>
 
-    <!--  Sofa  -->
+    <!-- Sofa -->
     <NODE id="sofa">
       <MATERIAL id="leatherSofa"/>
       <TEXTURE id="leather"/>
@@ -1426,7 +1662,7 @@
 
     </NODE>
 
-    <!--  Pillows  -->
+    <!-- Pillows -->
 
     <NODE id="pillow1">
       <MATERIAL id="null"/>
@@ -1491,8 +1727,6 @@
       </DESCENDANTS>
 
     </NODE>
-
-
 
   </NODES>
 

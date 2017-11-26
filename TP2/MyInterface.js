@@ -89,3 +89,20 @@ MyInterface.prototype.addShadersGroup = function() {
     this.gui.add(this.scene, 'selectedShader', shaders).name('Shader examples');
 
 }
+
+
+MyInterface.prototype.addSelectionColor = function(){
+  let obj = this;
+  this.gui.add(this.scene, 'r',0,1).onChange(function(v)
+	{
+		obj.scene.updateR(v);
+	});
+  this.gui.add(this.scene, 'g',0,1).onChange(function(v)
+	{
+		obj.scene.updateG(v);
+	});
+  this.gui.add(this.scene, 'b',0,1).onChange(function(v)
+	{
+		obj.scene.updateB(v);
+	});
+}

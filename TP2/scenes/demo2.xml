@@ -420,7 +420,7 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore">
+    <NODE id="troncoArvore" selectable="tt">
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="clear" />
 
@@ -540,7 +540,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
         <ANIMATIONREFS>
-          <ANIMATIONREF id="animacaoTesteLinear"/>
+          <ANIMATIONREF id="animacaoTesteCombo"/>
         </ANIMATIONREFS>
         <DESCENDANTS>
        		<NODEREF id="meiaPiramide1" />

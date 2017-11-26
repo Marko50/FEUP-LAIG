@@ -32,7 +32,7 @@ class CircularAnimation extends Animation{
     this.calcPosition(deltaTime);
     mat4.translate(this.transformMatrix, this.aux, [this.animationCenter[0], this.animationCenter[1], this.animationCenter[2]]);
     mat4.translate(this.transformMatrix, this.transformMatrix, [this.posX, this.posY, this.posZ]);
-    mat4.rotate(this.transformMatrix, this.transformMatrix, this.startAngle - this.angle, [0, 1, 0]);
+    mat4.rotate(this.transformMatrix, this.transformMatrix, -this.startAngle + this.angle, [0, 1, 0]);
     this.checkPositionStatus();
   }
 }

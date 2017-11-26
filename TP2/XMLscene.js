@@ -12,11 +12,23 @@ function XMLscene(interface) {
   this.interface = interface;
   this.nodesSelectableValues = {};
   this.lightValues = {};
+  this.r = 1;
+  this.g = 1;
+  this.b = 1;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
 XMLscene.prototype.constructor = XMLscene;
 
+XMLscene.prototype.updateR = function(v){
+  this.r = v;
+}
+XMLscene.prototype.updateG = function(v){
+  this.g = v;
+}
+XMLscene.prototype.updateB = function(v){
+  this.b = v;
+}
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.7
  * @function
@@ -37,7 +49,7 @@ XMLscene.prototype.init = function(application) {
   this.shaders = [
     ["test", new CGFshader(this.gl, "shaders/test.vert", "shaders/test.frag")],
     ["cenas", new CGFshader(this.gl, "shaders/test.vert", "shaders/test2.frag")],
-    ["variable", new CGFshader(this.gl, "shaders/variable.vert", "shaders/test.frag")]
+    ["variable", new CGFshader(this.gl, "shaders/variable.vert", "shaders/variable.frag")]
   ];
   this.selectedShader = 0;
 
@@ -117,6 +129,8 @@ XMLscene.prototype.onGraphLoaded = function() {
   this.interface.addSelectablesGroup(this.graph.nodes);
   //Ads the shaders group
   this.interface.addShadersGroup();
+
+  this.interface.addSelectionColor();
 }
 
 /**
@@ -131,9 +145,12 @@ XMLscene.prototype.display = function() {
   // Clear image and depth buffer everytime we update the scene
   this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
   this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
+  let fColor = vec3.fromValues(this.r, this.g,this.b);
   let timeF = Math.cos(this.elapsedTime);
+  let timeF2 = Math.sin(this.elapsedTime);
   this.shaders[2][1].setUniformsValues({timeFactor: timeF});
+  this.shaders[2][1].setUniformsValues({timeFactor2: timeF2});
+  this.shaders[2][1].setUniformsValues({finalColor: fColor});
 
   let time = Date.now();
   let deltaTime = (time - this.currentTime)/1000;

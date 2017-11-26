@@ -1589,7 +1589,7 @@ MySceneGraph.prototype.displayNode = function(node) {
   selected = this.stackSelected[this.stackSelected.length - 1] | node.selected;
   this.scene.pushMatrix();
   node.update();
-  this.scene.multMatrix(node.transformMatrix);
+  this.scene.multMatrix(node.realMatrix);
   this.stackMaterials.push(mID);
   this.stackTextures.push(tID);
   this.stackSelected.push(selected);
@@ -1610,7 +1610,8 @@ MySceneGraph.prototype.displayNode = function(node) {
   }
   this.materials[mID].apply();
   if(selected){
-    
+    let diff = vec3.fromValues(this.materials[mID].diffuse[0],this.materials[mID].diffuse[1],this.materials[mID].diffuse[2]);
+    this.scene.shaders[2][1].setUniformsValues({initialColor: diff});
     this.scene.setActiveShader(this.scene.shaders[this.scene.selectedShader][1]);
     node.display(s, t);
     this.scene.setActiveShader(this.scene.defaultShader);

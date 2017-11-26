@@ -36,6 +36,8 @@ function MyGraphNode(graph, nodeID, selectable) {
   this.transformMatrix = mat4.create();
   mat4.identity(this.transformMatrix);
 
+  this.realMatrix = mat4.create();
+
   this.lastTime = Date.now();
 }
 
@@ -117,7 +119,7 @@ MyGraphNode.prototype.update = function(){
     this.lastTime = currentTime;
     this.updateAnimations(deltaTime);
   }
-  this.scene.multMatrix(this.animationsMatrix);
+  mat4.multiply(this.realMatrix,this.animationsMatrix,this.transformMatrix);
 }
 
 MyGraphNode.prototype.display = function(s, t){
