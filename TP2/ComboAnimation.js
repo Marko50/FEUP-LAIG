@@ -1,29 +1,40 @@
-class ComboAnimation extends Animation{
-  constructor(scene, velocity, animations){
+/**
+  Class representing an Animation of type Combo
+  @extends Animation
+*/
+class ComboAnimation extends Animation {
+  /**
+    @param {XMLScene} scene XML Scene where the animation will be represented
+    @param {Number} velocity The animation's velocity
+    @param {Array} animations The animations that this combo animation represents
+    @constructor
+  */
+  constructor(scene, velocity, animations) {
     super(scene, velocity);
     this.animations = animations;
     this.index = 0;
   }
 
-  checkStatus(){
-    if(!this.animations[this.index].moving){
+  /**
+    Checks if each one of the current animation has reached its end
+    @name checkStatus
+  */
+  checkStatus() {
+    if (!this.animations[this.index].moving) {
       this.index++;
-      if(this.index == this.animations.length){
+      if (this.index == this.animations.length) {
         this.moving = false;
       }
     }
   }
-
-  update(deltaTime){
-    if(this.moving){
-        this.animations[this.index].update(deltaTime);
-        this.transformMatrix = this.animations[this.index].transformMatrix;
-        this.checkStatus();
-    }
-    else{
-      this.animations[this.index].update(deltaTime);
-      this.transformMatrix = this.animations[this.index].transformMatrix;
-    }
-
+  /**
+    Calculates the animation's transform matrix
+    @param {Number} deltaTime time bewteen updates
+    @name update
+  */
+  update(deltaTime) {
+    this.animations[this.index].update(deltaTime);
+    this.transformMatrix = this.animations[this.index].transformMatrix;
+    this.checkStatus();
   }
 }

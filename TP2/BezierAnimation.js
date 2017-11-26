@@ -1,4 +1,15 @@
+/**
+  Class representing an Animation of type Bezier
+  @extends Animation
+*/
 class BezierAnimation extends Animation{
+  /**
+    Creates a Bezier animation
+    @constructor
+    @param {XMLScene} scene XML Scene where the animation will be represented
+    @param {Number} velocity The animation velocity
+    @param {Array} controlPoints controlPoints of the animation
+  */
   constructor(scene,velocity, controlPoints){
     super(scene,velocity);
     this.s = 0;
@@ -6,7 +17,11 @@ class BezierAnimation extends Animation{
     mat4.identity(this.aux);
     this.casteljou(controlPoints);
   }
-
+  /**
+    Does the first level of casteljou's algorithm to calculate the approximate distance of the animation
+    @param {Array} controlPoints controlPoints of the animation
+    @name casteljou
+  */
   casteljou(controlPoints){
     let p1 = vec3.fromValues(controlPoints[0],controlPoints[1],controlPoints[2]);
     let p2 = vec3.fromValues(controlPoints[3],controlPoints[4],controlPoints[5]);
@@ -56,7 +71,11 @@ class BezierAnimation extends Animation{
 
     this.T = d/this.velocity;
   }
-
+  /**
+    Calculates the position of the object in the animation
+    @param {Number} deltaTime time between updates
+    @name calcPosition
+  */
   calcPosition(deltaTime){
     let param1 = Math.pow(1-this.s,3);
     let param2 = 3*this.s*(1-Math.pow(this.s,2));
@@ -76,13 +95,21 @@ class BezierAnimation extends Animation{
     this.s += deltaTime/this.T;
   }
 
+  /**
+    Checks if the animation has reached its end
+    @name checkPositionStatus
+  */
   checkPositionStatus(){
     if(this.s >= 1 ){
       this.moving = false;
     }
   }
 
-
+  /**
+    Calculates the animation's transform matrix
+    @param {Number} deltaTime time between updates
+    @name update
+  */
   update(deltaTime) {
     mat4.translate(this.transformMatrix, this.aux, [this.x, this.y, this.z]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);

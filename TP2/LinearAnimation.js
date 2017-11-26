@@ -1,4 +1,15 @@
+/**
+  Class representing an Animation of type Linear
+  @extends Animation
+*/
 class LinearAnimation extends Animation {
+  /**
+    Creates a Linear animation
+    @constructor
+    @param {XMLScene} scene XML Scene where the animation will be represented
+    @param {Number} velocity The animation velocity
+    @param {Array} controlPoints controlPoints of the animation
+  */
   constructor(scene, velocity, controlPoints) {
     super(scene, velocity);
     this.cp = [];
@@ -12,7 +23,10 @@ class LinearAnimation extends Animation {
     this.calcAngle();
     this.calcVelocity();
   }
-
+  /**
+    Calculates the length of the current frame as well as its duration
+    @name calcLength
+  */
   calcLength() {
     this.posX = this.cp[this.index][0];
     this.posZ = this.cp[this.index][2];
@@ -23,7 +37,10 @@ class LinearAnimation extends Animation {
     this.timeForFrame = this.length / this.velocity;
     this.elapsedTime = 0;
   }
-
+  /**
+    Calculates the angle of two consecutive frame diretions
+    @name calcAngle
+  */
   calcAngle() {
     this.cosAngle = (this.cp[this.index + 1][0] - this.cp[this.index][0]) / this.length;
     let aux = (this.cp[this.index + 1][1] - this.cp[this.index][1]);
@@ -33,10 +50,10 @@ class LinearAnimation extends Animation {
     if (this.cosAngle == 0) {
       if (this.sinAngle == -1) this.angle = Math.PI / 2;
       else this.angle = 3 * Math.PI / 2;
-    } else if (this.sinAngle == 0) {
-      if (this.cosAngle == -1) {
-        this.angle = 0;
-      } else this.angle = Math.PI;
+    }
+    else if (this.sinAngle == 0) {
+      if (this.cosAngle == -1) this.angle = 0;
+      else this.angle = Math.PI;
     } else if (this.cosAngle > 0 && this.sinAngle > 0) {
       this.angle = Math.acos(this.cosAngle);
     } else if (this.cosAngle > 0 && this.sinAngle < 0) {
@@ -47,13 +64,19 @@ class LinearAnimation extends Animation {
       this.angle = Math.PI + Math.acos(this.cosAngle);
     }
   }
-
+  /**
+    Calculates the velocity in each axis
+    @name calcVelocity
+  */
   calcVelocity() {
     this.vx = this.velocity * this.cosAngle;
     this.vz = this.velocity * this.sinAngle;
     this.vy = Math.sqrt(Math.round(this.velocity * this.velocity - this.vx * this.vx - this.vz * this.vz, 3)) * this.yModifier;
   }
-
+  /**
+    Checks if the current frame has reached its end
+    @name checkPositionStatus
+  */
   checkPositionStatus() {
     if (this.elapsedTime >= this.timeForFrame) {
       this.index++;
@@ -66,13 +89,18 @@ class LinearAnimation extends Animation {
       }
     }
   }
-
+  /**
+    calculates the animation's transform matrix
+    @param {Number} deltaTime
+    @name update
+  */
   update(deltaTime) {
     this.elapsedTime += deltaTime;
     this.posX += deltaTime * this.vx;
     this.posZ += deltaTime * this.vz;
     this.posY += deltaTime * this.vy;
-    mat4.translate(this.transformMatrix, this.aux, [this.posX, this.posY, this.posZ]);
+    mat4.translate(this.transformMatrix, this.aux, [this.cp[this.index][0], this.cp[this.index][1],this.cp[this.index][2]]);
+    mat4.translate(this.transformMatrix, this.transformMatrix, [this.posX, this.posY, this.posZ]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);
     this.checkPositionStatus();
     }

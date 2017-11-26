@@ -90,7 +90,12 @@ MyInterface.prototype.addShadersGroup = function() {
 
 }
 
-
+/**
+ * Adds the selectors for the selection color of the xml scene
+ * @function
+ * @name addSelectionColor
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addSelectionColor = function(){
   let obj = this;
   this.gui.add(this.scene, 'r',0,1).onChange(function(v)

@@ -49,6 +49,8 @@ MyGraphNode.prototype.addAnimation = function(animation){
 
 
 MyGraphNode.prototype.updateAnimations = function(currentTime){
+  let aux = mat4.create();
+  mat4.identity(aux);
   if(this.animations[this.animationINDEX].moving){
     this.animations[this.animationINDEX].update(currentTime);
     this.animationsMatrix = this.animations[this.animationINDEX].transformMatrix;

@@ -20,12 +20,30 @@ function XMLscene(interface) {
 XMLscene.prototype = Object.create(CGFscene.prototype);
 XMLscene.prototype.constructor = XMLscene;
 
+/**
+ * Sets the Red component of the selction color
+ * @function
+ * @memberof XMLscene
+ * @name updateR
+ */
 XMLscene.prototype.updateR = function(v){
   this.r = v;
 }
+/**
+ * Sets the Green component of the selction color
+ * @function
+ * @memberof XMLscene
+ * @name updateG
+ */
 XMLscene.prototype.updateG = function(v){
   this.g = v;
 }
+/**
+ * Sets the Blue component of the selction color
+ * @function
+ * @memberof XMLscene
+ * @name updateB
+ */
 XMLscene.prototype.updateB = function(v){
   this.b = v;
 }

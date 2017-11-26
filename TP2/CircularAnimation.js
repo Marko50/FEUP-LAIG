@@ -1,4 +1,18 @@
+/**
+  Class representing an Animation of type Circular
+  @extends Animation
+*/
 class CircularAnimation extends Animation{
+  /**
+    Creates a Ciruclar animation
+    @constructor
+    @param {XMLScene} scene XML Scene where the animation will be represented
+    @param {Number} velocity The animation velocity
+    @param {Array} center The animation's center
+    @param {Number} radius The animation's radius
+    @param {Number} startang The initial angle that the object has to rotate
+    @param {Number} rotang The total angle that the object has to rotate
+   */
   constructor(scene,velocity, center, radius, startang, rotang){
     super(scene,velocity);
     var DEGREE_TO_RAD = Math.PI/180;
@@ -14,19 +28,30 @@ class CircularAnimation extends Animation{
     this.aux = mat4.create();
     mat4.identity(this.aux);
   }
-
+  /**
+    Checks if the animation has reached its end
+    @name checkPositionStatus
+  */
   checkPositionStatus(){
     if(this.angle >= this.rotAngle){
       this.moving = false;
     }
   }
-
+  /**
+    Calculates the position of the object in the animation as well as the angle
+    @param {Number} deltaTime time between updates
+    @name calcPosition
+  */
   calcPosition(deltaTime){
     this.angle += this.startAngle + this.angularVelocity*deltaTime;
     this.posX = Math.cos(this.angle) * this.animationRadius;
     this.posZ = Math.sin(this.angle) * this.animationRadius;
   }
-
+  /**
+    Calculates the animation's transform matrix.
+    @param {Number} deltaTime time between updates
+    @name update
+  */
   update(deltaTime) {
     this.elapsedTime += deltaTime;
     this.calcPosition(deltaTime);

@@ -227,15 +227,19 @@
 
   <ANIMATIONS>
     <ANIMATION id="animacaoLinearHomer" speed="1" type="linear">
-      <controlpoint xx="10" yy="0" zz="17"/>
-      <controlpoint xx="0" yy="0" zz="17"/>
+      <controlpoint xx="5" yy="0" zz="8.5"/>
+      <controlpoint xx="-5" yy="0" zz="8.5"/>
     </ANIMATION>
     <ANIMATION id="animacaoLinearHomer2" speed="1" type="linear">
-      <controlpoint xx="0" yy="0" zz="24"/>
-      <controlpoint xx="10" yy="0" zz="17"/>
+      <controlpoint xx="-5" yy="0" zz="8.5"/>
+      <controlpoint xx="5" yy="0" zz="-8.5"/>
     </ANIMATION>
-    <ANIMATION id ="animacaoRodaHomer" speed="0.1" type="circular"
-      centerx ="0" centery="0" centerz="18" radius="1" startang="0" rotang="180">
+    <ANIMATION id="animacaoLinearHomer3" speed="1" type="linear">
+      <controlpoint xx="0" yy="0" zz="5"/>
+      <controlpoint xx="5" yy="0" zz="5"/>
+    </ANIMATION>
+    <ANIMATION id ="animacaoRodaHomer" speed="1" type="circular"
+      centerx ="0" centery="0" centerz="20" radius="1" startang="0" rotang="90">
     </ANIMATION>
     <ANIMATION id="animacaoBezierHomer1" speed="1" type="bezier">
       <controlpoint xx="0" yy="0" zz="0"/>
@@ -243,10 +247,21 @@
       <controlpoint xx="10" yy="0" zz="10"/>
       <controlpoint xx="0" yy="0" zz="10"/>
     </ANIMATION>
+    <ANIMATION id="animacaoBezierHomer2" speed="1" type="bezier">
+      <controlpoint xx="0" yy="0" zz="10"/>
+      <controlpoint xx="10" yy="0" zz="10"/>
+      <controlpoint xx="10" yy="0" zz="0"/>
+      <controlpoint xx="0" yy="0" zz="0"/>
+    </ANIMATION>
     <ANIMATION id ="animacaoHomerCombo" type="combo">
       <SPANREF id ="animacaoLinearHomer"/>
       <SPANREF id ="animacaoRodaHomer"/>
       <SPANREF id ="animacaoLinearHomer2"/>
+    </ANIMATION>
+    <ANIMATION id ="animacaoHomerCombo2" type="combo">
+      <SPANREF id ="animacaoLinearHomer3"/>
+      <SPANREF id ="animacaoBezierHomer1"/>
+      <SPANREF id ="animacaoBezierHomer2"/>
     </ANIMATION>
   </ANIMATIONS>
 
@@ -278,9 +293,9 @@
     <NODE id="homer">
       <MATERIAL id="homerBody"/>
       <TEXTURE id="clear"/>
-      <ROTATION axis ="y" angle="90"/>
+      <ROTATION axis="y" angle="90"/>
       <ANIMATIONREFS>
-        <ANIMATIONREF id="animacaoBezierHomer1"/>
+        <ANIMATIONREF id="animacaoHomerCombo2"/>
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="cabeca"/>
@@ -290,7 +305,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="cabeca">
+    <NODE id="cabeca" selectable="true">
       <MATERIAL id="null"/>
       <TEXTURE id="clear"/>
       <DESCENDANTS>
@@ -379,7 +394,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="bracos">
+    <NODE id="bracos" selectable="true">
       <MATERIAL id="null"/>
       <TEXTURE id="null"/>
       <DESCENDANTS>
@@ -410,7 +425,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="pernas">
+    <NODE id="pernas" selectable="true">
       <MATERIAL id="pants"/>
       <TEXTURE id="null"/>
       <DESCENDANTS>
@@ -544,7 +559,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="cylinderholder">
+    <NODE id="cylinderholder" selectable ="true">
       <MATERIAL id="rug1"/>
       <TEXTURE id="clear"/>
       <TRANSLATION x="9.8" y="2.9" z="-1.6"/>
