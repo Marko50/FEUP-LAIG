@@ -285,7 +285,7 @@
     </NODE>
 
     <!-- Light bulb -->
-    <NODE id="luz_esfera" selectable ="tt">
+    <NODE id="luz_esfera" selectable ="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -314,7 +314,7 @@
     </NODE>
 
     <!-- Street bench -->
-    <NODE id="bancos" selectable = "tt">
+    <NODE id="bancos" selectable = "true">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="clear" />
         <DESCENDANTS>
@@ -420,7 +420,7 @@
     </NODE>
 
     <!-- Tree trunk -->
-    <NODE id="troncoArvore" selectable="tt">
+    <NODE id="troncoArvore" selectable="true">
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="clear" />
 
@@ -535,7 +535,7 @@
     </NODE>
 
     <!-- A pyramid -->
-    <NODE id="piramide" selectable = "tt">
+    <NODE id="piramide" selectable = "true">
 
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
@@ -566,7 +566,7 @@
     </NODE>
 
     <!-- Half a pyramid -->
-    <NODE id="meiaPiramide1" selectable ="tt">
+    <NODE id="meiaPiramide1" selectable ="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 

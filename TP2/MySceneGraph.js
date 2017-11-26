@@ -1283,7 +1283,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         return "node ID must be unique (conflict: ID = " + nodeID + ")";
       let selectable;
       let select = this.reader.getString(children[i],'selectable',false);
-      if(select == null || select != 'tt'){
+      if(select == null || select != 'true'){
         selectable = false;
       }
       else selectable = true;
