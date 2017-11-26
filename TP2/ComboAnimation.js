@@ -18,6 +18,7 @@ class ComboAnimation extends Animation {
   /**
     Checks if each one of the current animation has reached its end
     @name checkStatus
+    @memberof ComboAnimation
   */
   checkStatus() {
     if (!this.animations[this.index].moving) {
@@ -31,6 +32,7 @@ class ComboAnimation extends Animation {
     Calculates the animation's transform matrix
     @param {Number} deltaTime time bewteen updates
     @name update
+    @memberof ComboAnimation
   */
   update(deltaTime) {
     this.animations[this.index].update(deltaTime);

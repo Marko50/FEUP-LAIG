@@ -21,6 +21,7 @@ class BezierAnimation extends Animation{
     Does the first level of casteljou's algorithm to calculate the approximate distance of the animation
     @param {Array} controlPoints controlPoints of the animation
     @name casteljou
+    @memberof BezierAnimation
   */
   casteljou(controlPoints){
     let p1 = vec3.fromValues(controlPoints[0],controlPoints[1],controlPoints[2]);
@@ -75,6 +76,7 @@ class BezierAnimation extends Animation{
     Calculates the position of the object in the animation
     @param {Number} deltaTime time between updates
     @name calcPosition
+    @memberof BezierAnimation
   */
   calcPosition(deltaTime){
     let param1 = Math.pow(1-this.s,3);
@@ -98,6 +100,7 @@ class BezierAnimation extends Animation{
   /**
     Checks if the animation has reached its end
     @name checkPositionStatus
+    @memberof BezierAnimation
   */
   checkPositionStatus(){
     if(this.s >= 1 ){
@@ -109,6 +112,7 @@ class BezierAnimation extends Animation{
     Calculates the animation's transform matrix
     @param {Number} deltaTime time between updates
     @name update
+    @memberof BezierAnimation
   */
   update(deltaTime) {
     mat4.translate(this.transformMatrix, this.aux, [this.x, this.y, this.z]);

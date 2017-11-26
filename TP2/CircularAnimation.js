@@ -31,6 +31,7 @@ class CircularAnimation extends Animation{
   /**
     Checks if the animation has reached its end
     @name checkPositionStatus
+    @memberof CircularAnimation
   */
   checkPositionStatus(){
     if(this.angle >= this.rotAngle){
@@ -41,6 +42,7 @@ class CircularAnimation extends Animation{
     Calculates the position of the object in the animation as well as the angle
     @param {Number} deltaTime time between updates
     @name calcPosition
+    @memberof CircularAnimation
   */
   calcPosition(deltaTime){
     this.angle += this.startAngle + this.angularVelocity*deltaTime;
@@ -51,6 +53,7 @@ class CircularAnimation extends Animation{
     Calculates the animation's transform matrix.
     @param {Number} deltaTime time between updates
     @name update
+    @memberof CircularAnimation
   */
   update(deltaTime) {
     this.elapsedTime += deltaTime;

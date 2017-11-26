@@ -26,6 +26,7 @@ class LinearAnimation extends Animation {
   /**
     Calculates the length of the current frame as well as its duration
     @name calcLength
+    @memberof LinearAnimation
   */
   calcLength() {
     this.posX = this.cp[this.index][0];
@@ -40,6 +41,7 @@ class LinearAnimation extends Animation {
   /**
     Calculates the angle of two consecutive frame diretions
     @name calcAngle
+    @memberof LinearAnimation
   */
   calcAngle() {
     this.cosAngle = (this.cp[this.index + 1][0] - this.cp[this.index][0]) / this.length;
@@ -67,6 +69,7 @@ class LinearAnimation extends Animation {
   /**
     Calculates the velocity in each axis
     @name calcVelocity
+    @memberof LinearAnimation
   */
   calcVelocity() {
     this.vx = this.velocity * this.cosAngle;
@@ -76,6 +79,7 @@ class LinearAnimation extends Animation {
   /**
     Checks if the current frame has reached its end
     @name checkPositionStatus
+    @memberof LinearAnimation
   */
   checkPositionStatus() {
     if (this.elapsedTime >= this.timeForFrame) {
@@ -93,6 +97,7 @@ class LinearAnimation extends Animation {
     calculates the animation's transform matrix
     @param {Number} deltaTime
     @name update
+    @memberof LinearAnimation
   */
   update(deltaTime) {
     this.elapsedTime += deltaTime;
