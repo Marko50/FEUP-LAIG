@@ -20,7 +20,7 @@
   <!-- Lights -->
   <LIGHTS>
     <LIGHT id="light0">
-      <enable value="1"/>
+      <enable value="0"/>
       <position x="1.8" y="3.5" z="1" w="1"/>
       <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
       <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
@@ -28,7 +28,7 @@
     </LIGHT>
 
     <LIGHT id="light1">
-      <enable value="1"/>
+      <enable value="0"/>
       <position x="11.9" y="4" z="1.55" w="1"/>
       <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
       <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
@@ -36,7 +36,7 @@
     </LIGHT>
 
     <LIGHT id="light2">
-      <enable value="0"/>
+      <enable value="1"/>
       <position x="8.0" y="12.5" z="8.0" w="1"/>
       <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
       <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
@@ -207,6 +207,7 @@
       <emission r="0.0" g="0.0" b="0.0" a="1"/>
     </MATERIAL>
 
+
     <MATERIAL id="boardmaterial">
       <shininess value="1.0"/>
       <specular r="0.0" g="0.0" b="0.0" a="1"/>
@@ -284,6 +285,8 @@
         <NODEREF id="sofa"/>
         <NODEREF id="wall1"/>
         <NODEREF id="wall2"/>
+        <NODEREF id="wall3"/>
+        <NODEREF id="wall4"/>
         <NODEREF id="candeeiromaior"/>
         <NODEREF id="rug"/>
         <NODEREF id="homer"/>
@@ -292,16 +295,57 @@
 
     <NODE id="homer">
       <MATERIAL id="homerBody"/>
-      <TEXTURE id="clear"/>
+      <TEXTURE id="null"/>
       <ROTATION axis="y" angle="90"/>
       <ANIMATIONREFS>
         <ANIMATIONREF id="animacaoHomerCombo2"/>
       </ANIMATIONREFS>
       <DESCENDANTS>
-        <NODEREF id="cabeca"/>
+        <NODEREF id="shoe1"/>
+        <NODEREF id="shoe2"/>
         <NODEREF id="tronco"/>
+        <NODEREF id="cabeca"/>
         <NODEREF id="bracos"/>
         <NODEREF id="pernas"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="shoe1" selectable="true">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <SCALE sx ="0.5" sy="0.25" sz="0.5"/>
+      <TRANSLATION x="23" y="0" z="9.6"/>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="shoe2" selectable="true">
+      <MATERIAL id="null"/>
+      <TEXTURE id="null"/>
+      <SCALE sx ="0.5" sy="0.25" sz="0.5"/>
+      <TRANSLATION x="25" y="0" z="9.6"/>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="tronco" selectable="true">
+      <MATERIAL id="shirt"/>
+      <TEXTURE id="null"/>
+      <SCALE sx ="2" sy="2" sz="1"/>
+      <TRANSLATION x="6" y="2" z="5"/>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 20 20"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cabelo">
+      <MATERIAL id="null"/>
+      <TEXTURE id="leather"/>
+      <DESCENDANTS>
+        <NODEREF id="cabelo1"/>
+        <NODEREF id="cabelo2"/>
       </DESCENDANTS>
     </NODE>
 
@@ -311,18 +355,7 @@
       <DESCENDANTS>
         <NODEREF id="olhos"/>
         <NODEREF id="boca"/>
-        <NODEREF id="pescoco"/>
         <NODEREF id ="cranio"/>
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="pescoco">
-      <MATERIAL id="shirt"/>
-      <TEXTURE id="clear"/>
-      <TRANSLATION x="12" y="5" z="4.5"/>
-      <SCALE sx="1.3" sy="1" sz="1"/>
-      <DESCENDANTS>
-        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
       </DESCENDANTS>
     </NODE>
 
@@ -380,17 +413,6 @@
       <SCALE sx ="0.1" sy="0.1" sz="0.1"/>
       <DESCENDANTS>
         <LEAF type="sphere" args="1 20 20"/>
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="tronco">
-      <MATERIAL id="shirt"/>
-      <TEXTURE id="null"/>
-      <TRANSLATION x="12" y="5" z="5"/>
-      <ROTATION axis="x" angle="90"/>
-      <SCALE sx="1.5" sy="1" sz="2.5"/>
-      <DESCENDANTS>
-        <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
       </DESCENDANTS>
     </NODE>
 
@@ -477,11 +499,33 @@
     <NODE id="wall2">
       <MATERIAL id="wallmaterial"/>
       <TEXTURE id="clear"/>
-      <TRANSLATION x="0" y="0" z="10"/>
-      <SCALE sx="3" sy="2.5" sz="2"/>
+      <TRANSLATION x="0" y="0" z="3"/>
+      <SCALE sx="3" sy="2.5" sz="1"/>
       <ROTATION axis="y" angle="90"/>
       <DESCENDANTS>
-        <LEAF type="rectangle" args="0 5 5 0"/>
+        <LEAF type="rectangle" args="0 5 3 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="wall3">
+      <MATERIAL id="wallmaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="0" z="10"/>
+      <SCALE sx="3" sy="2.5" sz="1"/>
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 5 4 0"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="wall4">
+      <MATERIAL id="wallmaterial"/>
+      <TEXTURE id="clear"/>
+      <TRANSLATION x="0" y="10" z="6"/>
+      <SCALE sx="3" sy="1" sz="1"/>
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 2.5 3 0"/>
       </DESCENDANTS>
     </NODE>
 
@@ -560,8 +604,8 @@
     </NODE>
 
     <NODE id="cylinderholder" selectable ="true">
-      <MATERIAL id="rug1"/>
-      <TEXTURE id="clear"/>
+      <MATERIAL id="leatherSofa"/>
+      <TEXTURE id="leather"/>
       <TRANSLATION x="9.8" y="2.9" z="-1.6"/>
       <DESCENDANTS>
         <NODEREF id="cylinderholderfirsthalf"/>
