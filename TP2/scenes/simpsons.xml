@@ -231,6 +231,11 @@
       <controlpoint xx="5" yy="0" zz="8.5"/>
       <controlpoint xx="-5" yy="0" zz="8.5"/>
     </ANIMATION>
+    <ANIMATION id="animacaoLinearHomer4" speed="1" type="linear">
+      <controlpoint xx="0" yy="0" zz="0"/>
+      <controlpoint xx="0" yy="0" zz="8.5"/>
+      <controlpoint xx="0" yy="0" zz="0"/>
+    </ANIMATION>
     <ANIMATION id="animacaoLinearHomer2" speed="1" type="linear">
       <controlpoint xx="-5" yy="0" zz="8.5"/>
       <controlpoint xx="5" yy="0" zz="-8.5"/>
@@ -296,9 +301,9 @@
     <NODE id="homer">
       <MATERIAL id="homerBody"/>
       <TEXTURE id="null"/>
-      <ROTATION axis="y" angle="90"/>
+      <TRANSLATION x="-12" y="0" z="-5"/>
       <ANIMATIONREFS>
-        <ANIMATIONREF id="animacaoHomerCombo2"/>
+        <ANIMATIONREF id="animacaoLinearHomer4"/>
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="shoe1"/>
