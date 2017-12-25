@@ -1,0 +1,152 @@
+<SCENE>
+
+<!-- Initial values -->
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="1" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+</INITIALS>
+
+
+<!-- Illumination and clear colour -->
+<ILLUMINATION>
+    <ambient r="0.2" g="0.2" b="0.2" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+</ILLUMINATION>
+
+
+<!-- Lights -->
+<LIGHTS>
+	<LIGHT id="light0">
+        <enable value ="1" />
+        <position  x="0" y="30" z="0" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light1">
+        <enable value ="1" />
+        <position x="20" y="20" z="0" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+	<LIGHT id="light2">
+        <enable value ="1" />
+        <position x="0" y="10" z="20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value ="1" />
+        <position x="30" y="10" z="20" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+    </LIGHT>
+
+</LIGHTS>
+
+<!-- Textures -->
+<TEXTURES>
+	<!-- Tree trunk -->
+    <TEXTURE id="board">
+        <file path="../images/board.jpg" />
+        <amplif_factor s="2" t="2" />
+    </TEXTURE>
+</TEXTURES>
+
+
+<MATERIALS>
+    <!-- A default material -->
+    <MATERIAL id="defaultMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+</MATERIALS>
+
+<ANIMATIONS>
+  <ANIMATION id ="animacaoTesteLinear" speed="2" type="linear">
+    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="10" yy="5" zz="0"/>
+    <controlpoint xx="10" yy="0" zz="10"/>
+    <controlpoint xx="0" yy="5" zz="10"/>
+    <controlpoint xx="0" yy="0" zz="0"/>
+  </ANIMATION>
+  <ANIMATION id ="animacaoTesteCircular" speed="2" type="circular"
+    centerx ="0" centery="0" centerz="0" radius="5" startang="0" rotang="360">
+  </ANIMATION>
+  <ANIMATION id ="animacaoTesteBezier" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="5"/>
+    <controlpoint xx="2.5" yy="0" zz="0"/>
+    <controlpoint xx="5" yy="0" zz="0"/>
+    <controlpoint xx="7.5" yy="0" zz="5"/>
+  </ANIMATION>
+</ANIMATIONS>
+
+<!-- The nodes -->
+<NODES>
+
+    <ROOT id="root" />
+
+    <!-- The root node -->
+    <NODE id="root">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <DESCENDANTS>
+            <NODEREF id="peca1" />
+            <NODEREF id="objeto"/>
+            <NODEREF id="objetoHiden"/>
+        </DESCENDANTS>
+
+    </NODE>
+    <!-- The floor -->
+    <NODE id="peca1">
+        <MATERIAL id="null" />
+        <TEXTURE id="clear" />
+        <TYPE name="piece">
+          <TEAM id="1"/>
+        </TYPE>
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />
+				</DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="objeto">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="0" y="5" z="5"/>
+      <TYPE name="background">
+        <MODE id="1"/>
+      </TYPE>
+      <DESCENDANTS>
+				<LEAF  type="rectangle" args="0 4 5 0" />
+			</DESCENDANTS>
+    </NODE>
+
+    <NODE id="objetoHiden">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <TYPE name="hidden"/>
+      <TRANSLATION x="5" y="5" z="5"/>
+      <DESCENDANTS>
+				<LEAF  type="rectangle" args="0 4 5 0" />
+			</DESCENDANTS>
+    </NODE>
+
+</NODES>
+
+</SCENE>
