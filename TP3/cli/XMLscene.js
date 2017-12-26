@@ -28,6 +28,8 @@ XMLscene.prototype.init = function(application) {
 
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
+
+  this.board = new board(this,8,5);
 }
 
 XMLscene.prototype.logPicking = function ()
@@ -35,12 +37,11 @@ XMLscene.prototype.logPicking = function ()
 	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
-				if (obj)
-				{
-					var customId = this.pickResults[i][1];
+				let obj = this.pickResults[i][0];
+        if(obj){
+          let customId = this.pickResults[i][1];
 					console.log("Picked object: " + obj + ", with pick id " + customId);
-				}
+        }
 			}
 			this.pickResults.splice(0,this.pickResults.length);
 		}
@@ -110,7 +111,7 @@ XMLscene.prototype.onGraphLoaded = function() {
   this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
     this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
 
-  this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+  this.gl.clearColor(0.5, 0.3, 0.2, this.graph.background[3]);
 
   this.initLights();
 
@@ -167,12 +168,14 @@ XMLscene.prototype.display = function() {
     // Displays the scene.
     this.graph.displayScene();
 
+    this.board.display();
+
   } else {
     // Draw axis
     this.axis.display();
   }
 
-
+  this.clearPickRegistration();
   this.popMatrix();
   // ---- END Background, camera and axis setup
 

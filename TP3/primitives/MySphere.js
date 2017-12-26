@@ -6,9 +6,6 @@
  */
 function MySphere(scene, coords) {
   CGFobject.call(this, scene);
-
-  this.sceneGraph = scene;
-
   this.initBuffers(coords);
 };
 

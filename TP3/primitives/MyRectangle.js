@@ -6,8 +6,8 @@
  */
  function MyRectangle(scene, coords) {
  	CGFobject.call(this,scene);
-
  	this.initBuffers(coords);
+  this.piece = null;
  };
 
  MyRectangle.prototype = Object.create(CGFobject.prototype);

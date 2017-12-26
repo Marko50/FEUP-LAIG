@@ -9,6 +9,7 @@ function MyGraphNode(graph, nodeID) {
   this.scene = graph.scene;
   this.nodeID = nodeID;
 
+
   this.animationINDEX = 0;
 
   // IDs of child nodes.
@@ -25,13 +26,6 @@ function MyGraphNode(graph, nodeID) {
   // The texture ID.
   this.textureID = null;
 
-  //type
-  this.type = null;
-
-  //piece
-  this.team = null;
-  //background
-  this.mode = null;
 
   //ANIMATIONS_INDEX
   this.animations = [];
@@ -55,8 +49,6 @@ MyGraphNode.prototype.addAnimation = function(animation){
 
 
 MyGraphNode.prototype.updateAnimations = function(currentTime){
-  let aux = mat4.create();
-  mat4.identity(aux);
   if(this.animations[this.animationINDEX].moving){
     this.animations[this.animationINDEX].update(currentTime);
     this.animationsMatrix = this.animations[this.animationINDEX].transformMatrix;
@@ -116,7 +108,7 @@ MyGraphNode.prototype.addLeaf = function(leaf, coords) {
  * @param {Array} controlp - control points of the patch
  */
 MyGraphNode.prototype.addPatch = function(uDivs, vDivs, degreeU, degreeV, controlp) {
-  this.leaves.push(new MyPatch(this.scene, uDivs, vDivs, degreeU, degreeV, controlp));
+  this.leaves.push(new MyPatch(this.scene, uDivs, vDivs, degreeU, degreeV, controlp,this.nodeID));
 }
 
 MyGraphNode.prototype.update = function(){
@@ -130,10 +122,9 @@ MyGraphNode.prototype.update = function(){
   mat4.multiply(this.realMatrix,this.animationsMatrix,this.transformMatrix);
 }
 
+
 MyGraphNode.prototype.display = function(s, t){
   for (let i = 0; i < this.leaves.length; i++) {
-    if(this.type != "background")
-      this.graph.scene.registerForPick(this.intID, this.leaves[i]);
     this.leaves[i].updateTexCoords(s, t);
     this.leaves[i].display();
   }

@@ -26,6 +26,7 @@ function MySceneGraph(filename, scene) {
 
   this.stackTextures = new Array();
   this.stackMaterials = new Array();
+
   this.idRoot = null; // The id of the root element.
 
   this.axisCoords = [];
@@ -1260,7 +1261,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
   // Traverses nodes.
   this.nodeIDS = [];
   let children = nodesNode.children;
-  let intID = 1;
+    let intID = 1;
   for (var i = 0; i < children.length; i++) {
     var nodeName;
     if ((nodeName = children[i].nodeName) == "ROOT") {
@@ -1291,7 +1292,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       // Gathers child nodes.
       var nodeSpecs = children[i].children;
       var specsNames = [];
-      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS","TYPE"];
+      var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
       for (var j = 0; j < nodeSpecs.length; j++) {
         var name = nodeSpecs[j].nodeName;
         specsNames.push(nodeSpecs[j].nodeName);
@@ -1300,41 +1301,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         if (possibleValues.indexOf(name) == -1)
           this.onXMLMinorError("unknown tag <" + name + ">");
       }
-      let typeIndex = specsNames.indexOf("TYPE");
-      if(typeIndex != -1)
-      {
-        let type = this.reader.getString(nodeSpecs[typeIndex],'name');
-        if(type == null)
-          return "unable to parse type of NODE (node ID = " + nodeID + ")";
-        this.nodes[nodeID].type = type;
-        if(type == "piece"){
-          let pieceDesc = nodeSpecs[typeIndex].children;
-          if(pieceDesc.length != 1)
-            return "A piece only has to refer to a team and nothing else!(node ID = " + nodeID + ")";
-          if(pieceDesc[0].nodeName != "TEAM")
-            return "Invalid TAG " + pieceDesc[0].nodeName +" in (node ID = " + nodeID + ")";
-
-          let team = this.reader.getInteger(pieceDesc[0], 'id');
-          this.nodes[nodeID].team = team;
-          this.nodes[nodeID].intID = intID;
-          intID++;
-        }
-        else if (type == "background"){
-          let backgroundDesc = nodeSpecs[typeIndex].children;
-          if(backgroundDesc.length != 1)
-            return "A background object only has to refer to a display mode!(node ID = " + nodeID + ")";
-          if(backgroundDesc[0].nodeName != "MODE")
-            return "Invalid TAG " + backgroundDesc[0].nodeName +" in (node ID = " + nodeID + ")";
-
-          let mode = this.reader.getInteger(backgroundDesc[0], 'id');
-          this.nodes[nodeID].mode = mode;
-        }
-        else if (type = "hidden"){
-          this.nodes[nodeID].intID = intID;
-          intID++;
-        }
-      }
-      else this.nodes[nodeID].type = "root";
       // Retrieves material ID.
       var materialIndex = specsNames.indexOf("MATERIAL");
       if (materialIndex == -1)
@@ -1531,7 +1497,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
   this.stackTextures.push("clear");
   this.stackMaterials.push(this.defaultMaterialID);
 
-
   return null;
 }
 
@@ -1603,6 +1568,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
   let tID;
   let mID;
+
   if (node.materialID == "null") {
     mID = this.stackMaterials[this.stackMaterials.length - 1];
   } else {
@@ -1613,6 +1579,7 @@ MySceneGraph.prototype.displayNode = function(node) {
   } else {
     tID = node.textureID;
   }
+
   this.scene.pushMatrix();
   node.update();
   this.scene.multMatrix(node.realMatrix);
@@ -1621,7 +1588,7 @@ MySceneGraph.prototype.displayNode = function(node) {
 
   for (let i = 0; i < node.children.length; i++) {
     let childName = node.children[i];
-    let child = this.nodes[childName];
+    let child = this.nodes[childName];  let pickID;
     this.displayNode(child);
   }
   let s = 1;
@@ -1635,9 +1602,7 @@ MySceneGraph.prototype.displayNode = function(node) {
   }
   this.materials[mID].apply();
 
-  if(node.type != "hidden")
-    node.display(s, t);
-
+  node.display(s, t);
 
   this.stackMaterials.pop();
   this.stackTextures.pop();
@@ -1660,6 +1625,7 @@ MySceneGraph.generateRandomString = function(length) {
 
   return String.fromCharCode.apply(null, numbers);
 }
+
 
 /**
  * Displays the scene, processing each node, starting in the root node.

@@ -18,6 +18,7 @@ serialInclude(['../lib/CGF.js', '../cli/XMLscene.js', '../cli/MySceneGraph.js',
        '../primitives/MyCircle.js', '../primitives/MyPatch.js', '../animations/Animation.js',
        '../animations/LinearAnimation.js',  '../animations/CircularAnimation.js', '../animations/BezierAnimation.js',
        '../animations/ComboAnimation.js',
+       '../objects/cell.js','../objects/board.js','../objects/piece.js',
 
 main=function()
 {

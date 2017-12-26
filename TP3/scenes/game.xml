@@ -28,7 +28,7 @@
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
         <specular r="1.0" g="1.0" b="1.0" a="1.0" />
     </LIGHT>
-
+<!--  
 	<LIGHT id="light1">
         <enable value ="1" />
         <position x="20" y="20" z="0" w="1" />
@@ -39,7 +39,7 @@
 
 	<LIGHT id="light2">
         <enable value ="1" />
-        <position x="0" y="10" z="20" w="1" />
+        <position x="0" y="30" z="20" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
         <specular r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -47,11 +47,11 @@
 
     <LIGHT id="light3">
         <enable value ="1" />
-        <position x="30" y="10" z="20" w="1" />
+        <position x="30" y="30" z="20" w="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
         <specular r="0.6" g="0.6" b="0.6" a="1.0" />
-    </LIGHT>
+    </LIGHT> -->
 
 </LIGHTS>
 
@@ -70,7 +70,23 @@
     <MATERIAL id="defaultMaterial">
         <shininess value="1" />
         <specular r="0.0" g="0.0" b="0.0" a="1" />
-        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="red">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="1.0" g="0.0" b="0.0" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="blue">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.0" g="0.0" b="1.0" a="1" />
         <ambient r="0.4" g="0.4" b="0.4" a="1" />
         <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -106,46 +122,24 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
         <DESCENDANTS>
-            <NODEREF id="peca1" />
             <NODEREF id="objeto"/>
-            <NODEREF id="objetoHiden"/>
         </DESCENDANTS>
 
     </NODE>
-    <!-- The floor -->
-    <NODE id="peca1">
-        <MATERIAL id="null" />
-        <TEXTURE id="clear" />
-        <TYPE name="piece">
-          <TEAM id="1"/>
-        </TYPE>
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
-				</DESCENDANTS>
 
-    </NODE>
 
     <NODE id="objeto">
       <MATERIAL id="null" />
       <TEXTURE id="clear" />
       <TRANSLATION x="0" y="5" z="5"/>
-      <TYPE name="background">
-        <MODE id="1"/>
-      </TYPE>
       <DESCENDANTS>
 				<LEAF  type="rectangle" args="0 4 5 0" />
 			</DESCENDANTS>
     </NODE>
 
-    <NODE id="objetoHiden">
-      <MATERIAL id="null" />
-      <TEXTURE id="clear" />
-      <TYPE name="hidden"/>
-      <TRANSLATION x="5" y="5" z="5"/>
-      <DESCENDANTS>
-				<LEAF  type="rectangle" args="0 4 5 0" />
-			</DESCENDANTS>
-    </NODE>
+
+
+
 
 </NODES>
 
