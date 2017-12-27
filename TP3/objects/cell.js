@@ -6,6 +6,9 @@ class cell {
     this.dimension = dimension;
     this.scene = scene;
     this.material = appearance;
+    this.type = "cell";
+    this.line = x/6;
+    this.col = y/6;
     let xi = x;
     let yi = y;
     let xf = x + dimension;
@@ -22,13 +25,11 @@ class cell {
     mat4.identity(this.transformMatrix);
     mat4.translate(this.transformMatrix, this.transformMatrix, [5, 0,50]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, -90 * DEGREE_TO_RAD, [1, 0, 0]);
-    console.log("coords: " + coords);
     this.obj = new MyRectangle(scene, coords);
-    this.obj.piece = this;
   }
 
   display(){
-    this.scene.registerForPick(this.id, this.obj);
+    this.scene.registerForPick(this.id, this);
     this.scene.pushMatrix();
     this.scene.multMatrix(this.transformMatrix);
     this.material.apply();

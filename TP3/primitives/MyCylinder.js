@@ -7,7 +7,6 @@
 function MyCylinder(scene, coords) {
   CGFobject.call(this, scene);
   this.scene = this.scene;
-  this.piece = null;
   var arr = [];
   arr = coords.split(" ");
   var height = parseInt(arr[0]);

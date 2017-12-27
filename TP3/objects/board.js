@@ -2,6 +2,7 @@ class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
+      this.readyCells = false;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
@@ -11,12 +12,12 @@ class board {
     this.pieces = [];
     let id = 2*dimension + 1;
     for(let i = 0; i < dimension; i++){
-      this.pieces.push(new piece(this.scene,1,this.green,id,2*i,0));
+      this.pieces.push(new piece(this.scene,1,this.green,id,'x',2*i,0));
       id++;
     }
 
     for(let i = 0; i < dimension; i++){
-      this.pieces.push(new piece(this.scene,2,this.yellow,id,2*i,60));
+      this.pieces.push(new piece(this.scene,2,this.yellow,id,'o',2*i,60));
       id++;
     }
   }
@@ -66,7 +67,36 @@ class board {
 
   }
 
-  display(){
+  registerCellsForPick(){
+    for(let i = 0; i < this.dimension; i++){
+      for(let j = 0; j < this.dimension; j++){
+        this.scene.registerForPick(this.board[i][j].id, this.board[i][j]);
+      }
+    }
+  }
+
+  movePieceToCell(piece, cell){
+    console.log(cell);
+    this.boardProlog[cell.line][cell.col] = piece.signature;
+    let controlpoints = [];
+    controlpoints[0] = piece.posX;
+    controlpoints[1] = 0;
+    controlpoints[2] = piece.posZ;
+    controlpoints[3] = piece.posX;
+    controlpoints[4] = 5;
+    controlpoints[5] = piece.posZ;
+    controlpoints[6] = piece.posX;
+    controlpoints[7] = 10;
+    controlpoints[8] = piece.posZ;
+    controlpoints[9] = cell.centerx;
+    controlpoints[10] = 0;
+    controlpoints[11] = cell.centery;
+
+    piece.animation = new BezierAnimation(this.scene, 5, controlpoints);
+    piece.moving = true;
+  }
+
+  display(currentTime){
     for(let i = 0; i < this.dimension; i++){
       for(let j = 0; j < this.dimension; j++){
         this.board[i][j].display();
@@ -74,7 +104,7 @@ class board {
     }
 
     for(let i = 0; i < this.pieces.length; i++){
-      this.pieces[i].display();
+      this.pieces[i].display(currentTime);
     }
   }
 

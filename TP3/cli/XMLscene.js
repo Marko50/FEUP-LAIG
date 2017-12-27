@@ -9,6 +9,10 @@ function XMLscene(interface) {
   CGFscene.call(this);
   this.interface = interface;
   this.lightValues = {};
+  this.selectedCell = null;
+  this.selectedPiece = null;
+  this.currentTime = Date.now();
+  this.elapsedTime = 0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -39,8 +43,19 @@ XMLscene.prototype.logPicking = function ()
 			for (var i=0; i< this.pickResults.length; i++) {
 				let obj = this.pickResults[i][0];
         if(obj){
-          let customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
+          if(obj.type == "piece"){
+            this.selectedPiece = obj;
+            this.board.readyCells = true;
+          }
+          else if(obj.type == "cell"){
+            this.selectedCell = obj;
+            this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
+            this.selectedPiece = null;
+            this.selectedCell = null;
+            this.board.readyCells = false;
+          }
+          // let customId = this.pickResults[i][1];
+					// console.log("Picked object: " + obj + ", with pick id " + customId);
         }
 			}
 			this.pickResults.splice(0,this.pickResults.length);
@@ -128,6 +143,12 @@ XMLscene.prototype.onGraphLoaded = function() {
 XMLscene.prototype.display = function() {
   // ---- BEGIN Background, camera and axis setup
   this.logPicking();
+
+  let time = Date.now();
+  let deltaTime = (time - this.currentTime)/1000;
+  this.elapsedTime += deltaTime;
+  this.currentTime = time;
+
   // Clear image and depth buffer everytime we update the scene
   this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
   this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -168,7 +189,9 @@ XMLscene.prototype.display = function() {
     // Displays the scene.
     this.graph.displayScene();
 
-    this.board.display();
+    this.board.display(deltaTime);
+
+
 
   } else {
     // Draw axis

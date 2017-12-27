@@ -116,7 +116,7 @@ class BezierAnimation extends Animation{
   */
   update(deltaTime) {
     mat4.translate(this.transformMatrix, this.aux, [this.x, this.y, this.z]);
-    mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);
+    //mat4.rotate(this.transformMatrix, this.transformMatrix, this.angle, [0, 1, 0]);
     this.calcPosition(deltaTime);
     this.checkPositionStatus();
   }
