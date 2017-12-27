@@ -77,6 +77,27 @@
     <file path="../images/towel.jpg" />
     <amplif_factor s="1" t="1" />
   </TEXTURE>
+
+<TEXTURE id="wallDojo1">
+  <file path="../images/wall1.jpg" />
+  <amplif_factor s="1" t="1" />
+</TEXTURE>
+
+<TEXTURE id="wallDojo2">
+  <file path="../images/wall2.png" />
+  <amplif_factor s="1" t="1" />
+</TEXTURE>
+
+<TEXTURE id="floorDojo">
+  <file path="../images/floorDojo.png" />
+  <amplif_factor s="1" t="1" />
+</TEXTURE>
+
+<TEXTURE id="tableDojo">
+  <file path="../images/table.jpg" />
+  <amplif_factor s="1" t="1" />
+</TEXTURE>
+
 </TEXTURES>
 
 <MATERIALS>
@@ -176,6 +197,17 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
         <DESCENDANTS>
+
+            <NODEREF id="scene2"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="scene1">
+        <MATERIAL id="null" />
+        <TEXTURE id="clear" />
+
+        <DESCENDANTS>
             <NODEREF id="floor"/>
             <NODEREF id="umbrella"/>
             <NODEREF id="towel"/>
@@ -184,7 +216,6 @@
         </DESCENDANTS>
 
     </NODE>
-
 
     <NODE id="floor">
       <MATERIAL id="null" />
@@ -723,6 +754,165 @@
         <LEAF type="cylinder" args="1 1 1 1 20 1 1"/>
       </DESCENDANTS>
     </NODE>
+
+
+
+
+    <NODE id="scene2">
+        <MATERIAL id="null" />
+        <TEXTURE id="clear" />
+
+        <DESCENDANTS>
+            <NODEREF id="floorDojo"/>
+            <NODEREF id="wall1Dojo"/>
+            <NODEREF id="wall2Dojo"/>
+            <NODEREF id="table"/>
+            <NODEREF id="homerDojo"/>
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="floorDojo">
+      <MATERIAL id="null" />
+      <TEXTURE id="floorDojo" />
+      <TRANSLATION x="-175" y="-4" z="200"  />
+      <SCALE sx="200" sy="1" sz="200" />
+      <TRANSLATION x="0" y="-20" z="0"  />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+				<LEAF  type="rectangle" args="0 2 2 0" />
+			</DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="wall1Dojo">
+      <MATERIAL id="null" />
+      <TEXTURE id="wallDojo2" />
+      <SCALE sx="200" sy="200" sz="1" />
+      <TRANSLATION x="-0.87" y="-0.15" z="-198"  />
+      <DESCENDANTS>
+				<LEAF  type="rectangle" args="0 1 2 0" />
+			</DESCENDANTS>
+    </NODE>
+
+    <NODE id="wall2Dojo">
+      <MATERIAL id="null" />
+      <TEXTURE id="wallDojo1" />
+      <SCALE sx="200" sy="200" sz="200" />
+      <TRANSLATION x="-0.87" y="-0.15" z="1"  />
+      <ROTATION axis="y" angle="90" />
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 1 2 0" />
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="table">
+     <MATERIAL id="null" />
+     <TEXTURE id="tableDojo" />
+
+     <SCALE sx="24" sy="12" sz="36" />
+     <TRANSLATION x="1.3" y="-0.7" z="0.75"  />
+
+     <DESCENDANTS>
+       <NODEREF id="tableTop"/>
+       <NODEREF id="leg1"/>
+       <NODEREF id="leg2"/>
+       <NODEREF id="leg3"/>
+       <NODEREF id="leg4"/>
+     </DESCENDANTS>
+   </NODE>
+
+   <NODE id="tableTop">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableDojo" />
+
+      <TRANSLATION x="0" y="0.25" z="0" />
+      <SCALE sx="3" sy="0.5" sz="3" />
+
+      <DESCENDANTS>
+         <NODEREF id="cube"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="leg1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-1.2" y="0" z="-1.2" />
+      <SCALE sx="0.3" sy="0.3" sz="0.3" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <NODEREF id="leg"/>
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="leg2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="1.2" y="0" z="1.2" />
+      <SCALE sx="0.3" sy="0.3" sz="0.3" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <NODEREF id="leg"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="leg3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-1.2" y="0" z="1.2" />
+      <SCALE sx="0.3" sy="0.3" sz="0.3" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <NODEREF id="leg"/>
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="leg4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="1.2" y="0" z="-1.2" />
+      <SCALE sx="0.3" sy="0.3" sz="0.3" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+          <NODEREF id="leg"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="leg">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <DESCENDANTS>
+            <LEAF  type="cylinder" args="5 1 1 10 20 1 1" />
+        </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="homerDojo">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-100" y="40" z="250" />
+      <ROTATION axis="x" angle="90" />
+      <ROTATION axis="z" angle="90" />
+      <DESCENDANTS>
+          <NODEREF id="homer"/>
+      </DESCENDANTS>
+    </NODE>
+
+
+
+
+
 
 </NODES>
 
