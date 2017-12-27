@@ -49,13 +49,15 @@ XMLscene.prototype.logPicking = function ()
           }
           else if(obj.type == "cell"){
             this.selectedCell = obj;
-            this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
-            this.selectedPiece = null;
-            this.selectedCell = null;
-            this.board.readyCells = false;
+            if(this.selectedPiece != null){
+              this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
+              this.selectedPiece = null;
+              this.selectedCell = null;
+              this.board.readyCells = false;
+            }
           }
-          // let customId = this.pickResults[i][1];
-					// console.log("Picked object: " + obj + ", with pick id " + customId);
+          let customId = this.pickResults[i][1];
+					console.log("Picked object: " + obj + ", with pick id " + customId);
         }
 			}
 			this.pickResults.splice(0,this.pickResults.length);

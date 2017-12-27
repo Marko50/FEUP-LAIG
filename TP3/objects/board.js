@@ -1,3 +1,5 @@
+var DISTANCE_BETWEEN_CELLS = 6;
+
 class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
@@ -57,7 +59,7 @@ class board {
       let line = [];
       let lineProlog = [];
       for(let j = 0; j < dimensionBoard; j++){
-        line.push(new cell(this.scene,6*i,6*j + dimensionCell,dimensionCell,this.red, id));
+        line.push(new cell(this.scene,DISTANCE_BETWEEN_CELLS*i,DISTANCE_BETWEEN_CELLS*j + dimensionCell,dimensionCell,this.red, id));
         lineProlog.push('v');
         id++;
       }
@@ -76,24 +78,30 @@ class board {
   }
 
   movePieceToCell(piece, cell){
-    console.log(cell);
     this.boardProlog[cell.line][cell.col] = piece.signature;
+    let finalx = 5 + cell.centerx;
+    let finalz = 50 - cell.centery;
+
     let controlpoints = [];
     controlpoints[0] = piece.posX;
     controlpoints[1] = 0;
     controlpoints[2] = piece.posZ;
+
     controlpoints[3] = piece.posX;
     controlpoints[4] = 5;
-    controlpoints[5] = piece.posZ;
-    controlpoints[6] = piece.posX;
-    controlpoints[7] = 10;
-    controlpoints[8] = piece.posZ;
-    controlpoints[9] = cell.centerx;
-    controlpoints[10] = 0;
-    controlpoints[11] = cell.centery;
+    controlpoints[5] = piece.posZ ;
 
-    piece.animation = new BezierAnimation(this.scene, 5, controlpoints);
+    controlpoints[6] = finalx;
+    controlpoints[7] = 5;
+    controlpoints[8] = finalz;
+
+    controlpoints[9] = finalx;
+    controlpoints[10] = 0;
+    controlpoints[11] = finalz;
+
+    piece.animation = new BezierAnimation(this.scene,17, controlpoints);
     piece.moving = true;
+    cell.piece = piece;
   }
 
   display(currentTime){

@@ -11,10 +11,6 @@ class piece {
     this.team = team;
     this.material = appearence;
     this.obj = new MyCylinder(scene, "1 1 1 1 20 1 1");
-    this.finalMatrix = mat4.create();
-    mat4.identity(this.finalMatrix);
-    this.animationMatrix = mat4.create();
-    mat4.identity(this.animationMatrix);
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
     mat4.translate(this.transformMatrix, this.transformMatrix, [distancex ,0,distancey]);
@@ -26,6 +22,7 @@ class piece {
       if(this.animation.moving){
         this.animation.update(currentTime);
         this.transformMatrix = this.animation.transformMatrix;
+        mat4.rotate(this.transformMatrix, this.transformMatrix, -90 * DEGREE_TO_RAD, [1, 0, 0]);
       }
       else{
         this.moving = false;

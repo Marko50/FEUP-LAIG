@@ -1,5 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
-
+var DISTANCE_BETWEEN_CELLS = 6;
 
 class cell {
   constructor(scene, x,y,dimension, appearance, id) {
@@ -7,8 +7,8 @@ class cell {
     this.scene = scene;
     this.material = appearance;
     this.type = "cell";
-    this.line = x/6;
-    this.col = y/6;
+    this.line = x/DISTANCE_BETWEEN_CELLS;
+    this.col = y/DISTANCE_BETWEEN_CELLS;
     let xi = x;
     let yi = y;
     let xf = x + dimension;
@@ -23,9 +23,10 @@ class cell {
     let coords = xfs + " " + yfs + " " + xis + " " + yis;
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
-    mat4.translate(this.transformMatrix, this.transformMatrix, [5, 0,50]);
+    mat4.translate(this.transformMatrix, this.transformMatrix, [5, 0, 50]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, -90 * DEGREE_TO_RAD, [1, 0, 0]);
     this.obj = new MyRectangle(scene, coords);
+    this.piece = null;
   }
 
   display(){
