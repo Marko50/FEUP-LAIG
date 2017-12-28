@@ -9,6 +9,7 @@ class piece {
     this.moving = false;
     this.animation = null;
     this.team = team;
+    this.elegible = true;
     this.material = appearence;
     this.obj = new MyCylinder(scene, "1 1 1 1 20 1 1");
     this.transformMatrix = mat4.create();

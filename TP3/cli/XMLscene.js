@@ -38,14 +38,16 @@ XMLscene.prototype.init = function(application) {
 
 XMLscene.prototype.logPicking = function ()
 {
-	if (this.pickMode == false) {
+	if (this.pickMode == false && !this.board.finished) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				let obj = this.pickResults[i][0];
         if(obj){
           if(obj.type == "piece"){
-            this.selectedPiece = obj;
-            this.board.readyCells = true;
+            if(obj.elegible && obj.team == this.board.currentTeam){
+              this.selectedPiece = obj;
+              this.board.readyCells = true;
+            }
           }
           else if(obj.type == "cell"){
             this.selectedCell = obj;
@@ -56,8 +58,8 @@ XMLscene.prototype.logPicking = function ()
               this.board.readyCells = false;
             }
           }
-          let customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
+          // let customId = this.pickResults[i][1];
+					// console.log("Picked object: " + obj + ", with pick id " + customId);
         }
 			}
 			this.pickResults.splice(0,this.pickResults.length);

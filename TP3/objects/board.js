@@ -4,22 +4,28 @@ class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
+      this.currentTeam = 1;
+      this.finished = false;
       this.readyCells = false;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
   }
 
+
+
   generatePieces(dimension){
-    this.pieces = [];
+    this.piecesTeam1 = [];
+    this.piecesTeam2 = [];
     let id = 2*dimension + 1;
+
     for(let i = 0; i < dimension; i++){
-      this.pieces.push(new piece(this.scene,1,this.green,id,'x',2*i,0));
+      this.piecesTeam1.push(new piece(this.scene,1,this.green,id,'x',2*i,0));
       id++;
     }
 
     for(let i = 0; i < dimension; i++){
-      this.pieces.push(new piece(this.scene,2,this.yellow,id,'o',2*i,60));
+      this.piecesTeam2.push(new piece(this.scene,2,this.yellow,id,'o',2*i,60));
       id++;
     }
   }
@@ -69,6 +75,24 @@ class board {
 
   }
 
+  updateBoard(){
+    for(let i = 0; i < this.boardProlog.length; i++){
+      for(let j = 0; j < this.boardProlog[i].length; j++){
+        if(this.boardProlog[i][j] == 'x'){//player1
+          this.board[i][j].piece.team = 1;
+          this.board[i][j].piece.signature = 'x';
+          this.board[i][j].piece.material = this.green;
+        }
+
+        else if(this.boardProlog[i][j] == 'o'){
+          this.board[i][j].piece.team = 2;
+          this.board[i][j].piece.signature = 'o';
+          this.board[i][j].piece.material = this.yellow;
+        }
+      }
+    }
+  }
+
   registerCellsForPick(){
     for(let i = 0; i < this.dimension; i++){
       for(let j = 0; j < this.dimension; j++){
@@ -76,7 +100,12 @@ class board {
       }
     }
   }
-
+  play(piece, cell){
+    this.movePieceToCell(piece, cell);
+    if(this.currentTeam == 1)
+      this.currentTeam = 2;
+    else this.currentTeam = 1;
+  }
   movePieceToCell(piece, cell){
     let finalx = 5 + cell.centerx;
     let finalz = 50 - cell.centery;
@@ -100,9 +129,10 @@ class board {
 
     piece.animation = new BezierAnimation(this.scene,17, controlpoints);
     piece.moving = true;
+    piece.elegible = false;
     cell.piece = piece;
 
-    this.scene.client.play(this.boardProlog, piece.signature, cell.line, cell.col);
+    this.scene.client.play(this, piece.signature, cell.line, cell.col);
   }
 
   display(currentTime){
@@ -112,8 +142,12 @@ class board {
       }
     }
 
-    for(let i = 0; i < this.pieces.length; i++){
-      this.pieces[i].display(currentTime);
+    for(let i = 0; i < this.piecesTeam1.length; i++){
+      this.piecesTeam1[i].display(currentTime);
+    }
+
+    for(let i = 0; i < this.piecesTeam2.length; i++){
+      this.piecesTeam2[i].display(currentTime);
     }
   }
 
