@@ -2,13 +2,13 @@ var DEGREE_TO_RAD = Math.PI / 180;
 var DISTANCE_BETWEEN_CELLS = 6;
 
 class cell {
-  constructor(scene, x,y,dimension, appearance, id) {
+  constructor(scene, x,y,dimension, appearance, id,line,column) {
     this.dimension = dimension;
     this.scene = scene;
     this.material = appearance;
     this.type = "cell";
-    this.line = x/DISTANCE_BETWEEN_CELLS;
-    this.col = y/DISTANCE_BETWEEN_CELLS;
+    this.line = line;
+    this.col = column;
     let xi = x;
     let yi = y;
     let xf = x + dimension;

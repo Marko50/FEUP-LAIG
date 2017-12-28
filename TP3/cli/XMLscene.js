@@ -32,7 +32,7 @@ XMLscene.prototype.init = function(application) {
 
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
-
+  this.client = new client(this);
   this.board = new board(this,8,5);
 }
 

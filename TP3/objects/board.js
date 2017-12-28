@@ -59,7 +59,7 @@ class board {
       let line = [];
       let lineProlog = [];
       for(let j = 0; j < dimensionBoard; j++){
-        line.push(new cell(this.scene,DISTANCE_BETWEEN_CELLS*i,DISTANCE_BETWEEN_CELLS*j + dimensionCell,dimensionCell,this.red, id));
+        line.push(new cell(this.scene,DISTANCE_BETWEEN_CELLS*i,DISTANCE_BETWEEN_CELLS*j + dimensionCell,dimensionCell,this.red, id,i+1,j+1));
         lineProlog.push('v');
         id++;
       }
@@ -78,7 +78,6 @@ class board {
   }
 
   movePieceToCell(piece, cell){
-    this.boardProlog[cell.line][cell.col] = piece.signature;
     let finalx = 5 + cell.centerx;
     let finalz = 50 - cell.centery;
 
@@ -102,6 +101,8 @@ class board {
     piece.animation = new BezierAnimation(this.scene,17, controlpoints);
     piece.moving = true;
     cell.piece = piece;
+
+    this.scene.client.play(this.boardProlog, piece.signature, cell.line, cell.col);
   }
 
   display(currentTime){

@@ -1,7 +1,7 @@
 :-use_module(library(sockets)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
-:-ensure_loaded('../logic/lear.pl').
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%                                        Server                                                   %%%%
@@ -103,10 +103,17 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:-ensure_loaded('../logic/lear.pl').
 
-parse_input(handshake, handshake).
-parse_input(test(C,N), Res) :- test(C,Res,N).
+verificaFimServer(Tab, 'yes'):-verificaFim(Tab).
+verificaFimServer(_,'no').
+
+setPecaServidor(NLinha,NColuna,Peca,Tabuleiro,TabOut):-
+	setPeca(NLinha, NColuna, Peca,Tabuleiro, TabOut2),
+	verificaJogada(TabOut2, NLinha, NColuna, Peca,  TabOut).
+
+
 parse_input(quit, goodbye).
-
-test(_,[],N) :- N =< 0.
-test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
+parse_input(setPeca(NLinha, NColuna, Peca,TabIn), TabOut) :- setPecaServidor(NLinha, NColuna, Peca,TabIn, TabOut).
+parse_input(verificaFimJogo(Tab), Verf):- verificaFimServer(Tab, Verf).
+parse_input(verificaVencedorJogo(Tab), Vencedor):- verificaVencedor(Tab, 'x', 'o', Vencedor).
