@@ -4,15 +4,11 @@ class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
-      this.currentTeam = 1;
-      this.finished = false;
       this.readyCells = false;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
   }
-
-
 
   generatePieces(dimension){
     this.piecesTeam1 = [];
@@ -93,20 +89,7 @@ class board {
     }
   }
 
-  registerCellsForPick(){
-    for(let i = 0; i < this.dimension; i++){
-      for(let j = 0; j < this.dimension; j++){
-        this.scene.registerForPick(this.board[i][j].id, this.board[i][j]);
-      }
-    }
-  }
   play(piece, cell){
-    this.movePieceToCell(piece, cell);
-    if(this.currentTeam == 1)
-      this.currentTeam = 2;
-    else this.currentTeam = 1;
-  }
-  movePieceToCell(piece, cell){
     let finalx = 5 + cell.centerx;
     let finalz = 50 - cell.centery;
 
@@ -127,12 +110,24 @@ class board {
     controlpoints[10] = 0;
     controlpoints[11] = finalz;
 
-    piece.animation = new BezierAnimation(this.scene,17, controlpoints);
+    piece.animation = new BezierAnimation(this.scene,20, controlpoints);
     piece.moving = true;
     piece.elegible = false;
     cell.piece = piece;
+  }
 
-    this.scene.client.play(this, piece.signature, cell.line, cell.col);
+  selectCell(x,y){
+    console.log("x: " + x);
+    console.log("y: " + y);
+    return this.board[x][y];
+  }
+
+  selectElegiblePCPiece(){
+    for(let i = 0; i < this.piecesTeam2.length; i++){
+      if(this.piecesTeam2[i].elegible){
+        return this.piecesTeam2[i];
+      }
+    }
   }
 
   display(currentTime){

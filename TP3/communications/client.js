@@ -24,13 +24,26 @@ var readPrologResponseBoard = function(PrologBoard){
   return ret;
 }
 
+var readPrologPCResponse = function(Response,Line,Column){
+  let ResponseAux = Response.slice(2, Response.length - 1);
+  let ResponseSplited = ResponseAux.split('-');
+  Line = parseInt(ResponseSplited[1]) - 1;
+  Column = parseInt(ResponseSplited[2]) - 1;
+  let boardUnparsed = ResponseSplited[0];
+  let boardUnparsedAux = "[" + boardUnparsed;
+  let retBoard = readPrologResponseBoard(boardUnparsedAux);
+  ret = [Line,Column,retBoard];
+  return ret;
+}
+
 class client {
-  constructor(scene) {
-    this.scene = scene;
+  constructor(game) {
+    this.game = game;
     this.port = 8081;
   }
 
   play(Board, signature, x, y){
+    console.log(this);
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
     let request = "setPeca(" + x.toString() + "," + y.toString() + "," + signature + "," + prologBoard +")";
@@ -46,8 +59,44 @@ class client {
     xhttp.send();
   }
 
-  playPC(Board){
+  playPCHard(Board){
+    console.log(this);
+    let prologBoard = prepareBoardForProlog(Board.boardProlog);
+    let xhttp = new XMLHttpRequest();
+    let request = "jogaPCHard(" + prologBoard + ")";
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       let response = readPrologPCResponse(xhttp.response);
+       Board.boardProlog = response[2];
+       let cell = Board.selectCell(response[0],response[1]);
+       let piece = Board.selectElegiblePCPiece();
+       Board.play(piece,cell);
+       Board.updateBoard();
+     }
+    };
+    xhttp.open("GET", 'http://localhost:' + this.port.toString() + '/' + request , true);
+    xhttp.send();
+  }
 
+  playPCEasy(Board){
+    console.log(this);
+    let prologBoard = prepareBoardForProlog(Board.boardProlog);
+    let xhttp = new XMLHttpRequest();
+    let request = "jogaPCEasy(" + prologBoard + ")";
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       let linePlayed;
+       let columnPlayed;
+       let response = readPrologPCResponse(xhttp.response,linePlayed,columnPlayed);
+       Board.boardProlog = response[2];
+       let cell = Board.selectCell(response[0],response[1]);
+       let piece = Board.selectElegiblePCPiece();
+       Board.play(piece,cell);
+       Board.updateBoard();
+     }
+    };
+    xhttp.open("GET", 'http://localhost:' + this.port.toString() + '/' + request , true);
+    xhttp.send();
   }
 
   checkEndGame(Board){
@@ -75,10 +124,9 @@ class client {
     let request = "verificaVencedorJogo(" + prologBoard + ")";
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-       // Typical action to be performed when the document is ready:
        let response = xhttp.response.text;
        let winner = parseInt(response);
-       
+       this.game.parseWinner(winner);
      }
     };
     xhttp.open("GET", 'http://localhost:' + this.port.toString() + '/' + request , true);

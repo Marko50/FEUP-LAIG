@@ -1,4 +1,4 @@
-:-use_module(library(sockets)).
+	:-use_module(library(sockets)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
 
@@ -117,3 +117,5 @@ parse_input(quit, goodbye).
 parse_input(setPeca(NLinha, NColuna, Peca,TabIn), TabOut) :- setPecaServidor(NLinha, NColuna, Peca,TabIn, TabOut).
 parse_input(verificaFimJogo(Tab), Verf):- verificaFimServer(Tab, Verf).
 parse_input(verificaVencedorJogo(Tab), Vencedor):- verificaVencedor(Tab, 'x', 'o', Vencedor).
+parse_input(jogaPCEasy(Tab), [TabOut-NLinha-NColuna]):- jogaPC('o',Tab,TabOut,NLinha,NColuna).
+parse_input(jogaPCHard(Tab), [TabOut-NLinha-NColuna]):- jogaPCIA('o',Tab,TabOut,NLinha,NColuna).

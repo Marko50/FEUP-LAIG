@@ -9,8 +9,6 @@ function XMLscene(interface) {
   CGFscene.call(this);
   this.interface = interface;
   this.lightValues = {};
-  this.selectedCell = null;
-  this.selectedPiece = null;
   this.currentTime = Date.now();
   this.elapsedTime = 0;
 }
@@ -32,42 +30,44 @@ XMLscene.prototype.init = function(application) {
 
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
-  this.client = new client(this);
-  this.board = new board(this,8,5);
+
+  this.game = new Game(this);
 }
 
 XMLscene.prototype.logPicking = function ()
 {
-	if (this.pickMode == false && !this.board.finished) {
+	if (this.pickMode == false && !this.game.finished) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				let obj = this.pickResults[i][0];
         if(obj){
-          if(obj.type == "piece"){
-            if(obj.elegible && obj.team == this.board.currentTeam){
-              this.selectedPiece = obj;
-              this.board.readyCells = true;
-            }
+          let customId = this.pickResults[i][1];
+  				console.log("Picked object: " + obj + ", with pick id " + customId);
+          this.game.parseSelected(obj);
           }
-          else if(obj.type == "cell"){
-            this.selectedCell = obj;
-            if(this.selectedPiece != null){
-              this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
-              this.selectedPiece = null;
-              this.selectedCell = null;
-              this.board.readyCells = false;
-            }
-          }
-          // let customId = this.pickResults[i][1];
-					// console.log("Picked object: " + obj + ", with pick id " + customId);
         }
 			}
 			this.pickResults.splice(0,this.pickResults.length);
 		}
-	}
 }
 
+XMLscene.prototype.startGameHuman = function(){
+  this.game = new Game(this);
+  this.game.startGame();
+  this.game.human = true;
+}
 
+XMLscene.prototype.startGamePCEasy = function(){
+  this.game = new Game(this);
+  this.game.startGame();
+  this.game.pceasy = true;
+}
+
+XMLscene.prototype.startGameHard = function(){
+  this.game = new Game(this);
+  this.game.startGame();
+  this.game.pchard = true;
+}
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -136,6 +136,7 @@ XMLscene.prototype.onGraphLoaded = function() {
 
   // Adds lights group.
   this.interface.addLightsGroup(this.graph.lights);
+  this.interface.addStartGame();
 }
 
 /**
@@ -193,9 +194,8 @@ XMLscene.prototype.display = function() {
     // Displays the scene.
     this.graph.displayScene();
 
-    this.board.display(deltaTime);
 
-
+    this.game.display(deltaTime);
 
   } else {
     // Draw axis
