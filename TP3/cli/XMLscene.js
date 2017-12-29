@@ -11,6 +11,9 @@ function XMLscene(interface) {
   this.lightValues = {};
   this.currentTime = Date.now();
   this.elapsedTime = 0;
+
+  this.selectedAmbient =3;
+  this.ambientlength=3;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -190,6 +193,21 @@ XMLscene.prototype.display = function() {
         i++;
       }
     }
+    //Inserts the scenes ambient not wanted
+    for(let i=0; i<this.ambientlength;i++){
+      if((i+1)!=this.selectedAmbient){
+        if(this.graph.NOTselectedAmbient.indexOf((i+1))==-1){
+        this.graph.NOTselectedAmbient.push(i+1);
+        }
+      }
+      else{
+        if(this.graph.NOTselectedAmbient.indexOf((i+1))!=-1){
+          let k=this.graph.NOTselectedAmbient.indexOf((i+1));
+          this.graph.NOTselectedAmbient.splice(k,1);
+        }
+      }
+    }
+
 
     // Displays the scene.
     this.graph.displayScene();

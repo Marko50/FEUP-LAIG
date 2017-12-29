@@ -24,8 +24,11 @@ function MySceneGraph(filename, scene) {
 
   this.nodes = [];
 
+  this.NOTselectedAmbient = new Array();
+
   this.stackTextures = new Array();
   this.stackMaterials = new Array();
+  this.stackAmbient = new Array();
 
   this.idRoot = null; // The id of the root element.
 
@@ -1283,12 +1286,17 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
       if (this.nodes[nodeID] != null)
         return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
+      // Retrieves node Ambient.
+      var nodeambientID = this.reader.getString(children[i], 'ambient',false);
+      if (nodeambientID == false)
+      nodeambientID =0;
+
 
       this.log("Processing node " + nodeID);
 
       // Creates node.
       this.nodeIDS.push(nodeID);
-      this.nodes[nodeID] = new MyGraphNode(this, nodeID);
+      this.nodes[nodeID] = new MyGraphNode(this, nodeID,nodeambientID);
       // Gathers child nodes.
       var nodeSpecs = children[i].children;
       var specsNames = [];
@@ -1568,6 +1576,8 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 MySceneGraph.prototype.displayNode = function(node) {
   let tID;
   let mID;
+  let boolAmbient;
+
 
   if (node.materialID == "null") {
     mID = this.stackMaterials[this.stackMaterials.length - 1];
@@ -1580,15 +1590,26 @@ MySceneGraph.prototype.displayNode = function(node) {
     tID = node.textureID;
   }
 
+  boolAmbient=node.ambient;
+  if(boolAmbient==null){
+    boolAmbient=0;
+  }
+
+if(boolAmbient!=this.NOTselectedAmbient[0] && boolAmbient!=this.NOTselectedAmbient[1]){
+
   this.scene.pushMatrix();
   node.update();
   this.scene.multMatrix(node.realMatrix);
   this.stackMaterials.push(mID);
   this.stackTextures.push(tID);
+  this.stackAmbient.push(boolAmbient);
+
 
   for (let i = 0; i < node.children.length; i++) {
     let childName = node.children[i];
-    let child = this.nodes[childName];  let pickID;
+    let child = this.nodes[childName];
+    let pickID;
+
     this.displayNode(child);
   }
   let s = 1;
@@ -1601,12 +1622,14 @@ MySceneGraph.prototype.displayNode = function(node) {
     this.materials[mID].setTexture(null);
   }
   this.materials[mID].apply();
-
   node.display(s, t);
 
+
+  this.stackAmbient.pop();
   this.stackMaterials.pop();
   this.stackTextures.pop();
   this.scene.popMatrix();
+}
 }
 
 /**

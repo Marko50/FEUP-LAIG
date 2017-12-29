@@ -4,7 +4,10 @@
  * @param {String} nodeID - the identifier of the node
  * @constructor
  **/
-function MyGraphNode(graph, nodeID) {
+function MyGraphNode(graph, nodeID, ambient) {
+
+  this.ambient=ambient;
+
   this.graph = graph;
   this.scene = graph.scene;
   this.nodeID = nodeID;
