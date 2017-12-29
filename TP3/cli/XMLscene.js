@@ -11,7 +11,8 @@ function XMLscene(interface) {
   this.lightValues = {};
   this.currentTime = Date.now();
   this.elapsedTime = 0;
-
+  this.winsTeam1 = 0;
+  this.winsTeam2 = 0;
   this.selectedAmbient =3;
   this.ambientlength=3;
 }
@@ -140,6 +141,7 @@ XMLscene.prototype.onGraphLoaded = function() {
   // Adds lights group.
   this.interface.addLightsGroup(this.graph.lights);
   this.interface.addStartGame();
+  this.interface.addScenesGroup();
 }
 
 /**

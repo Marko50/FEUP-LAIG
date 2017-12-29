@@ -9,6 +9,7 @@ class cell {
     this.type = "cell";
     this.line = line;
     this.col = column;
+    this.elegible = true;
     let xi = x;
     let yi = y;
     let xf = x + dimension;

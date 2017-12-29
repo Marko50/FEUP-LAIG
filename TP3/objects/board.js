@@ -5,6 +5,7 @@ class board {
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
       this.readyCells = false;
+      this.elegible = true;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
@@ -98,9 +99,9 @@ class board {
     controlpoints[1] = 0;
     controlpoints[2] = piece.posZ;
 
-    controlpoints[3] = piece.posX;
+    controlpoints[3] = finalx;
     controlpoints[4] = 5;
-    controlpoints[5] = piece.posZ ;
+    controlpoints[5] = finalz;
 
     controlpoints[6] = finalx;
     controlpoints[7] = 5;
@@ -114,11 +115,10 @@ class board {
     piece.moving = true;
     piece.elegible = false;
     cell.piece = piece;
+    cell.elegible = false;
   }
 
   selectCell(x,y){
-    console.log("x: " + x);
-    console.log("y: " + y);
     return this.board[x][y];
   }
 
