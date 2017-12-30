@@ -74,7 +74,7 @@ this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] ).name("Selected Ambi
 
 }
 
-MyInterface.prototype.removeFilmOption(){
+MyInterface.prototype.removeFilmOption = function(){
   this.gui.remove('film');
   this.film = false;
 }
@@ -83,4 +83,11 @@ MyInterface.prototype.removeFilmOption(){
 MyInterface.prototype.addFilmOption = function(){
   this.gui.add(this.scene,'film').name('Game Film');
     this.film = true;
+}
+
+
+MyInterface.prototype.addStartGame = function(){
+  this.gui.add(this.scene,'startGameHuman').name('Player vs Player');
+  this.gui.add(this.scene,'startGamePCEasy').name('Player vs Easy');
+  this.gui.add(this.scene,'startGameHard').name('Player vs Hard');
 }

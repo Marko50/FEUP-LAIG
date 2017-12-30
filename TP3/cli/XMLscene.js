@@ -38,8 +38,7 @@ XMLscene.prototype.init = function(application) {
 
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
-
-  this.board = new board(this,8,5);
+  this.game = new Game(this);
 }
 
 XMLscene.prototype.logPicking = function ()
@@ -49,17 +48,7 @@ XMLscene.prototype.logPicking = function ()
 			for (var i=0; i< this.pickResults.length; i++) {
 				let obj = this.pickResults[i][0];
         if(obj){
-          if(obj.type == "piece"){
-            this.selectedPiece = obj;
-            this.board.readyCells = true;
-          }
-          else if(obj.type == "cell"){
-            this.selectedCell = obj;
-            this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
-            this.selectedPiece = null;
-            this.selectedCell = null;
-            this.board.readyCells = false;
-          }
+          this.game.parseSelected(obj);
           // let customId = this.pickResults[i][1];
 					// console.log("Picked object: " + obj + ", with pick id " + customId);
         }
@@ -101,7 +90,7 @@ XMLscene.prototype.undo = function(){
   this.game.rollBack();
 }
 
-XML.scene.prototype.film = function (index) {
+XMLscene.prototype.film = function (index) {
 
 }
 
@@ -174,6 +163,8 @@ XMLscene.prototype.onGraphLoaded = function() {
   // Adds lights group.
   this.interface.addLightsGroup(this.graph.lights);
   this.interface.addScenesGroup();
+  this.interface.addStartGame();
+  this.interface.addUndo();
 }
 
 /**
@@ -248,7 +239,7 @@ XMLscene.prototype.display = function() {
     // Displays the scene.
     this.graph.displayScene();
 
-    this.board.display(deltaTime);
+    this.game.display(deltaTime);
 
 
 
