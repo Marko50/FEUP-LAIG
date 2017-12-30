@@ -56,10 +56,13 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 }
 
 
-MyInterface.prototype.addStartGame = function(){
-  this.gui.add(this.scene,'startGameHuman').name('Player vs Player');
-  this.gui.add(this.scene,'startGamePCEasy').name('Play PC Easy');
-  this.gui.add(this.scene,'startGameHard').name('Play PC Hard');
+MyInterface.prototype.addScenesGroup = function(){
+var f1 = this.gui.addFolder("Scene");
+f1.open();
+
+
+this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] );
+
 }
 
 MyInterface.prototype.addUndo = function(){

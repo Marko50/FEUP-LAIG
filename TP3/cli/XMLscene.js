@@ -9,6 +9,9 @@ function XMLscene(interface) {
   CGFscene.call(this);
   this.interface = interface;
   this.lightValues = {};
+
+  this.selectedCell = null;
+  this.selectedPiece = null;
   this.currentTime = Date.now();
   this.elapsedTime = 0;
   this.winsTeam1 = 0;
@@ -36,24 +39,34 @@ XMLscene.prototype.init = function(application) {
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
 
-  this.game = new Game(this);
+  this.board = new board(this,8,5);
 }
 
 XMLscene.prototype.logPicking = function ()
 {
-	if (this.pickMode == false && !this.game.finished) {
+	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				let obj = this.pickResults[i][0];
         if(obj){
-          let customId = this.pickResults[i][1];
-  				console.log("Picked object: " + obj + ", with pick id " + customId);
-          this.game.parseSelected(obj);
+          if(obj.type == "piece"){
+            this.selectedPiece = obj;
+            this.board.readyCells = true;
           }
+          else if(obj.type == "cell"){
+            this.selectedCell = obj;
+            this.board.movePieceToCell(this.selectedPiece, this.selectedCell);
+            this.selectedPiece = null;
+            this.selectedCell = null;
+            this.board.readyCells = false;
+          }
+          // let customId = this.pickResults[i][1];
+					// console.log("Picked object: " + obj + ", with pick id " + customId);
         }
 			}
 			this.pickResults.splice(0,this.pickResults.length);
 		}
+	}
 }
 
 XMLscene.prototype.startGameHuman = function(){
@@ -160,9 +173,7 @@ XMLscene.prototype.onGraphLoaded = function() {
 
   // Adds lights group.
   this.interface.addLightsGroup(this.graph.lights);
-  this.interface.addStartGame();
   this.interface.addScenesGroup();
-  this.interface.addUndo();
 }
 
 /**
@@ -234,12 +245,12 @@ XMLscene.prototype.display = function() {
       }
     }
 
-
     // Displays the scene.
     this.graph.displayScene();
 
+    this.board.display(deltaTime);
 
-    this.game.display(deltaTime);
+
 
   } else {
     // Draw axis
