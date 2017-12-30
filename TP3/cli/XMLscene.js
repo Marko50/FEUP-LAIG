@@ -13,6 +13,7 @@ function XMLscene(interface) {
   this.elapsedTime = 0;
   this.winsTeam1 = 0;
   this.winsTeam2 = 0;
+  this.filmActivated = false;
   this.selectedAmbient =3;
   this.ambientlength=3;
 }
@@ -59,23 +60,36 @@ XMLscene.prototype.startGameHuman = function(){
   this.game = new Game(this);
   this.game.startGame();
   this.game.human = true;
+  if(this.interface.film){
+    this.interface.removeFilmOption();
+  }
 }
 
 XMLscene.prototype.startGamePCEasy = function(){
   this.game = new Game(this);
   this.game.startGame();
   this.game.pceasy = true;
+  if(this.interface.film){
+    this.interface.removeFilmOption();
+  }
 }
 
 XMLscene.prototype.startGameHard = function(){
   this.game = new Game(this);
   this.game.startGame();
   this.game.pchard = true;
+  if(this.interface.film){
+    this.interface.removeFilmOption();
+  }
 }
 
 
 XMLscene.prototype.undo = function(){
   this.game.rollBack();
+}
+
+XML.scene.prototype.film = function (index) {
+
 }
 
 
@@ -158,6 +172,9 @@ XMLscene.prototype.onGraphLoaded = function() {
  * @name display
  */
 XMLscene.prototype.display = function() {
+  document.getElementById('time').innerHTML = Math.round(this.game.elapsedTime);
+  document.getElementById('scoreTeam').innerHTML = "Player 1 " + this.winsTeam1 + this.winsTeam2  + " Player 2";
+
   // ---- BEGIN Background, camera and axis setup
   this.logPicking();
 

@@ -13,6 +13,8 @@ class Game {
     this.client = new client(this);
     this.board = new board(this.scene,8,5);
     this.stackBoards = new Array();
+    this.currentTime = Date.now();
+    this.elapsedTime = 0;
   }
 
   startGame(){
@@ -38,7 +40,6 @@ class Game {
     if(obj.type == "piece"){
       if(obj.elegible && obj.team == this.currentTeam && this.board.elegible){
         this.selectedPiece = obj;
-        this.board.readyCells = true;
       }
     }
     else if(obj.type == "cell"){
@@ -58,11 +59,7 @@ class Game {
             this.currentTeam = 1;
           }
         }
-        this.selectedPiece = null;
-        this.selectedCell = null;
-        this.board.readyCells = false;
-
-        if(this.pchard){
+        else if(this.pchard){
           this.stackBoards.push(this.board.clone());
           this.board.elegible = false;
           setTimeout(() => {this.client.playPCHard(this.board);}, 5000);
@@ -73,6 +70,8 @@ class Game {
           this.board.elegible = false;
           setTimeout(() => {this.client.playPCHard(this.board);}, 5000);
         }
+        this.selectedPiece = null;
+        this.selectedCell = null;
       }
     }
 
@@ -84,9 +83,16 @@ parseWinner(winner){
   else if(winner == 2)
     this.scene.winsTeam2++;
   this.finished = true;
+  this.scene.interface.addFilmOption();
 }
 
   display(deltaTime){
+    if(!this.finished){
+      let time = Date.now();
+      let delta = (time - this.currentTime)/1000;
+      this.elapsedTime+= delta;
+      this.currentTime = time;
+    }
     this.board.display(deltaTime);
   }
 }

@@ -5,6 +5,7 @@
 function MyInterface() {
     //call CGFinterface constructor
     CGFinterface.call(this);
+    this.film = false;
 }
 ;
 
@@ -61,16 +62,22 @@ MyInterface.prototype.addStartGame = function(){
   this.gui.add(this.scene,'startGameHard').name('Play PC Hard');
 }
 
-
 MyInterface.prototype.addUndo = function(){
   this.gui.add(this.scene,'undo').name('Undo last action');
 }
 
 MyInterface.prototype.addScenesGroup = function(){
-var f1 = this.gui.addFolder("Scene");
-f1.open();
+this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] ).name("Selected Ambient");
+
+}
+
+MyInterface.prototype.removeFilmOption(){
+  this.gui.remove('film');
+  this.film = false;
+}
 
 
-this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] );
-
+MyInterface.prototype.addFilmOption = function(){
+  this.gui.add(this.scene,'film').name('Game Film');
+    this.film = true;
 }

@@ -4,7 +4,6 @@ class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
-      this.readyCells = false;
       this.elegible = true;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
