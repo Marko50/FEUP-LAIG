@@ -11,6 +11,7 @@ class board {
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
   }
 
+
   generatePieces(dimension){
     this.piecesTeam1 = [];
     this.piecesTeam2 = [];
@@ -55,6 +56,7 @@ class board {
 
   generateBoard(dimensionBoard,dimensionCell){
     this.dimension = dimensionBoard;
+    this.dimensionCell = dimensionCell;
     this.board = [];
     this.boardProlog = [];
     let id = 1;
@@ -70,12 +72,14 @@ class board {
       this.board.push(line);
     }
 
+    this.lastPrologBoard = this.boardProlog;
+
   }
 
   updateBoard(){
     for(let i = 0; i < this.boardProlog.length; i++){
       for(let j = 0; j < this.boardProlog[i].length; j++){
-        if(this.boardProlog[i][j] == 'x'){//player1
+        if(this.boardProlog[i][j] == 'x'){
           this.board[i][j].piece.team = 1;
           this.board[i][j].piece.signature = 'x';
           this.board[i][j].piece.material = this.green;
@@ -130,6 +134,8 @@ class board {
     }
   }
 
+
+
   display(currentTime){
     for(let i = 0; i < this.dimension; i++){
       for(let j = 0; j < this.dimension; j++){
@@ -144,6 +150,27 @@ class board {
     for(let i = 0; i < this.piecesTeam2.length; i++){
       this.piecesTeam2[i].display(currentTime);
     }
+  }
+
+  clone(){
+    let ret = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    ret.board = [];7
+    ret.piecesTeam1 = [];
+    ret.piecesTeam2 = [];
+    for(let i = 0; i < this.board.length; i++){
+      let line = []
+      for(let j = 0; j < this.board.length; j++){
+        line.push(Object.assign(Object.create(Object.getPrototypeOf(this.board[i][j])), this.board[i][j]));
+      }
+      ret.board.push(line);
+    }
+    for(let i = 0; i < this.piecesTeam1.length; i++){
+      ret.piecesTeam1.push(Object.assign(Object.create(Object.getPrototypeOf(this.piecesTeam1[i])),this.piecesTeam1[i]));
+    }
+    for(let i = 0; i < this.piecesTeam2.length; i++){
+      ret.piecesTeam2.push(Object.assign(Object.create(Object.getPrototypeOf(this.piecesTeam2[i])),this.piecesTeam2[i]));
+    }
+    return ret;
   }
 
 }

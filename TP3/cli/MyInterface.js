@@ -61,6 +61,11 @@ MyInterface.prototype.addStartGame = function(){
   this.gui.add(this.scene,'startGameHard').name('Play PC Hard');
 }
 
+
+MyInterface.prototype.addUndo = function(){
+  this.gui.add(this.scene,'undo').name('Undo last action');
+}
+
 MyInterface.prototype.addScenesGroup = function(){
 var f1 = this.gui.addFolder("Scene");
 f1.open();

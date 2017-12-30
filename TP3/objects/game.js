@@ -8,12 +8,30 @@ class Game {
     this.pchard = false;
     this.pceasy = false;
     this.human = false;
-    this.client = new client(this.scene);
+    this.lastCellPlayer1 = new Array();
+    this.lastCellPlayer2 = new Array();
+    this.client = new client(this);
     this.board = new board(this.scene,8,5);
+    this.stackBoards = new Array();
   }
 
   startGame(){
     this.finished = false;
+  }
+
+  rollBack(){
+    if(this.human && this.stackBoards.length > 0){
+      if(this.currentTeam == 1){
+        this.currentTeam = 2;
+      }
+      else {
+        this.currentTeam = 1;
+      }
+      console.log(this.board);
+      this.board = this.stackBoards[this.stackBoards.length - 1];
+      console.log(this.board);
+      this.stackBoards.pop();
+    }
   }
 
   parseSelected(obj){
@@ -27,24 +45,31 @@ class Game {
       this.selectedCell = obj;
       if(this.selectedPiece != null && this.selectedCell.elegible){
         this.selectedCell = obj;
-        this.board.play(this.selectedPiece, this.selectedCell);
+        this.stackBoards.push(this.board.clone());
         this.client.play(this.board, this.selectedPiece.signature, this.selectedCell.line, this.selectedCell.col);
+        this.board.play(this.selectedPiece, this.selectedCell);
+        if(this.human){
+          if(this.currentTeam == 1){
+            this.lastCellPlayer1 = this.selectedCell;
+            this.currentTeam = 2;
+          }
+          else {
+            this.lastCellPlayer2 = this.selectedCell;
+            this.currentTeam = 1;
+          }
+        }
         this.selectedPiece = null;
         this.selectedCell = null;
         this.board.readyCells = false;
 
-        if(this.human){
-          if(this.currentTeam == 1)
-            this.currentTeam = 2;
-          else this.currentTeam = 1;
-        }
-
-        else if(this.pchard){
+        if(this.pchard){
+          this.stackBoards.push(this.board.clone());
           this.board.elegible = false;
           setTimeout(() => {this.client.playPCHard(this.board);}, 5000);
         }
 
         else if(this.pceasy){
+          this.stackBoards.push(this.board.clone());
           this.board.elegible = false;
           setTimeout(() => {this.client.playPCHard(this.board);}, 5000);
         }
@@ -58,9 +83,6 @@ parseWinner(winner){
     this.scene.winsTeam1++;
   else if(winner == 2)
     this.scene.winsTeam2++;
-
-  console.log("Player1: " + this.winsTeam1);
-  console.log("Player2: " + this.winsTeam2);
   this.finished = true;
 }
 

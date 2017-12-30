@@ -114,10 +114,8 @@ class client {
       if (this.readyState == 4 && this.status == 200) {
        let response = xhttp.response;
        if(response == "yes"){
-         console.log("end of game");
          cl.checkWinner(Board);
        }
-       else console.log("not end of game");
      }
     };
     xhttp.open("GET", 'http://localhost:' + this.port.toString() + '/' + request , true);
@@ -133,7 +131,6 @@ class client {
       if (this.readyState == 4 && this.status == 200) {
        let response = xhttp.response;
        let winner = parseInt(response);
-       console.log(winner);
        cl.game.parseWinner(winner);
      }
     };

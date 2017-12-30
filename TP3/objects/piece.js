@@ -16,6 +16,10 @@ class piece {
     mat4.identity(this.transformMatrix);
     mat4.translate(this.transformMatrix, this.transformMatrix, [distancex ,0,distancey]);
     mat4.rotate(this.transformMatrix, this.transformMatrix, -90 * DEGREE_TO_RAD, [1, 0, 0]);
+    this.originalTransformMatrix = mat4.create();
+    mat4.identity(this.originalTransformMatrix);
+    mat4.translate(this.originalTransformMatrix, this.originalTransformMatrix, [distancex ,0,distancey]);
+    mat4.rotate(this.originalTransformMatrix, this.originalTransformMatrix, -90 * DEGREE_TO_RAD, [1, 0, 0]);
   }
 
   updateMovement(currentTime){

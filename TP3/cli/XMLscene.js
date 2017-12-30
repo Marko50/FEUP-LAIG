@@ -73,6 +73,12 @@ XMLscene.prototype.startGameHard = function(){
   this.game.pchard = true;
 }
 
+
+XMLscene.prototype.undo = function(){
+  this.game.rollBack();
+}
+
+
 /**
  * Initializes the scene lights with the values read from the LSX file.
  * @function
@@ -142,6 +148,7 @@ XMLscene.prototype.onGraphLoaded = function() {
   this.interface.addLightsGroup(this.graph.lights);
   this.interface.addStartGame();
   this.interface.addScenesGroup();
+  this.interface.addUndo();
 }
 
 /**
