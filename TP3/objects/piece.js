@@ -3,6 +3,7 @@ class piece {
     this.scene = scene;
     this.posX = distancex;
     this.posZ = distancey;
+    this.selected = false;
     this.id = id;
     this.type = "piece";
     this.signature = sign;
@@ -41,7 +42,13 @@ class piece {
     this.scene.pushMatrix();
     this.scene.multMatrix(this.transformMatrix);
     this.material.apply();
-    this.obj.display();
+    if(this.selected)
+    {
+      this.scene.setActiveShader(this.scene.selectShader);
+      this.obj.display();
+      this.scene.setActiveShader(this.scene.defaultShader);
+    }
+    else this.obj.display();
     this.scene.popMatrix();
   }
 }

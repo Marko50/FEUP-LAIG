@@ -4,7 +4,7 @@ class board {
 
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
-      this.elegible = true;
+      this.elegible = false;
       this.setColors();
       this.generateBoard(dimensionBoard,dimensionCell);
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
@@ -117,12 +117,25 @@ class board {
     piece.animation = new BezierAnimation(this.scene,20, controlpoints);
     piece.moving = true;
     piece.elegible = false;
+    piece.selected = false;
     cell.piece = piece;
     cell.elegible = false;
   }
 
   selectCell(x,y){
     return this.board[x][y];
+  }
+
+  selectPiece(id){
+    for(let i = 0; i < this.piecesTeam1.length; i++){
+      if(this.piecesTeam1[i].id == id)
+        return this.piecesTeam1[i];
+    }
+
+    for(let i = 0; i < this.piecesTeam2.length; i++){
+      if(this.piecesTeam2[i].id == id)
+        return this.piecesTeam2[i];
+    }
   }
 
   selectElegiblePCPiece(){

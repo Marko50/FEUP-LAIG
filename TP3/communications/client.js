@@ -42,17 +42,20 @@ class client {
     this.port = 8081;
   }
 
-  play(Board, signature, x, y){
+  play(Board, Piece, Cell){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
-    let request = "setPeca(" + x.toString() + "," + y.toString() + "," + signature + "," + prologBoard +")";
+    let request = "setPeca(" + Cell.line.toString() + "," + Cell.col.toString() + "," + Piece.signature + "," + prologBoard +")";
     let url = 'http://localhost:' + this.port.toString() + '/' + request;
     let cl = this;
+    let game = this.game;
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
        let response = readPrologResponseBoard(xhttp.response);
        Board.boardProlog = response;
+       Board.play(Piece, Cell);
        Board.updateBoard();
+       game.stackPlays.push([Piece, Cell]);
        cl.checkEndGame(Board);
      }
     };
@@ -65,12 +68,14 @@ class client {
     let xhttp = new XMLHttpRequest();
     let request = "jogaPCHard(" + prologBoard + ")";
     let cl = this;
+    let game = this.game;
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
        let response = readPrologPCResponse(xhttp.response);
        Board.boardProlog = response[2];
        let cell = Board.selectCell(response[0],response[1]);
        let piece = Board.selectElegiblePCPiece();
+       game.stackPlays.push([Piece,Cell]);
        Board.play(piece,cell);
        Board.updateBoard();
        Board.elegible = true;
@@ -86,6 +91,7 @@ class client {
     let xhttp = new XMLHttpRequest();
     let request = "jogaPCEasy(" + prologBoard + ")";
     let cl = this;
+    let game = this.game;
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
        let linePlayed;
@@ -94,6 +100,7 @@ class client {
        Board.boardProlog = response[2];
        let cell = Board.selectCell(response[0],response[1]);
        let piece = Board.selectElegiblePCPiece();
+       game.stackPlays.push([Piece,Cell]);
        Board.play(piece,cell);
        Board.updateBoard();
        Board.elegible = true;
@@ -105,7 +112,6 @@ class client {
   }
 
   checkEndGame(Board){
-    console.log("checkEndGame");
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
     let request = "verificaFimJogo(" + prologBoard + ")";

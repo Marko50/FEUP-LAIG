@@ -6,6 +6,7 @@ function MyInterface() {
     //call CGFinterface constructor
     CGFinterface.call(this);
     this.film = false;
+    this.filmcontroler = null;
 }
 ;
 
@@ -75,13 +76,14 @@ this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] ).name("Selected Ambi
 }
 
 MyInterface.prototype.removeFilmOption = function(){
-  this.gui.remove('film');
+  this.gui.remove(this.filmcontroler);
   this.film = false;
+  this.filmcontroler = null;
 }
 
 
 MyInterface.prototype.addFilmOption = function(){
-  this.gui.add(this.scene,'film').name('Game Film');
+  this.filmcontroler = this.gui.add(this.scene,'film').name('Game Film');
     this.film = true;
 }
 

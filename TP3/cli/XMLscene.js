@@ -16,7 +16,6 @@ function XMLscene(interface) {
   this.elapsedTime = 0;
   this.winsTeam1 = 0;
   this.winsTeam2 = 0;
-  this.filmActivated = false;
   this.selectedAmbient =3;
   this.ambientlength=3;
 }
@@ -39,6 +38,7 @@ XMLscene.prototype.init = function(application) {
   this.setPickEnabled(true);
   this.axis = new CGFaxis(this);
   this.game = new Game(this);
+  this.selectShader = new CGFshader(this.gl, "../shaders/selec.vert", "../shaders/selec.frag");
 }
 
 XMLscene.prototype.logPicking = function ()
@@ -91,7 +91,7 @@ XMLscene.prototype.undo = function(){
 }
 
 XMLscene.prototype.film = function (index) {
-
+  this.game.prepareMovie();
 }
 
 
@@ -165,6 +165,7 @@ XMLscene.prototype.onGraphLoaded = function() {
   this.interface.addScenesGroup();
   this.interface.addStartGame();
   this.interface.addUndo();
+  //this.interface.addFilmOption();
 }
 
 /**
@@ -175,7 +176,7 @@ XMLscene.prototype.onGraphLoaded = function() {
  */
 XMLscene.prototype.display = function() {
   document.getElementById('time').innerHTML = Math.round(this.game.elapsedTime);
-  document.getElementById('scoreTeam').innerHTML = "Player 1 " + this.winsTeam1 + this.winsTeam2  + " Player 2";
+  document.getElementById('scoreTeam').innerHTML = "Home " + this.winsTeam1 + " " + this.winsTeam2  + " Away";
 
   // ---- BEGIN Background, camera and axis setup
   this.logPicking();
@@ -238,6 +239,7 @@ XMLscene.prototype.display = function() {
 
     // Displays the scene.
     this.graph.displayScene();
+
 
     this.game.display(deltaTime);
 
