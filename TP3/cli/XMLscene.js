@@ -17,7 +17,10 @@ function XMLscene(interface) {
   this.winsTeam1 = 0;
   this.winsTeam2 = 0;
   this.selectedAmbient =3;
+  this.selectedCamera=1;
+  this.actualCamera=1;
   this.ambientlength=3;
+  this.lastCurrTime=0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -139,7 +142,15 @@ XMLscene.prototype.initLights = function() {
  * @name initCameras
  */
 XMLscene.prototype.initCameras = function() {
-  this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+  //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+
+  this.cameraPerspectives = [];
+  this.cameraPerspectives[0] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+  this.cameraPerspectives[1] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(150, 150, 150), vec3.fromValues(0, -5, 0));
+  this.cameraPerspectives[2] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-5, 150, 1), vec3.fromValues(5, 0, 1));
+
+  this.cameraAnimation = null;
+  this.camera = this.cameraPerspectives[this.selectedCamera-1];
 }
 
 /** Handler called when the graph is finally loaded.
@@ -163,6 +174,7 @@ XMLscene.prototype.onGraphLoaded = function() {
   // Adds lights group.
   this.interface.addLightsGroup(this.graph.lights);
   this.interface.addScenesGroup();
+  this.interface.addCameraPerspetives();
   this.interface.addStartGame();
   this.interface.addUndo();
   //this.interface.addFilmOption();
@@ -236,6 +248,27 @@ XMLscene.prototype.display = function() {
         }
       }
     }
+	  
+    if(this.actualCamera != this.selectedCamera){
+
+      this.position1 = vec3.fromValues(50, 50, 50);
+      this.position2 = vec3.fromValues(150, 150, 150);
+      this.position3 = vec3.fromValues(-5, 150, 1);
+
+      this.direction1 = vec3.fromValues(0, 0, 0);
+      this.direction2 = vec3.fromValues(0, -5, 0);
+      this.direction3 = vec3.fromValues(0, -5, 0);
+
+      this.position=[this.position1,this.position2,this.position3];
+      this.direction=[this.direction1,this.direction2,this.direction3];
+
+      this.cameraAnimation = new CameraAnimation(this.position[this.selectedCamera-1],this.position[this.actualCamera-1],this.direction[this.selectedCamera-1],this.direction[this.actualCamera-1]);
+      this.actualCamera = this.selectedCamera;
+      }
+
+    this.update(this.currentTime);
+    this.interface.setActiveCamera(this.camera);
+
 
     // Displays the scene.
     this.graph.displayScene();
@@ -255,3 +288,93 @@ XMLscene.prototype.display = function() {
   // ---- END Background, camera and axis setup
 
 }
+
+
+
+XMLscene.prototype.update = function(currTime) {
+
+    if (this.cameraAnimation != null) {
+    var deltaTime = currTime - this.lastCurrTime;
+    this.animateCamera(deltaTime);
+  }
+  this.lastCurrTime = currTime;
+};
+
+XMLscene.prototype.animateCamera = function (deltaTime) {
+
+	var animation = this.cameraAnimation;
+	var camera = this.camera;
+
+	if (this.lastCurrTime != 0)
+		if (Math.abs(animation.travelledPosDist[0]) < Math.abs(animation.Distance[0]) ||
+			Math.abs(animation.travelledPosDist[1]) < Math.abs(animation.Distance[1]) ||
+			Math.abs(animation.travelledPosDist[2]) < Math.abs(animation.Distance[2]) ||
+			Math.abs(animation.travelledDirDist[0]) < Math.abs(animation.dirDist[0]) ||
+			Math.abs(animation.travelledDirDist[1]) < Math.abs(animation.dirDist[1]) ||
+			Math.abs(animation.travelledDirDist[2]) < Math.abs(animation.dirDist[2]) ) {
+
+
+			let distPosX = animation.velPos[0] * deltaTime;
+			let distPosY = animation.velPos[1] * deltaTime;
+			let distPosZ = animation.velPos[2] * deltaTime;
+
+			if(Math.abs(animation.travelledPosDist[0]) < Math.abs(animation.Distance[0])) {
+
+				camera.position[0] += distPosX;
+				animation.travelledPosDist[0] += distPosX;
+
+			}
+
+			if(Math.abs(animation.travelledPosDist[1]) < Math.abs(animation.Distance[1])) {
+
+				camera.position[1] += distPosY;
+				animation.travelledPosDist[1] += distPosY;
+
+			}
+
+			if(Math.abs(animation.travelledPosDist[2]) < Math.abs(animation.Distance[2])) {
+
+				camera.position[2] += distPosZ;
+				animation.travelledPosDist[2] += distPosZ;
+
+			}
+
+			let distDirX = animation.velDir[0] * deltaTime;
+			let distDirY = animation.velDir[1] * deltaTime;
+			let distDirZ = animation.velDir[2] * deltaTime;
+
+			if(Math.abs(animation.travelledDirDist[0]) < Math.abs(animation.dirDist[0])) {
+
+				camera.target[0] += distDirX;
+				camera.direction[0] += distDirX;
+				animation.travelledDirDist[0] += distDirX;
+
+			}
+
+			if(Math.abs(animation.travelledDirDist[1]) < Math.abs(animation.dirDist[1])) {
+
+				camera.target[1] += distDirY;
+				camera.direction[1] += distDirY;
+				animation.travelledDirDist[1] += distDirY;
+
+			}
+
+			if(Math.abs(animation.travelledDirDist[2]) < Math.abs(animation.dirDist[2])) {
+
+				camera.target[2] += distDirZ;
+				camera.direction[2] += distDirZ;
+				animation.travelledDirDist[2] += distDirZ;
+
+			}
+
+		} else {
+
+    vec3.copy(camera.position, animation.destinationPos);
+    vec3.copy(camera.direction, animation.destinationDir);
+    vec3.copy(camera.target, animation.destinationDir);
+		this.cameraAnimation = null;
+
+		}
+    this.camera=camera;
+}
+
