@@ -66,6 +66,13 @@ this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] );
 
 }
 
+MyInterface.prototype.addCameraPerspetives = function(){
+
+this.gui.add(this.scene, 'selectedCamera', ['1', '2','3'] );
+
+}
+
+
 MyInterface.prototype.addUndo = function(){
   this.gui.add(this.scene,'undo').name('Undo last action');
 }
