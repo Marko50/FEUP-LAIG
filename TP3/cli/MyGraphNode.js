@@ -114,6 +114,12 @@ MyGraphNode.prototype.addPatch = function(uDivs, vDivs, degreeU, degreeV, contro
   this.leaves.push(new MyPatch(this.scene, uDivs, vDivs, degreeU, degreeV, controlp,this.nodeID));
 }
 
+/**
+ * Update the node's current transformMatrix and animation Matrix.
+ * @function
+ * @memberof MyGraphNode
+ * @name update
+ */
 MyGraphNode.prototype.update = function(){
   if(this.moving)
   {
@@ -125,7 +131,14 @@ MyGraphNode.prototype.update = function(){
   mat4.multiply(this.realMatrix,this.animationsMatrix,this.transformMatrix);
 }
 
-
+/**
+ * Update the node's current transformMatrix and animation Matrix.
+ * @function
+ * @memberof MyGraphNode
+ * @param {number} texture coords scale factor s axis
+ * @param {number} texture coords scale factor t axis
+ * @name display
+ */
 MyGraphNode.prototype.display = function(s, t){
   for (let i = 0; i < this.leaves.length; i++) {
     this.leaves[i].updateTexCoords(s, t);

@@ -1,7 +1,7 @@
 /**
  * constructor of the camera Animation
  * @constructor CameraAnimation
- *
+ * @class
  */
  function CameraAnimation(destinationPos, originPos, destinationDir,originDir) {
 

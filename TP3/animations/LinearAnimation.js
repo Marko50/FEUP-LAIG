@@ -1,6 +1,7 @@
 /**
   Class representing an Animation of type Linear
   @extends Animation
+  @class
 */
 class LinearAnimation extends Animation {
   /**

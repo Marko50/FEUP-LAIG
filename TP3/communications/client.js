@@ -1,3 +1,10 @@
+/**
+* Prepares a board to be sent to prolog server
+* @function
+* @name prepareBoardForProlog
+* @param {Array} Board - Unparsed Board
+* @returns {String} - The Board parsed to a string
+*/
 var prepareBoardForProlog = function(Board){
   let ret = "[";
   for(let i = 0; i < Board.length; i++){
@@ -12,6 +19,13 @@ var prepareBoardForProlog = function(Board){
   return ret;
 }
 
+/**
+* Reads the response Board from a prolog server
+* @function
+* @name readPrologResponseBoard
+* @param {String} PrologBoard - Unparsed Board
+* @returns {Array} - The Board parsed to an Array
+*/
 var readPrologResponseBoard = function(PrologBoard){
   PrologBoard = PrologBoard.slice(1,PrologBoard.length - 1);
   PrologBoard = PrologBoard.slice(1,PrologBoard.length - 1);
@@ -24,6 +38,15 @@ var readPrologResponseBoard = function(PrologBoard){
   return ret;
 }
 
+/**
+* Reads the response PC play from Prolog
+* @function
+* @name readPrologPCResponse
+* @param {String} Response - Response from Prolog server
+* @param {Number} Line - Line Played
+* @param {Number} Column - Column Played
+* @returns {Array} - Array with the result board and coordinates of the play
+*/
 var readPrologPCResponse = function(Response,Line,Column){
   let ResponseAux = Response.slice(2, Response.length - 1);
   let ResponseSplited = ResponseAux.split('-');
@@ -36,12 +59,30 @@ var readPrologPCResponse = function(Response,Line,Column){
   return ret;
 }
 
+/**
+  Class representing a client that communicates with the prolog server
+  @class
+*/
 class client {
+
+  /**
+    Creates a client
+    @constructor
+    @param {Game} Game using this client
+  */
   constructor(game) {
     this.game = game;
     this.port = 8081;
   }
 
+  /**
+    requests Prolog server a play
+    @name  play
+    @param {board} Board - current Board
+    @param {piece} Piece - Piece played
+    @param {cell} Cell - Cell where the piece is played
+    @memberof Client
+  */
   play(Board, Piece, Cell){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
@@ -63,6 +104,12 @@ class client {
     xhttp.send();
   }
 
+  /**
+    requests Prolog server a PC Hard play
+    @name  playPCHard
+    @param {board} Board - current Board
+    @memberof Client
+  */
   playPCHard(Board){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
@@ -73,10 +120,10 @@ class client {
       if (this.readyState == 4 && this.status == 200) {
        let response = readPrologPCResponse(xhttp.response);
        Board.boardProlog = response[2];
-       let cell = Board.selectCell(response[0],response[1]);
-       let piece = Board.selectElegiblePCPiece();
+       let Cell = Board.selectCell(response[0],response[1]);
+       let Piece = Board.selectElegiblePCPiece();
        game.stackPlays.push([Piece,Cell]);
-       Board.play(piece,cell);
+       Board.play(Piece,Cell);
        Board.updateBoard();
        Board.elegible = true;
        cl.checkEndGame(Board);
@@ -86,6 +133,12 @@ class client {
     xhttp.send();
   }
 
+  /**
+    requests Prolog server a PC Easy play
+    @name  playPCEasy
+    @param {board} Board - current Board
+    @memberof Client
+  */
   playPCEasy(Board){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
@@ -98,10 +151,10 @@ class client {
        let columnPlayed;
        let response = readPrologPCResponse(xhttp.response,linePlayed,columnPlayed);
        Board.boardProlog = response[2];
-       let cell = Board.selectCell(response[0],response[1]);
-       let piece = Board.selectElegiblePCPiece();
+       let Cell = Board.selectCell(response[0],response[1]);
+       let Piece = Board.selectElegiblePCPiece();
        game.stackPlays.push([Piece,Cell]);
-       Board.play(piece,cell);
+       Board.play(Piece,Cell);
        Board.updateBoard();
        Board.elegible = true;
        cl.checkEndGame(Board);
@@ -111,6 +164,12 @@ class client {
     xhttp.send();
   }
 
+  /**
+    requests Prolog server to check end of game
+    @name  checkEndGame
+    @param {board} Board - current Board
+    @memberof Client
+  */
   checkEndGame(Board){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();
@@ -128,6 +187,12 @@ class client {
     xhttp.send();
   }
 
+  /**
+    requests Prolog to check the winner
+    @name  checkWinner
+    @param {board} Board - current Board
+    @memberof Client
+  */
   checkWinner(Board){
     let prologBoard = prepareBoardForProlog(Board.boardProlog);
     let xhttp = new XMLHttpRequest();

@@ -26,6 +26,12 @@ function XMLscene(interface) {
 XMLscene.prototype = Object.create(CGFscene.prototype);
 XMLscene.prototype.constructor = XMLscene;
 
+/**
+* Initializes the scene
+* @function
+* @memberof XMLscene
+* @name init
+*/
 XMLscene.prototype.init = function(application) {
   CGFscene.prototype.init.call(this, application);
 
@@ -44,6 +50,12 @@ XMLscene.prototype.init = function(application) {
   this.selectShader = new CGFshader(this.gl, "../shaders/selec.vert", "../shaders/selec.frag");
 }
 
+/**
+* Deals with picked objects from the scene.
+* @function
+* @memberof XMLscene
+* @name logPicking
+*/
 XMLscene.prototype.logPicking = function ()
 {
 	if (this.pickMode == false) {
@@ -61,6 +73,12 @@ XMLscene.prototype.logPicking = function ()
 	}
 }
 
+/**
+* Prepare the scene's game for starting a new Player vs PLayer Game.
+* @function
+* @memberof XMLscene
+* @name startGameHuman
+*/
 XMLscene.prototype.startGameHuman = function(){
   this.game = new Game(this);
   this.game.startGame();
@@ -70,6 +88,12 @@ XMLscene.prototype.startGameHuman = function(){
   }
 }
 
+/**
+* Prepare the scene's game for starting a new Player vs PC Easy game.
+* @function
+* @memberof XMLscene
+* @name startGamePCEasy
+*/
 XMLscene.prototype.startGamePCEasy = function(){
   this.game = new Game(this);
   this.game.startGame();
@@ -79,6 +103,12 @@ XMLscene.prototype.startGamePCEasy = function(){
   }
 }
 
+/**
+* Prepare the scene's game for starting a new Player vs PC HARD game.
+* @function
+* @memberof XMLscene
+* @name startGameHard
+*/
 XMLscene.prototype.startGameHard = function(){
   this.game = new Game(this);
   this.game.startGame();
@@ -88,11 +118,22 @@ XMLscene.prototype.startGameHard = function(){
   }
 }
 
-
+/**
+* Prepare the scene's to revert last play.
+* @function
+* @memberof XMLscene
+* @name undo
+*/
 XMLscene.prototype.undo = function(){
   this.game.rollBack();
 }
 
+/**
+* Prepare the scene's game for the movie.
+* @function
+* @memberof XMLscene
+* @name film
+*/
 XMLscene.prototype.film = function (index) {
   this.game.prepareMovie();
 }
@@ -248,7 +289,7 @@ XMLscene.prototype.display = function() {
         }
       }
     }
-	  
+
     if(this.actualCamera != this.selectedCamera){
 
       this.position1 = vec3.fromValues(50, 50, 50);
@@ -377,4 +418,3 @@ XMLscene.prototype.animateCamera = function (deltaTime) {
 		}
     this.camera=camera;
 }
-

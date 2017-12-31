@@ -1,7 +1,8 @@
 /**
-  Class representing an Animation of type Bezier
-  @extends Animation
-*/
+ * Class representing an Animation of type Bezier
+ * @class
+ * @extends Animation
+ **/
 class BezierAnimation extends Animation{
   /**
     Creates a Bezier animation

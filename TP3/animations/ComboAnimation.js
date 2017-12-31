@@ -1,6 +1,7 @@
 /**
   Class representing an Animation of type Combo
   @extends Animation
+  @class
 */
 class ComboAnimation extends Animation {
   /**

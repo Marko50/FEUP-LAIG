@@ -56,45 +56,68 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-
+/**
+ * Adds the gui for selecting an environment
+ * @function
+ * @name addScenesGroup
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addScenesGroup = function(){
-var f1 = this.gui.addFolder("Scene");
-f1.open();
-
-
-this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] );
-
+  this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] );
 }
 
+/**
+ * Adds the gui for selecting different cameras
+ * @function
+ * @name addCameraPerspetives
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addCameraPerspetives = function(){
 
 this.gui.add(this.scene, 'selectedCamera', ['1', '2','3'] );
 
 }
 
-
+/**
+ * Adds the GUI for reverting a play in Human vs Human
+ * @function
+ * @name addUndo
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addUndo = function(){
   this.gui.add(this.scene,'undo').name('Undo last action');
 }
 
-MyInterface.prototype.addScenesGroup = function(){
-this.gui.add(this.scene, 'selectedAmbient', ['1', '2','3'] ).name("Selected Ambient");
 
-}
-
+/**
+ * Remove the GUI for the post-game film
+ * @function
+ * @name removeFilmOption
+ * @memberof MyInterface
+ */
 MyInterface.prototype.removeFilmOption = function(){
   this.gui.remove(this.filmcontroler);
   this.film = false;
   this.filmcontroler = null;
 }
 
-
+/**
+ * Adds the GUI for the post-game film
+ * @function
+ * @name addFilmOption
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addFilmOption = function(){
   this.filmcontroler = this.gui.add(this.scene,'film').name('Game Film');
     this.film = true;
 }
 
-
+/**
+ * Adds the GUI for starting different types of games
+ * @function
+ * @name addStartGame
+ * @memberof MyInterface
+ */
 MyInterface.prototype.addStartGame = function(){
   this.gui.add(this.scene,'startGameHuman').name('Player vs Player');
   this.gui.add(this.scene,'startGamePCEasy').name('Player vs Easy');

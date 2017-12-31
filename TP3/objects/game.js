@@ -1,4 +1,13 @@
+/**
+  Class representing a Game
+  @class
+*/
 class Game {
+  /**
+    Creates a Game
+    @constructor
+    @param {XMLscene} scene Scene where the game will be represented
+  */
   constructor(scene) {
     this.scene = scene;
     this.currentTeam = 1;
@@ -16,18 +25,30 @@ class Game {
     this.elapsedTime = 0;
     this.movieIndex = 0;
   }
-  /*for (let i = 0; i < playSeq.length; i++) {
-window.setTimeout(fazerJogada, 1000 * i, arg1, arg2);
-} */
+  /**
+    Prepares the game movie
+    @name prepareMovie
+    @memberof Game
+  */
   prepareMovie(){
     this.board = new board(this.scene,8,5);
     this.movie = true;
   }
+  /**
+    Starts a new Game
+    @name startGame
+    @memberof Game
+  */
   startGame(){
     this.board.elegible = true;
     this.finished = false;
   }
 
+  /**
+    Reverts last action on this game
+    @name rollBack
+    @memberof Game
+  */
   rollBack(){
     if(this.human && this.stackBoards.length > 0 && !this.finished){
       if(this.currentTeam == 1){
@@ -41,6 +62,12 @@ window.setTimeout(fazerJogada, 1000 * i, arg1, arg2);
     }
   }
 
+  /**
+    Deals with selected objects
+    @name parseSelected
+    @param {Object} obj - Has to be either a piece or a cell
+    @memberof Game
+  */
   parseSelected(obj){
     if(obj.type == "piece"){
       if(obj.elegible && obj.team == this.currentTeam && this.board.elegible){
@@ -80,6 +107,12 @@ window.setTimeout(fazerJogada, 1000 * i, arg1, arg2);
 
   }
 
+/**
+    Deals with game winner
+    @name parseWinner
+    @param {Number} winner - winner either team 1 or team 2
+    @memberof Game
+  */
 parseWinner(winner){
   if(winner == 1)
     this.scene.winsTeam1++;
@@ -91,32 +124,37 @@ parseWinner(winner){
     this.scene.interface.addFilmOption();
 }
 
-  display(deltaTime){
-    if(this.movie){
-      if(this.movieIndex < this.stackPlays.length)
-      {
-        let move = this.stackPlays[this.movieIndex];
-        let cl = this.client;
-        let b = this.board;
-        setTimeout(() => {
-          let Piece = b.selectPiece(move[0].id);
-          let Cell = b.selectCell(move[1].line - 1,move[1].col - 1);
-          cl.play(this.board, Piece, Cell);
-        }, 3000 + this.movieIndex*1000*1.5);
-
-        this.movieIndex++;
-        this.board.display(deltaTime);
-      }
-      else this.movie = false;
-    }
-    else{
-      if(!this.finished){
-        let time = Date.now();
-        let delta = (time - this.currentTime)/1000;
-        this.elapsedTime+= delta;
-        this.currentTime = time;
-      }
+/**
+  Displays the game
+  @name display
+  @param {Number} deltaTime - time between frames
+  @memberof Game
+*/
+display(deltaTime){
+  if(this.movie){
+    if(this.movieIndex < this.stackPlays.length)
+    {
+      let move = this.stackPlays[this.movieIndex];
+      let cl = this.client;
+      let b = this.board;
+      setTimeout(() => {
+        let Piece = b.selectPiece(move[0].id);
+        let Cell = b.selectCell(move[1].line - 1,move[1].col - 1);
+        cl.play(this.board, Piece, Cell);
+      }, 3000 + this.movieIndex*1000*1.5);
+      this.movieIndex++;
       this.board.display(deltaTime);
     }
+    else this.movie = false;
   }
+  else{
+    if(!this.finished){
+      let time = Date.now();
+      let delta = (time - this.currentTime)/1000;
+      this.elapsedTime+= delta;
+      this.currentTime = time;
+    }
+    this.board.display(deltaTime);
+  }
+}
 }

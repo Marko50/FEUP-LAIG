@@ -1,7 +1,17 @@
 var DISTANCE_BETWEEN_CELLS = 6;
 
+/**
+  Class representing a board
+  @class
+*/
 class board {
-
+  /**
+    Creates a board
+    @constructor
+    @param {XMLscene} scene Scene where the board will be represented
+    @param {Number} dimensionBoard size of the board
+    @param {Number} dimensionCell size of the board's cells
+  */
   constructor(scene, dimensionBoard, dimensionCell) {
       this.scene = scene;
       this.elegible = false;
@@ -10,7 +20,12 @@ class board {
       this.generatePieces((dimensionBoard*dimensionBoard)/2);
   }
 
-
+  /**
+    Generates the boards pieces
+    @name generatePieces
+    @param {Number} dimension size of the board
+    @memberof piece
+  */
   generatePieces(dimension){
     this.piecesTeam1 = [];
     this.piecesTeam2 = [];
@@ -27,6 +42,11 @@ class board {
     }
   }
 
+  /**
+    Creates materials
+    @name setColors
+    @memberof piece
+  */
   setColors(){
     this.red = new CGFappearance(this.scene);
     this.red.setShininess(0);
@@ -53,6 +73,13 @@ class board {
     this.blue.setEmission(0, 0, 0, 0);
   }
 
+  /**
+    Generates the boards cells
+    @name generateBoard
+    @param {Number} dimensionBoard size of the board
+    @param {Number} dimensionCell size of the cells
+    @memberof piece
+  */
   generateBoard(dimensionBoard,dimensionCell){
     this.dimension = dimensionBoard;
     this.dimensionCell = dimensionCell;
@@ -75,6 +102,11 @@ class board {
 
   }
 
+  /**
+    Updates the board according to the prolog
+    @name updateBoard
+    @memberof piece
+  */
   updateBoard(){
     for(let i = 0; i < this.boardProlog.length; i++){
       for(let j = 0; j < this.boardProlog[i].length; j++){
@@ -93,6 +125,13 @@ class board {
     }
   }
 
+  /**
+    Plays a piece on a cell
+    @name play
+    @param {piece} piece piece to be played
+    @param {cell} cell cell where the piece will be played
+    @memberof piece
+  */
   play(piece, cell){
     let finalx = 5 + cell.centerx;
     let finalz = 50 - cell.centery;
@@ -121,11 +160,23 @@ class board {
     cell.piece = piece;
     cell.elegible = false;
   }
-
+  /**
+    Selects a specific cell
+    @name selectCell
+    @param {Number} x x board coordinate
+    @param {Number} y y board coordinate
+    @memberof piece
+  */
   selectCell(x,y){
     return this.board[x][y];
   }
 
+  /**
+    Selects a specific piece
+    @name selectPiece
+    @param {Number} id Identificator of the piece
+    @memberof piece
+  */
   selectPiece(id){
     for(let i = 0; i < this.piecesTeam1.length; i++){
       if(this.piecesTeam1[i].id == id)
@@ -138,6 +189,11 @@ class board {
     }
   }
 
+  /**
+    Selects the first elegible piece
+    @name selectElegiblePCPiece
+    @memberof piece
+  */
   selectElegiblePCPiece(){
     for(let i = 0; i < this.piecesTeam2.length; i++){
       if(this.piecesTeam2[i].elegible){
@@ -147,7 +203,12 @@ class board {
   }
 
 
-
+  /**
+    Displays the board
+    @name display
+    @param {Number} currentTime time between frames
+    @memberof piece
+  */
   display(currentTime){
     for(let i = 0; i < this.dimension; i++){
       for(let j = 0; j < this.dimension; j++){
@@ -164,6 +225,11 @@ class board {
     }
   }
 
+  /**
+    Creates a colne of the board
+    @name clone
+    @memberof piece
+  */
   clone(){
     let ret = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     ret.board = [];7

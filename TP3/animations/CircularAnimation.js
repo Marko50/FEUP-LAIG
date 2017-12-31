@@ -1,6 +1,7 @@
 /**
   Class representing an Animation of type Circular
   @extends Animation
+  @class
 */
 class CircularAnimation extends Animation{
   /**

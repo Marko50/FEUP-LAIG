@@ -1,7 +1,23 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 var DISTANCE_BETWEEN_CELLS = 6;
 
+/**
+  Class representing a cell on a board
+  @class
+*/
 class cell {
+  /**
+    Creates a cell
+    @constructor
+    @param {XMLscene} scene Scene where the cell will be displayed
+    @param {Number} x X spacial coordinate
+    @param {Number} y Y spacial coordinate
+    @param {Number} dimension Size of the cell
+    @param {CGFappearance} appearence Material used on the cell
+    @param {Number} id Identification for picking
+    @param {Number} line x coordinate on the board
+    @param {Number} column y coordinate on the board
+  */
   constructor(scene, x,y,dimension, appearance, id,line,column) {
     this.dimension = dimension;
     this.scene = scene;
@@ -30,6 +46,11 @@ class cell {
     this.piece = null;
   }
 
+  /**
+    Displays the cell
+    @name display
+    @memberof cell
+  */
   display(){
     this.scene.registerForPick(this.id, this);
     this.scene.pushMatrix();
