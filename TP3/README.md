@@ -1,5 +1,10 @@
 # TP3
 
+## Setup
+ 1. Get a prolog compiler like Sicstus
+ 2. Consult server.pl in the communications folder
+ 3. Execute server.pl
+
 ## Objectives
 
 - [X] Build a connection with a PROLOG server that processes logic taks of the board game
