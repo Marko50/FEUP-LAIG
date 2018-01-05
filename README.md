@@ -13,3 +13,8 @@ Building a scene using the previous project but implementing animations for scen
 ## TP3
 
 Building a board game using PROLOG program as a server(made in PLOG course at FEUP) containing all that was learned in the previous two projects and some more knowledge like picking an object.
+
+
+### Developers
+@Marko50
+@bruno-ribeiro
