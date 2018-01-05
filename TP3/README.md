@@ -3,7 +3,7 @@
 ## Setup
  1. Get a prolog compiler like Sicstus
  2. Consult server.pl in the communications folder
- 3. Execute server.pl
+ 3. Execute `server.`
 
 ## Objectives
 
