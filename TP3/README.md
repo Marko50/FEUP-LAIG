@@ -15,6 +15,7 @@
   - Player vs PC Hard
 - [X] Game film, when it ends  
 - [X] Undo last action on a player vs player game
+- [X] 3 cameras that animate the transition when the user changes the selected one
 
 ## Images 
 
