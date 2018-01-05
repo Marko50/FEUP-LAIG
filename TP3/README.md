@@ -8,7 +8,13 @@
 - [X] Highlight the selected piece
 - [X] Scoreboard
 - [X] Timer
-- [X] 3 scenes that surround the game board.
+- [X] 3 scenes that surround the game board
+- [X] 3 game modes:
+  - Player vs Player
+  - Player vs PC Easy
+  - Player vs PC Hard
+- [X] Game film, when it ends  
+- [X] Undo last action on a player vs player game
 
 ## Images 
 
